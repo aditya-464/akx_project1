@@ -1,0 +1,146 @@
+#media-data-container {
+  background-color: #f1f2f2;
+  margin-top: 3rem;
+  padding: 1rem 2rem;
+  border-radius: 7px;
+}
+
+#media-data-headings-div {
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.media-heading-id {
+  width: 5%;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.media-heading-image {
+  width: 10%;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.media-data-image {
+  width: 35px;
+  height: 35px;
+  object-fit: cover;
+}
+
+.media-heading-name {
+  width: 20%;
+  font-size: 12px;
+  font-weight: 500;
+}
+.media-heading-size {
+  width: 20%;
+  font-size: 12px;
+  font-weight: 500;
+}
+.media-heading-uploaded-by {
+  width: 20%;
+  font-size: 12px;
+  font-weight: 500;
+}
+.media-heading-uploaded-at {
+  width: 20%;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.media-data-item {
+  font-weight: 400;
+}
+
+.media-data-option-div {
+  width: 5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#media-data-partition-horizontal {
+  width: 100%;
+  height: 1px;
+  background-color: #ebeced;
+  margin: 1rem 0;
+}
+
+#media-data-content-div {
+  padding-top: 1rem;
+  max-height: 40vh;
+  overflow-y: scroll;
+  position: relative;
+}
+
+.media-data-item-div {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #ebeced;
+  padding: 1rem 0;
+}
+
+.media-data-option-div {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  cursor: pointer;
+  padding-left: 1rem;
+}
+
+/* options pop-up */
+/* Container for the entire menu */
+.media-data-item-div {
+  display: flex;
+  align-items: center;
+  position: relative; /* Ensure popup is positioned relative to the user row */
+  /* padding: 0.5rem 1rem; */
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.media-data-item {
+  margin: 0;
+  /* padding: 0.5rem; */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Options button styles */
+.media-data-option-div {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Popup Menu Styling */
+.popup-menu-media {
+  position: absolute;
+  top: 50%; /* Adjusted to align below the options icon */
+  right: 0; /* Align to the right edge of the row */
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  padding: 0.5rem 0;
+  min-width: 100px;
+}
+
+/* Popup Menu Items */
+.popup-menu-item-media {
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  color: #333;
+  transition: background-color 0.2s ease;
+}
+
+.popup-menu-item-media:hover {
+  background-color: #f4f4f4;
+}

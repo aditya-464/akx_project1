@@ -1,10 +1,20 @@
 import React, { useState } from "react";
 import "./LoginForm.css";
 import login_img from "../../assets/images/login2.webp";
+import { useSelector, useDispatch } from "react-redux";
+import { changePage, changeUsername } from "../../redux/page.js";
 
 const LoginForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
+
+  const loginFunction = () => {
+    if (username != "" && password != "") {
+      dispatch(changePage("otp"));
+      dispatch(changeUsername(username));
+    }
+  };
 
   return (
     <div className="login-form-container">
@@ -45,7 +55,7 @@ const LoginForm = () => {
             />
             <p>Stay logged in</p>
           </div>
-          <div className="login-button">
+          <div className="login-button" onClick={loginFunction}>
             <p>Login</p>
           </div>
 

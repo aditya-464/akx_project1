@@ -1,12 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./OtpForm.css";
 import otp_img from "../../assets/images/login2.webp";
+import { useSelector, useDispatch } from "react-redux";
+import { changePage } from "../../redux/page";
 
 const OtpForm = () => {
   const [length, setLength] = useState(6);
   const [otp, setOtp] = useState(new Array(length).fill(""));
   const [finalOtp, setFinalOtp] = useState("");
   const [timeLeft, setTimeLeft] = useState(59);
+  const dispatch = useDispatch();
 
   const inputRefs = useRef([]);
 
@@ -69,6 +72,12 @@ const OtpForm = () => {
     return () => clearInterval(timerId); // Cleanup on unmount or re-render
   }, [timeLeft]);
 
+  const otpVerifyFunction = () => {
+    if (finalOtp.length == 6) {
+      dispatch(changePage("dashboard"));
+    }
+  };
+
   return (
     <div className="otp-form-container">
       <div className="otp-image-div">
@@ -97,7 +106,7 @@ const OtpForm = () => {
             })}
           </div>
 
-          <div className="otp-button">
+          <div className="otp-button" onClick={otpVerifyFunction}>
             <p>Submit</p>
           </div>
 
