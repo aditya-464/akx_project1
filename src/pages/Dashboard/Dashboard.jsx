@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
-import "./Dashboard.css";
 import "./DashboardMedia.css";
+import "./Dashboard.css";
 import UserData from "../../components/UserData/UserData";
 import dummy_data from "../../assets/data/user_data.js";
 import dummy_data_media from "../../assets/data/media_data.js";
 import user_img from "../../assets/images/user.webp";
 import { useSelector, useDispatch } from "react-redux";
 
-import { IoFilter } from "react-icons/io5";
+import { IoFilter, IoSearch } from "react-icons/io5";
 import { VscBellDot } from "react-icons/vsc";
 import { AiFillHome } from "react-icons/ai";
 import { FaUser } from "react-icons/fa6";
@@ -158,6 +158,11 @@ const Dashboard = () => {
     e.preventDefault();
 
     if (formMediaData.file) {
+      let pdfFileView = "";
+      if (formMediaData.fileType == "pdf") {
+        URL.createObjectURL(formMediaData.file);
+      }
+
       // Get the file size in a human-readable format (e.g., KB, MB)
       const fileSizeInBytes = formMediaData.file.size;
       const fileSizeInMB = (fileSizeInBytes / (1024 * 1024)).toFixed(2); // Size in MB, rounded to 2 decimal places
@@ -168,7 +173,8 @@ const Dashboard = () => {
         name: formMediaData.file.name,
         type: formMediaData.fileType,
         size: fileSizeInMB + " MB", // Store file size in MB
-        filePreview: fileMediaPreview, // Store the file preview for image types
+        filePreview:
+          formMediaData.fileType == "pdf" ? pdfFileView : fileMediaPreview, // Store the file preview for image types
         uploadedBy: "Admin",
         uploadedAt: new Date().toISOString(),
       };
@@ -177,7 +183,6 @@ const Dashboard = () => {
       setData_media((prevData) => [...prevData, newMedia]);
 
       // Show success message
-      alert(`File "${formMediaData.file.name}" uploaded successfully!`);
 
       // Close the popup after submission
       toggleMediaPopup();
@@ -256,16 +261,22 @@ const Dashboard = () => {
       </div>
       <div id="dashboard-content-div">
         <div id="dashboard-content-navbar">
-          <div className="bell-icon">
-            <VscBellDot size={24}></VscBellDot>
+          <div className="dashboard-nav-searchbar">
+            <p>Search here...</p>
+            <IoSearch size={14} color="#5e6a72"></IoSearch>
           </div>
-          <div id="navbar-admin-details">
-            <div id="navbar-admin-logo">
-              <img src={user_img} alt="" />
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <div className="bell-icon">
+              <VscBellDot size={24}></VscBellDot>
             </div>
-            <div id="navbar-admin-text">
-              <p id="admin-username">{username}</p>
-              <p id="admin-fullname">John Doe</p>
+            <div id="navbar-admin-details">
+              <div id="navbar-admin-logo">
+                <img src={user_img} alt="" />
+              </div>
+              <div id="navbar-admin-text">
+                <p id="admin-username">{username}</p>
+                <p id="admin-fullname">John Doe</p>
+              </div>
             </div>
           </div>
         </div>

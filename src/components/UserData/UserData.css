@@ -58,7 +58,7 @@
 .users-data-option-div {
   width: 5%;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
 }
 
@@ -71,7 +71,7 @@
 
 #users-data-content-div {
   padding-top: 1rem;
-  max-height: 40vh;
+  max-height: 50vh;
   overflow-y: scroll;
   position: relative;
 }
@@ -115,7 +115,7 @@
   cursor: pointer;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 /* Popup Menu Styling */

@@ -3,7 +3,7 @@ import React from "react";
 import "./Modal.css"; // Add your modal styles here
 
 const Modal = ({ show, close, media }) => {
-  if (!show) return null; // If show is false, don't render the modal
+  if (!show) return null;
 
   const renderMediaContent = () => {
     if (media.type === "image") {
@@ -19,14 +19,37 @@ const Modal = ({ show, close, media }) => {
           title={media.name}
         ></iframe>
       );
-    } else if (
-      media.type === "doc" ||
-      media.type === "excel" ||
-      media.type === "txt"
-    ) {
+    } else if (media.type === "doc" || media.type === "docx") {
+      return (
+        <iframe
+          src={`https://docs.google.com/gview?url=${media.filePreview}&embedded=true`}
+          width="100%"
+          height="500px"
+          title={media.name}
+        ></iframe>
+      );
+    } else if (media.type === "excel" || media.type === "xlsx") {
+      return (
+        <iframe
+          src={`https://docs.google.com/gview?url=${media.filePreview}&embedded=true`}
+          width="100%"
+          height="500px"
+          title={media.name}
+        ></iframe>
+      );
+    } else if (media.type === "txt") {
+      return (
+        <iframe
+          src={media.filePreview}
+          width="100%"
+          height="500px"
+          title={media.name}
+        ></iframe>
+      );
+    } else {
       return (
         <div>
-          <p>{media.name}</p>
+          <p>Preview not available for this file type.</p>
           <a href={media.filePreview} download>
             Download {media.type.toUpperCase()} File
           </a>
