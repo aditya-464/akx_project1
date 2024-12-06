@@ -1,0 +1,47 @@
+/* login-page-dropdown.css */
+.login-page-dropdown {
+  position: relative;
+  width: 200px;
+  margin: 10px auto;
+}
+
+.login-page-dropdown-button {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  text-align: left;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: "Poppins", sans-serif !important;
+}
+
+.login-page-dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
+
+.login-page-dropdown-item {
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.login-page-dropdown-item:hover {
+  background-color: #f0f0f0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .login-page-dropdown {
+    width: 100%;
+  }
+}

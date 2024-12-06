@@ -1,0 +1,41 @@
+.react-dropdown-select-dropdown {
+  position: absolute !important;
+}
+
+.login-form-dropdown {
+  /* width: 20rem !important; */
+  margin-top: 1rem !important;
+  padding: 1rem !important;
+  font-family: "Poppins", sans-serif !important;
+  font-size: 14px !important;
+  color: #36454f !important;
+  border: 1px solid #c3c7ca !important;
+  border-radius: 3px !important;
+  outline: none !important;
+  box-shadow: none !important;
+
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+.login-form-dropdown:focus {
+  box-shadow: none !important;
+  outline: none !important;
+
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+.login-form-dropdown input {
+  font-family: "Poppins", sans-serif !important;
+  font-size: 14px !important;
+  color: #36454f !important;
+}
+
+.dropdown-icon-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

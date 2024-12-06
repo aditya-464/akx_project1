@@ -3,6 +3,8 @@ import "./LoginForm.css";
 import login_img from "../../assets/images/login2.webp";
 import { useSelector, useDispatch } from "react-redux";
 import { changePage, changeUsername } from "../../redux/page.js";
+import LoginPageDropdown from "../LoginPageDropdown/LoginPageDropdown.jsx";
+import LoginFormDropdown from "../LoginFormDropdown/LoginFormDropdown.jsx";
 
 const LoginForm = () => {
   const [username, setUsername] = useState("");
@@ -14,6 +16,12 @@ const LoginForm = () => {
       dispatch(changePage("otp"));
       dispatch(changeUsername(username));
     }
+  };
+
+  const options = ["Option 1", "Option 2", "Option 3"];
+
+  const handleSelect = (selectedOption) => {
+    console.log("Selected:", selectedOption);
   };
 
   return (
@@ -30,6 +38,7 @@ const LoginForm = () => {
           <div className="login-fields-group">
             <p>Username</p>
             <input
+              className="login-fields-input"
               type="email"
               value={username}
               onChange={(e) => {
@@ -40,6 +49,7 @@ const LoginForm = () => {
           <div className="login-fields-group">
             <p>Password</p>
             <input
+              className="login-fields-input"
               type="password"
               value={password}
               onChange={(e) => {
@@ -47,14 +57,32 @@ const LoginForm = () => {
               }}
             />
           </div>
-          <div className="stay-logged-in-div">
+
+          <div className="login-fields-group">
+            <p>Select User</p>
+            {/* <input
+              type="password"
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+            /> */}
+            {/* <LoginPageDropdown
+              options={options}
+              onSelect={handleSelect}
+            ></LoginPageDropdown> */}
+            <LoginFormDropdown></LoginFormDropdown>
+          </div>
+
+          {/* <div className="stay-logged-in-div">
             <input
               className="custom-checkbox"
               type="checkbox"
               value="gregory"
             />
             <p>Stay logged in</p>
-          </div>
+          </div> */}
+
           <div className="login-button" onClick={loginFunction}>
             <p>Login</p>
           </div>

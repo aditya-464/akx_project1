@@ -73,7 +73,7 @@
   color: #36454f;
 }
 
-.login-fields-group input {
+.login-fields-input {
   width: 100%;
   margin-top: 1rem;
   font-size: 16px;
@@ -81,9 +81,10 @@
   padding: 1rem;
   border: 1px solid #c3c7ca;
   border-radius: 3px;
+  font-family: "Poppins", sans-serif !important;
 }
 
-.login-fields-group input:focus {
+.login-fields-input:focus {
   border: 1px solid rgba(3, 201, 136, 1);
   outline: none;
 }
