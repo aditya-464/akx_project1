@@ -16,21 +16,43 @@ import { GrTransaction } from "react-icons/gr";
 import { IoMdSettings } from "react-icons/io";
 
 import MediaData from "../../components/MediaData/MediaData.jsx";
+import LoginFormDropdown from "../../components/LoginFormDropdown/LoginFormDropdown.jsx";
+import NavbarDropdown from "../../components/NavbarDropdown/NavbarDropdown.jsx";
 
 const Dashboard = () => {
   // Function to toggle the popup
   // const [media, setMedia] = useState(true);
   // const [users, setUsers] = useState(false);
-  const [dashboardComponent, setDashboardComponent] = useState("users");
+  const [search, setSearch] = useState("");
+  const [dashboardComponent, setDashboardComponent] = useState("dashboard");
   const [data, setData] = useState("");
   const [data_media, setData_media] = useState("");
   const { username } = useSelector((state) => state.page);
   const dispatch = useDispatch();
+  const options = [
+    {
+      id: 1,
+      name: "Leanne Graham",
+    },
+    {
+      id: 2,
+      name: "Erin Howell",
+    },
+    {
+      id: 3,
+      name: "Alex Graham",
+    },
+  ];
 
   useEffect(() => {
     setData(dummy_data);
     setData_media(dummy_data_media);
   }, []);
+
+  // dashboard search input field
+  const handleSearchInput = (value) => {
+    setSearch(value);
+  };
 
   // media
   const [formMediaData, setFormMediaData] = useState({
@@ -219,7 +241,7 @@ const Dashboard = () => {
             <div className="dashboard-navigation-icons">
               <AiFillHome size={14} color={"white"}></AiFillHome>
             </div>
-            <p>Home</p>
+            <p>Dashboard</p>
           </div>
           <div
             id="dashboard-users-item"
@@ -245,27 +267,49 @@ const Dashboard = () => {
             </div>
             <p>Media</p>
           </div>
-          <div className="dashboard-navigation-item">
+          {/* <div className="dashboard-navigation-item">
             <div className="dashboard-navigation-icons">
               <GrTransaction size={14} color="white"></GrTransaction>
             </div>
             <p>Transactions</p>
-          </div>
-          <div className="dashboard-navigation-item">
+          </div> */}
+          {/* <div className="dashboard-navigation-item">
             <div className="dashboard-navigation-icons">
               <IoMdSettings size={14} color="white"></IoMdSettings>
             </div>
             <p>Settings</p>
-          </div>
+          </div> */}
         </div>
       </div>
       <div id="dashboard-content-div">
         <div id="dashboard-content-navbar">
-          <div className="dashboard-nav-searchbar">
-            <p>Search here...</p>
+          <div
+            className="dashboard-nav-searchbar"
+            style={{
+              visibility:
+                dashboardComponent == "users" || dashboardComponent == "media"
+                  ? "visible"
+                  : "hidden",
+            }}
+          >
+            <input
+              className="dashboard-search-input"
+              placeholder="Search here..."
+              value={search}
+              onChange={(e) => {
+                handleSearchInput(e.target.value);
+              }}
+            ></input>
             <IoSearch size={14} color="#5e6a72"></IoSearch>
           </div>
-          <div style={{ display: "flex", alignItems: "center" }}>
+          <div
+            className="dashboard-navbar-right-side"
+            style={{ display: "flex", alignItems: "center" }}
+          >
+            <div className="dashboard-navbar-dropdown">
+              {/* <LoginFormDropdown options={options}></LoginFormDropdown> */}
+              <NavbarDropdown options={options}></NavbarDropdown>
+            </div>
             <div className="bell-icon">
               <VscBellDot size={24}></VscBellDot>
             </div>

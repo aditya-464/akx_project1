@@ -1,0 +1,94 @@
+.react-dropdown-select-dropdown {
+  position: absolute !important;
+}
+
+.navbar-dropdown {
+  width: 20rem !important;
+  /* margin-top: 1rem !important; */
+  margin-right: 2rem !important;
+  padding: 1.5rem !important;
+  font-family: "Poppins", sans-serif !important;
+  font-size: 12px !important;
+  color: #36454f !important;
+  background-color: #f1f2f2 !important;
+  /* border: 1px solid #c3c7ca !important; */
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  border-radius: 7px !important;
+
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+.navbar-dropdown:focus {
+  box-shadow: none !important;
+  outline: none !important;
+
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+.navbar-dropdown input {
+  font-family: "Poppins", sans-serif !important;
+  font-size: 12px !important;
+  color: #36454f !important;
+}
+
+.dropdown-icon-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* dropdown menu container */
+
+.react-dropdown-select-dropdown {
+  background-color: #f1f2f2 !important;
+  padding: 1rem 0rem !important;
+  max-height: 25rem; /* Limit the height */
+  overflow-y: auto; /* Scroll if content exceeds height */
+  border: none !important;
+  outline: none !important;
+  border-radius: 7px !important;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px !important;
+}
+
+.react-dropdown-select-dropdown > div {
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  outline: none !important;
+  border: none !important;
+}
+
+.react-dropdown-select-dropdown > div:hover {
+  /* background-color: #e6e6e6;  */
+  border: none !important;
+  outline: none !important;
+  background-color: #f1f2f2 !important; /* Light gray background */
+}
+
+/* Dropdown item list */
+
+.react-dropdown-select-item {
+  margin: 0 !important;
+  padding: 0.75rem 1.5rem !important;
+  border: none !important;
+  outline: none !important;
+  cursor: pointer;
+  color: #333; /* Text color */
+  background-color: #f1f2f2 !important; /* Background color */
+  transition: background-color 0.3s ease;
+}
+
+.react-dropdown-select-item:hover {
+  background-color: #ebeced !important;
+  color: #36454f !important; /* Light gray on hover */
+}
+
+.react-dropdown-select-item-selected {
+  background-color: #d7dadc !important;
+  color: #36454f !important; /* Light gray on hover */
+}

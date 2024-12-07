@@ -1,48 +1,51 @@
 import React, { useState } from "react";
 import Select from "react-dropdown-select";
-import "./LoginFormDropdown.css";
+import "./NavbarDropdown.css";
 import { IoIosArrowDown } from "react-icons/io";
 
-const LoginFormDropdown = (props) => {
+// const options = [
+//   {
+//     id: 1,
+//     name: "Leanne Graham",
+//   },
+//   {
+//     id: 2,
+//     name: "Erin Howell",
+//   },
+//   {
+//     id: 3,
+//     name: "Leanne Graham",
+//   },
+//   {
+//     id: 4,
+//     name: "Ervi Howell",
+//   },
+//   {
+//     id: 5,
+//     name: "Leanne Graham",
+//   },
+//   {
+//     id: 6,
+//     name: "Ervin Howll",
+//   },
+// ];
+
+const NavbarDropdown = (props) => {
   const { options } = props;
-  // const options = [
-  //   {
-  //     id: 1,
-  //     name: "Leanne Graham",
-  //   },
-  //   {
-  //     id: 2,
-  //     name: "Erin Howell",
-  //   },
-  //   {
-  //     id: 3,
-  //     name: "Leanne Graham",
-  //   },
-  //   {
-  //     id: 4,
-  //     name: "Ervi Howell",
-  //   },
-  //   {
-  //     id: 5,
-  //     name: "Leanne Graham",
-  //   },
-  //   {
-  //     id: 6,
-  //     name: "Ervin Howll",
-  //   },
-  // ];
 
   const [option, setOption] = useState("");
+
   const handleSetOption = (values) => {
     console.log(values[0]);
   };
 
   return (
     <Select
-      className="login-form-dropdown"
+      className="navbar-dropdown"
       options={options}
       labelField="name"
       valueField="name"
+      placeholder="Select brand..."
       dropdownHandleRenderer={() => (
         // <span style={{ width: "20px", height: "20px" }}>▼</span>
         <div className="dropdown-icon-div">
@@ -54,4 +57,4 @@ const LoginFormDropdown = (props) => {
   );
 };
 
-export default LoginFormDropdown;
+export default NavbarDropdown;

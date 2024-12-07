@@ -18,8 +18,32 @@ const LoginForm = () => {
     }
   };
 
-  const options = ["Option 1", "Option 2", "Option 3"];
-
+  const options = [
+    {
+      id: 1,
+      name: "Leanne Graham",
+    },
+    {
+      id: 2,
+      name: "Erin Howell",
+    },
+    {
+      id: 3,
+      name: "Leanne Graham",
+    },
+    {
+      id: 4,
+      name: "Ervi Howell",
+    },
+    {
+      id: 5,
+      name: "Leanne Graham",
+    },
+    {
+      id: 6,
+      name: "Ervin Howll",
+    },
+  ];
   const handleSelect = (selectedOption) => {
     console.log("Selected:", selectedOption);
   };
@@ -71,7 +95,7 @@ const LoginForm = () => {
               options={options}
               onSelect={handleSelect}
             ></LoginPageDropdown> */}
-            <LoginFormDropdown></LoginFormDropdown>
+            <LoginFormDropdown options={options}></LoginFormDropdown>
           </div>
 
           {/* <div className="stay-logged-in-div">
