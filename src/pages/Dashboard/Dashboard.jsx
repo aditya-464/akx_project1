@@ -11,13 +11,17 @@ import { IoFilter, IoSearch } from "react-icons/io5";
 import { VscBellDot } from "react-icons/vsc";
 import { AiFillHome } from "react-icons/ai";
 import { FaUser } from "react-icons/fa6";
-import { MdPermMedia } from "react-icons/md";
+import { MdPermMedia, MdLogout } from "react-icons/md";
+import { FiLogOut } from "react-icons/fi";
+import { SlLogout } from "react-icons/sl";
 import { GrTransaction } from "react-icons/gr";
 import { IoMdSettings } from "react-icons/io";
 
 import MediaData from "../../components/MediaData/MediaData.jsx";
 import LoginFormDropdown from "../../components/LoginFormDropdown/LoginFormDropdown.jsx";
 import NavbarDropdown from "../../components/NavbarDropdown/NavbarDropdown.jsx";
+import DashboardComponent from "../../components/DashboardComponent/DashboardComponent.jsx";
+import LogoutForm from "../../components/LogoutForm/LogoutForm.jsx";
 
 const Dashboard = () => {
   // Function to toggle the popup
@@ -214,20 +218,58 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
+    const dashboardDoc = document.getElementById("dashboard-dashboard-item");
     const userDoc = document.getElementById("dashboard-users-item");
     const mediaDoc = document.getElementById("dashboard-media-item");
+    const logoutDoc = document.getElementById("dashboard-logout-item");
 
-    if (dashboardComponent == "users") {
+    if (dashboardComponent == "dashboard") {
+      if (userDoc.classList.contains("active-navigation-item")) {
+        userDoc.classList.remove("active-navigation-item");
+      }
       if (mediaDoc.classList.contains("active-navigation-item")) {
         mediaDoc.classList.remove("active-navigation-item");
+      }
+      if (logoutDoc.classList.contains("active-navigation-item")) {
+        logoutDoc.classList.remove("active-navigation-item");
+      }
+      dashboardDoc.classList.add("active-navigation-item");
+    }
+    if (dashboardComponent == "users") {
+      if (dashboardDoc.classList.contains("active-navigation-item")) {
+        dashboardDoc.classList.remove("active-navigation-item");
+      }
+      if (mediaDoc.classList.contains("active-navigation-item")) {
+        mediaDoc.classList.remove("active-navigation-item");
+      }
+      if (logoutDoc.classList.contains("active-navigation-item")) {
+        logoutDoc.classList.remove("active-navigation-item");
       }
       userDoc.classList.add("active-navigation-item");
     }
     if (dashboardComponent == "media") {
+      if (dashboardDoc.classList.contains("active-navigation-item")) {
+        dashboardDoc.classList.remove("active-navigation-item");
+      }
       if (userDoc.classList.contains("active-navigation-item")) {
         userDoc.classList.remove("active-navigation-item");
       }
+      if (logoutDoc.classList.contains("active-navigation-item")) {
+        logoutDoc.classList.remove("active-navigation-item");
+      }
       mediaDoc.classList.add("active-navigation-item");
+    }
+    if (dashboardComponent == "logout") {
+      if (dashboardDoc.classList.contains("active-navigation-item")) {
+        dashboardDoc.classList.remove("active-navigation-item");
+      }
+      if (userDoc.classList.contains("active-navigation-item")) {
+        userDoc.classList.remove("active-navigation-item");
+      }
+      if (mediaDoc.classList.contains("active-navigation-item")) {
+        mediaDoc.classList.remove("active-navigation-item");
+      }
+      logoutDoc.classList.add("active-navigation-item");
     }
   }, [dashboardComponent]);
 
@@ -237,7 +279,13 @@ const Dashboard = () => {
         <div id="company-details">DSMS</div>
         {/* <div className="partition-line"></div> */}
         <div id="dashboard-navigation-list-div">
-          <div className="dashboard-navigation-item">
+          <div
+            id="dashboard-dashboard-item"
+            className="dashboard-navigation-item"
+            onClick={() => {
+              setDashboardComponent("dashboard");
+            }}
+          >
             <div className="dashboard-navigation-icons">
               <AiFillHome size={14} color={"white"}></AiFillHome>
             </div>
@@ -245,7 +293,7 @@ const Dashboard = () => {
           </div>
           <div
             id="dashboard-users-item"
-            className="dashboard-navigation-item active-navigation-item"
+            className="dashboard-navigation-item"
             onClick={() => {
               setDashboardComponent("users");
             }}
@@ -267,12 +315,18 @@ const Dashboard = () => {
             </div>
             <p>Media</p>
           </div>
-          {/* <div className="dashboard-navigation-item">
+          <div
+            id="dashboard-logout-item"
+            className="dashboard-navigation-item"
+            onClick={() => {
+              setDashboardComponent("logout");
+            }}
+          >
             <div className="dashboard-navigation-icons">
-              <GrTransaction size={14} color="white"></GrTransaction>
+              <SlLogout size={14} color="white"></SlLogout>
             </div>
-            <p>Transactions</p>
-          </div> */}
+            <p>Logout</p>
+          </div>
           {/* <div className="dashboard-navigation-item">
             <div className="dashboard-navigation-icons">
               <IoMdSettings size={14} color="white"></IoMdSettings>
@@ -306,8 +360,15 @@ const Dashboard = () => {
             className="dashboard-navbar-right-side"
             style={{ display: "flex", alignItems: "center" }}
           >
-            <div className="dashboard-navbar-dropdown">
-              {/* <LoginFormDropdown options={options}></LoginFormDropdown> */}
+            <div
+              className="dashboard-navbar-dropdown"
+              style={{
+                visibility:
+                  dashboardComponent == "users" || dashboardComponent == "media"
+                    ? "visible"
+                    : "hidden",
+              }}
+            >
               <NavbarDropdown options={options}></NavbarDropdown>
             </div>
             <div className="bell-icon">
@@ -326,6 +387,10 @@ const Dashboard = () => {
         </div>
         <div id="dashboard-content-details">
           {/* <div id="dashboard-content-user-graph-div"></div> */}
+
+          {dashboardComponent == "dashboard" && (
+            <DashboardComponent></DashboardComponent>
+          )}
 
           {dashboardComponent == "users" && (
             <div className="dashboard-user">
@@ -514,6 +579,8 @@ const Dashboard = () => {
               </div>
             </div>
           )}
+
+          {dashboardComponent == "logout" && <LogoutForm></LogoutForm>}
         </div>
       </div>
     </div>

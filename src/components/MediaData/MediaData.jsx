@@ -2,12 +2,15 @@ import React, { useEffect, useState } from "react";
 import { SlOptionsVertical } from "react-icons/sl";
 import "./MediaData.css";
 import Modal from "./Modal.jsx"; // Import the modal component
+import ApproveMediaModal from "../ApproveMediaModal/ApproveMediaModal.jsx";
 
 const MediaData = (props) => {
   const { dummy_data_media } = props;
 
   const [visibleMediaMenuId, setVisibleMediaMenuId] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
+  const [approveMediaModalVisible, setApproveMediaModalVisible] =
+    useState(false);
   const [selectedMedia, setSelectedMedia] = useState(null);
 
   // Toggle the visibility of the media menu
@@ -42,6 +45,13 @@ const MediaData = (props) => {
   const handleDelete = (mediaId) => {
     console.log("Deleting media item:", mediaId);
     // Add logic for deleting media item
+    setVisibleMediaMenuId(null); // Close the menu after deleting
+  };
+
+  const handleApprove = (mediaId) => {
+    console.log("Deleting media item:", mediaId);
+    // Add logic for deleting media item
+    setApproveMediaModalVisible(true);
     setVisibleMediaMenuId(null); // Close the menu after deleting
   };
 
@@ -105,6 +115,12 @@ const MediaData = (props) => {
                     >
                       Delete
                     </p>
+                    <p
+                      className="popup-menu-item-media"
+                      onClick={() => handleApprove(item.id)}
+                    >
+                      Approve
+                    </p>
                   </div>
                 )}
               </div>
@@ -119,6 +135,11 @@ const MediaData = (props) => {
         close={() => setModalVisible(false)}
         media={selectedMedia}
       />
+
+      <ApproveMediaModal
+        show={approveMediaModalVisible}
+        close={() => setApproveMediaModalVisible(false)}
+      ></ApproveMediaModal>
     </div>
   );
 };

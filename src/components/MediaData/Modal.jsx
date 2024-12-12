@@ -63,7 +63,7 @@ const Modal = ({ show, close, media }) => {
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
           <button className="close-btn" onClick={close}>
-            X
+            x
           </button>
         </div>
         <div className="modal-body">{renderMediaContent()}</div>

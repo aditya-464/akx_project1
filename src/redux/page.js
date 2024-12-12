@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  page: "login",
+  page: "dashboard",
   username: "",
   password: "",
 };

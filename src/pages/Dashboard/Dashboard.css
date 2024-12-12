@@ -105,7 +105,7 @@
   color: #36454f;
 }
 
-.dashboard-navbar-dropdown{
+.dashboard-navbar-dropdown {
 }
 
 .bell-icon {
@@ -179,6 +179,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+#dashboard-filter-button:hover {
+  background-color: #ebeced;
 }
 
 #dashboard-filter-button p {

@@ -1,0 +1,17 @@
+.bar-chart-container {
+  width: 100%;
+  height: 30vh;
+  /* border: 2px solid red; */
+}
+
+.doughnut-chart-container {
+  width: 50% !important;
+  height: 40vh !important;
+  overflow: hidden;
+}
+
+.area-chart-container {
+  width: 100% !important;
+  height: 50vh !important;
+  overflow: hidden;
+}
