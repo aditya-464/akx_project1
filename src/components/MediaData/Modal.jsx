@@ -1,11 +1,14 @@
 // Modal.js
-import React from "react";
+import React, { useEffect } from "react";
 import "./Modal.css"; // Add your modal styles here
 
 const Modal = ({ show, close, media }) => {
   if (!show) return null;
 
   const renderMediaContent = () => {
+    console.log(media);
+    //
+
     if (media.type === "image") {
       return (
         <img src={media.filePreview} alt={media.name} className="modal-media" />
@@ -58,18 +61,41 @@ const Modal = ({ show, close, media }) => {
     }
   };
 
+  const openWithGoogleDocs = (url) => {
+    const googleDocsUrl = `https://docs.google.com/viewer?url=${encodeURIComponent(
+      url
+    )}&embedded=true`;
+    window.open(googleDocsUrl, "_blank");
+  };
+
+  const openDocument = (url) => {
+    window.open(url, "_blank");
+  };
+
+  useEffect(() => {
+    if (media) {
+      console.log(media);
+      // openWithGoogleDocs(media.filePreview);
+      openDocument(media.filePreview);
+    }
+  }, [media]);
+
   return (
-    <div className="modal-overlay" onClick={close}>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        <div className="modal-header">
-          <button className="close-btn" onClick={close}>
-            x
-          </button>
+    <>
+      {/* <div className="modal-overlay" onClick={close}>
+        <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+          <div className="modal-header">
+            <button className="close-btn" onClick={close}>
+              x
+            </button>
+          </div>
         </div>
-        <div className="modal-body">{renderMediaContent()}</div>
-      </div>
-    </div>
+      </div> */}
+    </>
   );
 };
 
+{
+  /* <div className="modal-body">{renderMediaContent()}</div> */
+}
 export default Modal;

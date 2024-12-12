@@ -186,7 +186,7 @@ const Dashboard = () => {
     if (formMediaData.file) {
       let pdfFileView = "";
       if (formMediaData.fileType == "pdf") {
-        URL.createObjectURL(formMediaData.file);
+        pdfFileView = URL.createObjectURL(formMediaData.file);
       }
 
       // Get the file size in a human-readable format (e.g., KB, MB)

@@ -1,0 +1,90 @@
+/* Modal.css */
+.delete-user-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+.delete-user-modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  position: relative;
+  max-width: 80%;
+  max-height: 80%;
+  overflow: auto;
+}
+
+.delete-user-modal-header {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.close-btn {
+  background-color: transparent;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.delete-user-modal-media {
+  width: 100%;
+  max-height: 70vh;
+  object-fit: contain;
+}
+
+.delete-user-form {
+  margin: 2rem 3rem;
+}
+
+.delete-user-ask-text {
+  font-size: 18px;
+  color: #36454f;
+  font-weight: 500;
+}
+
+.delete-user-buttons-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.delete-user-yes-button {
+  text-align: center;
+  width: 45%;
+  background-color: #03c988;
+  padding: 1rem;
+  font-size: 14px;
+  border-radius: 7px;
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.delete-user-yes-button:hover {
+  background-color: #03b57a;
+}
+
+.delete-user-no-button {
+  text-align: center;
+  width: 45%;
+  background-color: #f1f2f2;
+  padding: 1rem;
+  font-size: 14px;
+  border-radius: 7px;
+  color: #36454f;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.delete-user-no-button:hover {
+  background-color: #ebeced;
+}

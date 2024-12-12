@@ -62,11 +62,17 @@ const MediaData = (props) => {
           <div id="media-data-headings-div">
             <div id="media-heading-checkbox"></div>
             <p className="media-heading-id">Id</p>
-            <p className="media-heading-image">Image</p>
+            <p className="media-heading-image">Preview</p>
             <p className="media-heading-name">Name</p>
             <p className="media-heading-size">Size</p>
             <p className="media-heading-uploaded-by">Uploaded By</p>
             <p className="media-heading-uploaded-at">Uploaded At</p>
+            <div
+              className="media-data-option-div"
+              style={{ visibility: "hidden" }}
+            >
+              <SlOptionsVertical size={12} />
+            </div>
           </div>
 
           <div id="media-data-partition-horizontal"></div>

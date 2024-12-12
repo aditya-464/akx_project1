@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import "./UserData.css";
 import { SlOptionsVertical } from "react-icons/sl";
+import DeleteUserModal from "../DeleteUserModal/DeleteUserModal";
 
 const UserData = (props) => {
   const { dummy_data } = props;
 
   const [visibleMenuId, setVisibleMenuId] = useState(null); // Tracks the menu's visibility
+  const [deleteUserModalVisible, setdeleteUserModalVisible] = useState(false);
+  const [deleteUserDetails, setDeleteUserDetails] = useState("");
 
   // Toggle menu visibility for a specific item
   const toggleMenu = (id) => {
@@ -34,8 +37,10 @@ const UserData = (props) => {
   };
 
   // Delete handler
-  const handleDelete = (user) => {
+  const handleDelete = (item) => {
     // alert(`Delete user: ${user.name}`);
+    setDeleteUserDetails(item);
+    setdeleteUserModalVisible(true);
     setVisibleMenuId(null); // Close the menu
   };
 
@@ -51,7 +56,12 @@ const UserData = (props) => {
             <p className="users-heading-mobile">Mobile</p>
             <p className="users-heading-email">Email</p>
             <p className="users-heading-created-on">Created At</p>
-            {/* <p className="users-heading-options">Options</p> */}
+            <div
+              className="users-data-option-div"
+              style={{ visibility: "hidden" }}
+            >
+              <SlOptionsVertical size={12} />
+            </div>
           </div>
 
           <div id="users-data-partition-horizontal"></div>
@@ -91,7 +101,10 @@ const UserData = (props) => {
                     <p className="popup-menu-item" onClick={handleEdit}>
                       Edit
                     </p>
-                    <p className="popup-menu-item" onClick={handleDelete}>
+                    <p
+                      className="popup-menu-item"
+                      onClick={() => handleDelete(item)}
+                    >
                       Delete
                     </p>
                   </div>
@@ -101,6 +114,12 @@ const UserData = (props) => {
           </div>
         </>
       )}
+
+      <DeleteUserModal
+        show={deleteUserModalVisible}
+        close={() => setdeleteUserModalVisible(false)}
+        userDetails={deleteUserDetails}
+      ></DeleteUserModal>
     </div>
   );
 };
