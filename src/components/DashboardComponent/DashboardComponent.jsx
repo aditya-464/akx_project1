@@ -182,6 +182,8 @@ const DashboardComponent = () => {
         <DoughnutChart></DoughnutChart>
       </div>
 
+      <DoughnutChart></DoughnutChart>
+
       {/* <div className="area-chart-container">
         <AreaChart></AreaChart>
       </div> */}

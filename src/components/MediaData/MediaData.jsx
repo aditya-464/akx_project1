@@ -3,6 +3,7 @@ import { SlOptionsVertical } from "react-icons/sl";
 import "./MediaData.css";
 import Modal from "./Modal.jsx"; // Import the modal component
 import ApproveMediaModal from "../ApproveMediaModal/ApproveMediaModal.jsx";
+import DeleteMediaModal from "../DeleteMediaModal/DeleteMediaModal.jsx";
 
 const MediaData = (props) => {
   const { dummy_data_media } = props;
@@ -11,6 +12,9 @@ const MediaData = (props) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [approveMediaModalVisible, setApproveMediaModalVisible] =
     useState(false);
+  const [deleteMediaModalVisible, setdeleteMediaModalVisible] = useState(false);
+  const [deleteMediaDetails, setDeleteMediaDetails] = useState("");
+
   const [selectedMedia, setSelectedMedia] = useState(null);
 
   // Toggle the visibility of the media menu
@@ -42,9 +46,11 @@ const MediaData = (props) => {
   };
 
   // Handle the "Delete" action for media
-  const handleDelete = (mediaId) => {
-    console.log("Deleting media item:", mediaId);
+  const handleDelete = (item) => {
+    // console.log("Deleting media item:", mediaId);
     // Add logic for deleting media item
+    setDeleteMediaDetails(item);
+    setdeleteMediaModalVisible(true);
     setVisibleMediaMenuId(null); // Close the menu after deleting
   };
 
@@ -117,13 +123,13 @@ const MediaData = (props) => {
                     </p>
                     <p
                       className="popup-menu-item-media"
-                      onClick={() => handleDelete(item.id)}
+                      onClick={() => handleDelete(item)}
                     >
                       Delete
                     </p>
                     <p
                       className="popup-menu-item-media"
-                      onClick={() => handleApprove(item.id)}
+                      onClick={() => handleApprove(item)}
                     >
                       Approve
                     </p>
@@ -141,6 +147,12 @@ const MediaData = (props) => {
         close={() => setModalVisible(false)}
         media={selectedMedia}
       />
+
+      <DeleteMediaModal
+        show={deleteMediaModalVisible}
+        close={() => setdeleteMediaModalVisible(false)}
+        mediaDetails={deleteMediaDetails}
+      ></DeleteMediaModal>
 
       <ApproveMediaModal
         show={approveMediaModalVisible}
