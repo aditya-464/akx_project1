@@ -69,10 +69,11 @@
 
 #dashboard-content-div {
   width: 80vw;
-  height: 100vh;
+  min-height: 100vh !important;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  background-color: white !important;
 }
 
 #dashboard-content-navbar {

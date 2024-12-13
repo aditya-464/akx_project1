@@ -1,17 +1,17 @@
 import React from "react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import { Doughnut } from "react-chartjs-2";
+import { Pie } from "react-chartjs-2";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export const data = {
-  labels: ["Image", "Video", "Audio", "Document"],
+  labels: ["Approved", "Not Approved"],
   datasets: [
     {
       label: "# of Files",
-      data: [12, 19, 3, 5],
-      backgroundColor: ["#66a58b", "#1a7851", "#004a2b", "#002a19"],
-      borderColor: ["#f1f2f2", "#f1f2f2", "#f1f2f2", "#f1f2f2"],
+      data: [72, 28],
+      backgroundColor: ["#1a7851", "#002a19"],
+      borderColor: ["#f1f2f2", "#f1f2f2"],
       borderWidth: 1,
     },
   ],
@@ -48,8 +48,8 @@ const options = {
   },
 };
 
-const DoughnutChart = () => {
-  return <Doughnut data={data} options={options} />;
+const PieChart = () => {
+  return <Pie data={data} options={options} />;
 };
 
-export default DoughnutChart;
+export default PieChart;

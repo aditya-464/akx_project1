@@ -12,181 +12,130 @@ import "./DashboardComponent.css";
 //   ResponsiveContainer,
 // } from "recharts";
 
-import {
-  AreaChart,
-  Area,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  PieChart,
-  Pie,
-  Cell,
-} from "recharts";
+// import {
+//   AreaChart,
+//   Area,
+//   XAxis,
+//   YAxis,
+//   CartesianGrid,
+//   Tooltip,
+//   ResponsiveContainer,
+// } from "recharts";
 
 import DoughnutChart from "../Charts/DoughnutChart";
-// import AreaChart from "../Charts/AreaChart";
+import PieChart from "../Charts/PieChart";
+import AreaChartComp from "../Charts/AreaChartComp";
 
 const DashboardComponent = () => {
   const data1 = [
     {
-      name: "Page A",
-      uv: 4000,
-      amt: 2400,
+      name: "Jan",
+      val: 10,
     },
     {
-      name: "Page B",
-      uv: 3000,
-      amt: 2210,
+      name: "Feb",
+      val: 7,
     },
     {
-      name: "Page C",
-      uv: 2000,
-      amt: 2290,
+      name: "Mar",
+      val: 10,
     },
     {
-      name: "Page D",
-      uv: 2780,
-      amt: 2000,
+      name: "Apr",
+      val: 12,
     },
     {
-      name: "Page E",
-      uv: 1890,
-      amt: 2181,
+      name: "May",
+      val: 10,
     },
     {
-      name: "Page F",
-      uv: 2390,
-      amt: 2500,
+      name: "Jun",
+      val: 6,
     },
     {
-      name: "Page G",
-      uv: 4000,
-      amt: 2400,
+      name: "Jul",
+      val: 5,
     },
     {
-      name: "Page G",
-      uv: 3000,
-      amt: 2210,
+      name: "Aug",
+      val: 9,
     },
     {
-      name: "Page I",
-      uv: 2000,
-      amt: 2290,
+      name: "Sep",
+      val: 6,
     },
     {
-      name: "Page J",
-      uv: 2780,
-      amt: 2000,
+      name: "Oct",
+      val: 10,
     },
     {
-      name: "Page K",
-      uv: 1890,
-      amt: 2181,
+      name: "Nov",
+      val: 12,
     },
     {
-      name: "Page L",
-      uv: 2390,
-      amt: 2500,
+      name: "Dec",
+      val: 16,
     },
-  ];
-
-  const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
-  const data2 = [
-    { name: "Group A", value: 400 },
-    { name: "Group B", value: 300 },
-    { name: "Group C", value: 300 },
-    { name: "Group D", value: 200 },
   ];
 
   return (
     <div className="dashboard-component-container">
-      <div className="bar-chart-container">
-        {/* <ResponsiveContainer width="100%" height="100%">
-          <BarChart
-            data={barChartData}
-            margin={{
-              top: 5,
-              right: 30,
-              left: 20,
-              bottom: 5,
-            }}
-          >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Bar
-              dataKey="uv"
-              fill="#82ca9d"
-              activeBar={<Rectangle fill="gold" stroke="purple" />}
-            />
-          </BarChart>
-        </ResponsiveContainer> */}
-
-        <ResponsiveContainer width="100%" height="100%">
-          <AreaChart
-            // width={500}
-            // height={400}
-            data={data1}
-            margin={{
-              top: 10,
-              right: 30,
-              left: 0,
-              bottom: 0,
-            }}
-          >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Tooltip />
-            <Area
-              type="monotone"
-              dataKey="uv"
-              stroke="#8884d8"
-              fill="#8884d8"
-            />
-          </AreaChart>
-        </ResponsiveContainer>
+      <div className="area-chart-container">
+        <p className="area-chart-heading-text">User creation count</p>
+        <AreaChartComp></AreaChartComp>
       </div>
 
-      <div className="doughnut-chart-container">
-        {/* <PieChart
-          width={800}
-          height={300}
-          //  onMouseEnter={this.onPieEnter}
-        >
-          <Pie
-            data={data2}
-            style={{ border: "1px solid green" }}
-            cx={120}
-            cy={200}
-            innerRadius={60}
-            outerRadius={80}
-            fill="#8884d8"
-            paddingAngle={5}
-            dataKey="value"
-          >
-            {data1.map((entry, index) => (
-              <Cell
-                key={`cell-${index}`}
-                fill={COLORS[index % COLORS.length]}
-              />
-            ))}
-          </Pie>
-          <Tooltip />
-        </PieChart> */}
+      <div className="bottom-charts-container">
+        <div style={{ width: "48%", marginLeft: "1rem" }}>
+          <p className="doughnut-chart-heading-text">Media count</p>
+          <div className="doughnut-chart-container">
+            <DoughnutChart></DoughnutChart>
+          </div>
+          <div
+            style={{
+              width: "100%",
+              height: "2rem",
+              backgroundColor: "#f1f2f2",
+              marginBottom: "5rem !important",
+              borderBottomLeftRadius: "10px",
+              borderBottomRightRadius: "10px",
+            }}
+          ></div>
+          <div
+            style={{
+              width: "100%",
+              height: "5rem",
+              backgroundColor: "white",
+              marginBottom: "5rem !important",
+            }}
+          ></div>
+        </div>
 
-        <DoughnutChart></DoughnutChart>
+        <div style={{ width: "48%", marginLeft: "1rem" }}>
+          <p className="doughnut-chart-heading-text">Media approval count</p>
+          <div className="doughnut-chart-container">
+            <PieChart></PieChart>
+          </div>
+          <div
+            style={{
+              width: "100%",
+              height: "2rem",
+              backgroundColor: "#f1f2f2",
+              marginBottom: "5rem !important",
+              borderBottomLeftRadius: "10px",
+              borderBottomRightRadius: "10px",
+            }}
+          ></div>
+          <div
+            style={{
+              width: "100%",
+              height: "5rem",
+              backgroundColor: "white",
+              marginBottom: "5rem !important",
+            }}
+          ></div>
+        </div>
       </div>
-
-      <DoughnutChart></DoughnutChart>
-
-      {/* <div className="area-chart-container">
-        <AreaChart></AreaChart>
-      </div> */}
     </div>
   );
 };
