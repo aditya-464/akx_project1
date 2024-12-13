@@ -1,3 +1,10 @@
+/* #dashboard-heading-text{
+  font-size: 20px;
+  font-weight: 600;
+  margin-left: 1rem;
+  margin-bottom: 2.5rem;
+} */
+
 .dashboard-component-container {
   height: auto;
   background-color: white;
@@ -45,7 +52,7 @@
   font-weight: 500;
   text-align: left !important;
   background-color: #f1f2f2;
-  margin-top: 5rem;
+  margin-top: 3rem;
   padding: 2rem;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;

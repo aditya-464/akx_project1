@@ -2,11 +2,14 @@ import React, { useEffect, useState } from "react";
 import "./UserData.css";
 import { SlOptionsVertical } from "react-icons/sl";
 import DeleteUserModal from "../DeleteUserModal/DeleteUserModal";
+import EditUserModal from "../EditUserModal/EditUserModal";
 
 const UserData = (props) => {
   const { dummy_data } = props;
 
   const [visibleMenuId, setVisibleMenuId] = useState(null); // Tracks the menu's visibility
+  const [editUserModalVisible, setEditUserModalVisible] = useState(false);
+  const [editUserDetails, setEditUserDetails] = useState("");
   const [deleteUserModalVisible, setdeleteUserModalVisible] = useState(false);
   const [deleteUserDetails, setDeleteUserDetails] = useState("");
 
@@ -31,8 +34,10 @@ const UserData = (props) => {
   }, []);
 
   // Edit handler
-  const handleEdit = (user) => {
+  const handleEdit = (item) => {
     // alert(`Edit user: ${user.name}`);
+    setEditUserDetails(item);
+    setEditUserModalVisible(true);
     setVisibleMenuId(null); // Close the menu
   };
 
@@ -98,7 +103,10 @@ const UserData = (props) => {
                 {/* Popup Menu */}
                 {visibleMenuId === item.id && (
                   <div className="popup-menu">
-                    <p className="popup-menu-item" onClick={handleEdit}>
+                    <p
+                      className="popup-menu-item"
+                      onClick={() => handleEdit(item)}
+                    >
                       Edit
                     </p>
                     <p
@@ -114,6 +122,12 @@ const UserData = (props) => {
           </div>
         </>
       )}
+
+      <EditUserModal
+        show={editUserModalVisible}
+        close={() => setEditUserModalVisible(false)}
+        userDetails={editUserDetails}
+      ></EditUserModal>
 
       <DeleteUserModal
         show={deleteUserModalVisible}
