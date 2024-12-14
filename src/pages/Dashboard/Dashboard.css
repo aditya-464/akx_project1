@@ -291,7 +291,50 @@
   border-radius: 5px;
 }
 
-.submit-btn {
+.user-create-buttons-div {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.user-create-cancel-btn {
+  text-align: center;
+  width: 45%;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  background-color: #f1f2f2;
+  color: #36454f;
+  border: none;
+  border-radius: 7px;
+  margin-top: 3rem;
+}
+
+.user-create-cancel-btn:hover {
+  background-color: #ebeced;
+}
+
+.user-create-submit-btn {
+  text-align: center;
+  width: 45%;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  background-color: #03c988;
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  margin-top: 3rem;
+}
+
+.user-create-submit-btn:hover {
+  background-color: #03b57a;
+}
+
+/* .submit-btn {
   padding: 10px 20px;
   font-size: 16px;
   font-weight: 500;
@@ -311,7 +354,7 @@
 .submit-btn p {
   font-size: 16px;
   font-weight: 500;
-}
+} */
 
 /* Profile image preview styling */
 .profile-img-preview {

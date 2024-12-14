@@ -1,0 +1,178 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+#enter-user-details-text {
+  font-size: 18px;
+  font-weight: 600;
+  color: #36454f;
+  margin-bottom: 2rem;
+}
+
+/* Popup container */
+.popup-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.8);
+  animation: slideIn 0.4s ease forwards;
+  z-index: 1000;
+  padding: 2rem 3rem;
+  padding-bottom: 3rem;
+  width: 30vw;
+  /* width: 320px; */
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Popup box styling */
+.popup {
+  text-align: left;
+}
+
+/* Animations */
+@keyframes slideIn {
+  from {
+    transform: translate(-50%, -60%) scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Button styling */
+.popup-btn {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+}
+
+.user-create-buttons-div {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.user-create-cancel-btn {
+  text-align: center;
+  width: 45%;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  background-color: #f1f2f2;
+  color: #36454f;
+  border: none;
+  border-radius: 7px;
+  margin-top: 3rem;
+}
+
+.user-create-cancel-btn:hover {
+  background-color: #ebeced;
+}
+
+.user-create-submit-btn {
+  text-align: center;
+  width: 45%;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  background-color: #03c988;
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  margin-top: 3rem;
+}
+
+.user-create-submit-btn:hover {
+  background-color: #03b57a;
+}
+
+/* .submit-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    background-color: #03c988;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    width: 100%;
+    margin-top: 3rem;
+  }
+  
+  .submit-btn:hover {
+    background-color: #03b57a;
+  }
+  
+  .submit-btn p {
+    font-size: 16px;
+    font-weight: 500;
+  } */
+
+/* Profile image preview styling */
+.profile-img-preview {
+  margin-top: 10px;
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+/* Styling for input fields inside login-fields-group */
+.login-fields-group-user {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.login-fields-group-user p {
+  font-size: 14px;
+  color: #36454f;
+}
+.file-label {
+  font-size: 14px;
+  color: #36454f;
+  margin-bottom: 0.5rem;
+}
+
+.login-fields-group-user input {
+  width: 100%;
+  margin-top: 0.5rem;
+  font-size: 12px;
+  color: #36454f;
+  padding: 1rem;
+  border: 1px solid #c3c7ca;
+  border-radius: 3px;
+  margin-bottom: 2rem;
+}
+
+.login-fields-group-user input:focus {
+  border: 1px solid rgba(3, 201, 136, 1);
+  outline: none;
+}

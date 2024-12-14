@@ -1,0 +1,156 @@
+.popup-container-media {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: slideIn 0.4s ease forwards;
+  z-index: 1000;
+  padding: 2rem 3rem;
+  width: 30vw;
+  background-color: #fff;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#upload-media-text {
+  font-size: 18px;
+  font-weight: 500;
+  color: black;
+  margin-bottom: 2rem;
+}
+
+.popup-container-media p {
+  font-size: 14px;
+  font-weight: 500;
+  /* color: #36454f; */
+}
+
+.popup-media {
+  width: 100%;
+  /* width: 400px; 
+  max-width: 90%;
+  border-radius: 8px;
+  padding: 2rem;
+  text-align: center; */
+}
+
+.input-field-media {
+  width: 100%;
+  margin: 1rem 0;
+  padding: 1rem;
+  border: 1px solid #c3c7ca;
+  border-radius: 4px;
+  font-size: 12px;
+  color: #36454f;
+  font-family: "Poppins", sans-serif !important;
+  outline: none;
+  appearance: none; /* Remove default arrow */
+}
+
+.file-label-media {
+  margin-top: 1rem;
+  font-size: 1rem;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.submit-btn-media {
+  margin-top: 2rem;
+  padding: 1rem 1.5rem;
+  background-color: #03c988;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.submit-btn-media p {
+  font-size: 14px;
+  font-weight: 500;
+  color: white;
+}
+
+.media-preview-container {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.media-img-preview {
+  max-width: 100%;
+  max-height: 150px;
+  border: 1px solid #c3c7ca;
+  border-radius: 4px;
+}
+
+.media-doc-preview {
+  font-size: 0.9rem;
+  color: #36454f;
+}
+
+.overlay-media {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 999;
+  overflow: hidden;
+}
+
+/* mine content */
+.media-create-buttons-div {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.media-create-cancel-btn {
+  text-align: center;
+  width: 45%;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  background-color: #f1f2f2;
+  color: #36454f;
+  border: none;
+  border-radius: 7px;
+  margin-top: 3rem;
+}
+
+.media-create-cancel-btn:hover {
+  background-color: #ebeced;
+}
+
+.media-create-submit-btn {
+  text-align: center;
+  width: 45%;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  background-color: #03c988;
+  color: white !important;
+  border: none;
+  border-radius: 7px;
+  margin-top: 3rem;
+}
+
+.media-create-submit-btn:hover {
+  background-color: #03b57a;
+}
+
+.media-modal-field-heading {
+  font-size: 14px;
+  color: #36454f;
+}
+
+.media-modal-option {
+  font-size: 12px;
+  color: #36454f;
+  font-family: "Poppins", sans-serif !important;
+}

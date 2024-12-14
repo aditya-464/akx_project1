@@ -1,46 +1,22 @@
-import React, { useState } from "react";
+import React from "react";
 import Select from "react-dropdown-select";
 import "./LoginFormDropdown.css";
 import { IoIosArrowDown } from "react-icons/io";
 
 const LoginFormDropdown = (props) => {
-  const { options } = props;
-  // const options = [
-  //   {
-  //     id: 1,
-  //     name: "Leanne Graham",
-  //   },
-  //   {
-  //     id: 2,
-  //     name: "Erin Howell",
-  //   },
-  //   {
-  //     id: 3,
-  //     name: "Leanne Graham",
-  //   },
-  //   {
-  //     id: 4,
-  //     name: "Ervi Howell",
-  //   },
-  //   {
-  //     id: 5,
-  //     name: "Leanne Graham",
-  //   },
-  //   {
-  //     id: 6,
-  //     name: "Ervin Howll",
-  //   },
-  // ];
+  const { options, returnValue } = props;
 
-  const [option, setOption] = useState("");
   const handleSetOption = (values) => {
-    console.log(values[0]);
+    if (values.length > 0) {
+      returnValue(values[0].name);
+    }
   };
 
   return (
     <Select
       className="login-form-dropdown"
       options={options}
+      placeholder="Search"
       labelField="name"
       valueField="name"
       dropdownHandleRenderer={() => (

@@ -4,9 +4,10 @@ import "./MediaData.css";
 import Modal from "./Modal.jsx"; // Import the modal component
 import ApproveMediaModal from "../ApproveMediaModal/ApproveMediaModal.jsx";
 import DeleteMediaModal from "../DeleteMediaModal/DeleteMediaModal.jsx";
+import { useSelector, useDispatch } from "react-redux";
 
-const MediaData = (props) => {
-  const { dummy_data_media } = props;
+const MediaData = () => {
+  const { data_for_media } = useSelector((state) => state.page);
 
   const [visibleMediaMenuId, setVisibleMediaMenuId] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
@@ -63,7 +64,7 @@ const MediaData = (props) => {
 
   return (
     <div id="media-data-container">
-      {dummy_data_media && (
+      {data_for_media && (
         <>
           <div id="media-data-headings-div">
             <div id="media-heading-checkbox"></div>
@@ -83,7 +84,7 @@ const MediaData = (props) => {
 
           <div id="media-data-partition-horizontal"></div>
           <div id="media-data-content-div">
-            {dummy_data_media.map((item) => (
+            {data_for_media.map((item) => (
               <div key={item.id} className="media-data-item-div">
                 <p className="media-heading-id media-data-item">{item.id}</p>
                 <div className="media-heading-image media-data-item">

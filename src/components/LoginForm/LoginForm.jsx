@@ -9,6 +9,7 @@ import LoginFormDropdown from "../LoginFormDropdown/LoginFormDropdown.jsx";
 const LoginForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [dropdownVal, setDropdownVal] = useState("");
   const dispatch = useDispatch();
 
   const loginFunction = () => {
@@ -29,19 +30,7 @@ const LoginForm = () => {
     },
     {
       id: 3,
-      name: "Leanne Graham",
-    },
-    {
-      id: 4,
       name: "Ervi Howell",
-    },
-    {
-      id: 5,
-      name: "Leanne Graham",
-    },
-    {
-      id: 6,
-      name: "Ervin Howll",
     },
   ];
   const handleSelect = (selectedOption) => {
@@ -95,7 +84,10 @@ const LoginForm = () => {
               options={options}
               onSelect={handleSelect}
             ></LoginPageDropdown> */}
-            <LoginFormDropdown options={options}></LoginFormDropdown>
+            <LoginFormDropdown
+              options={options}
+              returnValue={(val) => setDropdownVal(val)}
+            ></LoginFormDropdown>
           </div>
 
           {/* <div className="stay-logged-in-div">

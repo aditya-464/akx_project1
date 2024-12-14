@@ -22,6 +22,8 @@ import LoginFormDropdown from "../../components/LoginFormDropdown/LoginFormDropd
 import NavbarDropdown from "../../components/NavbarDropdown/NavbarDropdown.jsx";
 import DashboardComponent from "../../components/DashboardComponent/DashboardComponent.jsx";
 import LogoutForm from "../../components/LogoutForm/LogoutForm.jsx";
+import UserCreateModal from "../../components/UserCreateModal/UserCreateModal.jsx";
+import UploadMediaModal from "../../components/UploadMediaModal/UploadMediaModal.jsx";
 
 const Dashboard = () => {
   // Function to toggle the popup
@@ -32,6 +34,9 @@ const Dashboard = () => {
   const [data, setData] = useState("");
   const [data_media, setData_media] = useState("");
   const { username } = useSelector((state) => state.page);
+  const [createUserModalVisible, setCreateUserModalVisible] = useState(false);
+  const [uploadMediaModalVisible, setUploadMediaModalVisible] = useState(false);
+
   const dispatch = useDispatch();
   const options = [
     {
@@ -82,6 +87,15 @@ const Dashboard = () => {
   const [imagePreview, setImagePreview] = useState(null);
 
   // Toggle popup visibility
+
+  const handleCreateUserFunc = () => {
+    setCreateUserModalVisible(true);
+  };
+
+  const handleUploadMediaFunc = () => {
+    setUploadMediaModalVisible(true);
+  };
+
   const togglePopup = () => {
     setIsPopupVisible(!isPopupVisible);
   };
@@ -402,14 +416,17 @@ const Dashboard = () => {
 
                     <p>Filter</p>
                   </div>
-                  <div onClick={togglePopup} id="dashboard-create-user-button">
+                  <div
+                    onClick={() => handleCreateUserFunc()}
+                    id="dashboard-create-user-button"
+                  >
                     <p>Create User</p>
                   </div>
                 </div>
               </div>
 
               {/* pop-up */}
-              {isPopupVisible && (
+              {/* {isPopupVisible && (
                 <>
                   <div className="popup-container">
                     <div className="popup">
@@ -463,20 +480,30 @@ const Dashboard = () => {
                             />
                           )}
                         </div>
-                        <button type="submit" className="submit-btn">
-                          <p>Create User</p>
-                        </button>
+
+                        <div className="user-create-buttons-div">
+                          <div
+                            className="user-create-cancel-btn"
+                            onClick={close}
+                          >
+                            <p>Cancel</p>
+                          </div>
+                          <div type="submit" className="user-create-submit-btn">
+                            <p>Create</p>
+                          </div>
+                        </div>
                       </form>
                     </div>
                   </div>
 
-                  {/* Overlay */}
-                  <div
-                    className="overlay"
-                    onClick={togglePopup} // Clicking outside closes the popup
-                  ></div>
+                  <div className="overlay" onClick={togglePopup}></div>
                 </>
-              )}
+              )} */}
+
+              <UserCreateModal
+                show={createUserModalVisible}
+                close={() => setCreateUserModalVisible(false)}
+              ></UserCreateModal>
 
               <div id="dashboard-content-user-details-div">
                 {data && <UserData dummy_data={data}></UserData>}
@@ -494,7 +521,7 @@ const Dashboard = () => {
                     <p>Filters</p>
                   </div>
                   <div
-                    onClick={toggleMediaPopup}
+                    onClick={() => handleUploadMediaFunc()}
                     id="dashboard-create-media-button"
                   >
                     <p>Upload Media</p>
@@ -503,7 +530,7 @@ const Dashboard = () => {
               </div>
 
               {/* Pop-up */}
-              {isMediaPopupVisible && (
+              {/* {isMediaPopupVisible && (
                 <>
                   <div className="popup-container-media">
                     <div className="popup-media">
@@ -564,13 +591,16 @@ const Dashboard = () => {
                     </div>
                   </div>
 
-                  {/* Overlay */}
                   <div
                     className="overlay-media"
-                    onClick={toggleMediaPopup} // Clicking outside closes the popup
+                    onClick={toggleMediaPopup}
                   ></div>
                 </>
-              )}
+              )} */}
+              <UploadMediaModal
+                show={uploadMediaModalVisible}
+                close={() => setUploadMediaModalVisible(false)}
+              ></UploadMediaModal>
 
               <div id="dashboard-content-user-details-div">
                 {data_media && (
