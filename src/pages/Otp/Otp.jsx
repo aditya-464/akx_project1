@@ -1,9 +1,10 @@
 import React from "react";
+import "./Otp.css"
 import OtpForm from "../../components/OtpForm/OtpForm";
 
 const Otp = () => {
   return (
-    <div>
+    <div className="otp-container">
       <OtpForm></OtpForm>
     </div>
   );
