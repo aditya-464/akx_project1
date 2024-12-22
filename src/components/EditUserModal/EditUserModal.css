@@ -159,3 +159,35 @@
   border: 1px solid rgba(3, 201, 136, 1);
   outline: none;
 }
+
+/* Mobile Responsiveness CSS */
+
+@media only screen and (max-width: 500px) {
+  .popup-container {
+    width: 80% !important;
+  }
+
+  #edit-user-details-text{
+    font-size: 16px;
+  }
+
+  .edit-user-fields-group p {
+    font-size: 12px;
+  }
+
+  .edit-user-fields-group input {
+    font-size: 12px;
+  }
+
+  .file-label {
+    font-size: 12px !important;
+  }
+
+  .edit-cancel-btn{
+    font-size: 12px;
+  }
+
+  .edit-submit-btn{
+    font-size: 12px;
+  }
+}

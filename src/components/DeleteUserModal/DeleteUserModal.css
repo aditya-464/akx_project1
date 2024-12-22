@@ -45,9 +45,16 @@
 }
 
 .delete-user-ask-text {
-  font-size: 18px;
+  font-size: 16px;
   color: #36454f;
   font-weight: 500;
+}
+
+.delete-user-name {
+  font-size: 18px;
+  display: inline-block;
+  font-weight: 600;
+  margin-left: 1rem;
 }
 
 .delete-user-buttons-container {
@@ -87,4 +94,25 @@
 
 .delete-user-no-button:hover {
   background-color: #ebeced;
+}
+
+/* Mobile Responsiveness CSS */
+
+@media only screen and (max-width: 500px) {
+  .delete-user-ask-text {
+    font-size: 14px;
+    text-align: center;
+  }
+
+  .delete-user-name{
+    font-size: 16px;
+  }
+
+  .delete-user-no-button{
+    font-size: 12px;
+  }
+
+  .delete-user-yes-button{
+    font-size: 12px;
+  }
 }

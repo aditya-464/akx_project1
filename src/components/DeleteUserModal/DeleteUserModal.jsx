@@ -17,9 +17,14 @@ const DeleteUserModal = ({ show, close, userDetails }) => {
         </div>
         <div className="delete-user-modal-body">
           <div className="delete-user-form">
-            <p className="delete-user-ask-text" style={{display : "flex"}}>
+            {/* <p className="delete-user-ask-text" style={{display : "flex"}}>
               Are you sure, you wan't to delete
               <p style={{ fontWeight: "600", marginLeft : "1rem" }}>{userDetails.name}</p>?
+            </p> */}
+
+            <p className="delete-user-ask-text">
+              Are you sure, you wan't to delete
+              <p className="delete-user-name">{userDetails.name}?</p>
             </p>
             <div className="delete-user-buttons-container">
               <div className="delete-user-no-button" onClick={close}>

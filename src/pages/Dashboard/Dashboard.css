@@ -416,11 +416,19 @@
     width: 100%;
   }
 
-  #dashboard-content-details{
+  #dashboard-content-details {
     padding: 0 2rem;
   }
 
   .dashboard-search-input {
     width: 20vw;
+  }
+
+  #dashboard-filter-button p {
+    font-size: 11px;
+  }
+
+  #dashboard-create-user-button p {
+    font-size: 11px;
   }
 }

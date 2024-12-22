@@ -1,9 +1,12 @@
 #users-data-container {
+  width: 100%;
   background-color: #f1f2f2;
   margin-top: 3rem;
   padding: 1rem 2rem;
   border-radius: 7px;
-  overflow-y: scroll;
+  overflow-y: auto;
+  overflow-x: auto;
+  scroll-behavior: smooth;
   position: relative;
 }
 
@@ -98,6 +101,7 @@
 /* options pop-up */
 /* Container for the entire menu */
 .users-data-item-div {
+  width: auto;
   display: flex;
   align-items: center;
   position: relative; /* Ensure popup is positioned relative to the user row */
@@ -147,4 +151,56 @@
 
 .popup-menu-item:hover {
   background-color: #f4f4f4;
+}
+
+/* Mobiile responsiveness CSS */
+
+@media only screen and (max-width: 500px) {
+  #users-data-headings-div {
+    /* overflow-x: auto; */
+  }
+
+  #users-data-content-div{
+    max-height: 65vh;
+  }
+
+  .users-heading-id {
+    min-width: 15vw;
+  }
+
+  .users-heading-image {
+    min-width: 20vw;
+  }
+
+  .users-heading-name {
+    min-width: 30vw;
+  }
+
+  .users-heading-mobile {
+    min-width: 25vw;
+  }
+
+  .users-heading-email {
+    min-width: 50vw;
+  }
+
+  .users-heading-created-on {
+    min-width: 40vw;
+  }
+
+  .users-data-option-div {
+    min-width: 10vw;
+  }
+
+  .popup-menu {
+    position: absolute;
+    top: 50%;
+    left: 160vw;
+    min-width: 90px;
+    /* transform: translateY(5px); */
+  }
+
+  .popup-menu-item{
+    font-size: 11px;
+  }
 }
