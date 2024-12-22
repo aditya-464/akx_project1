@@ -74,7 +74,7 @@ const OtpForm = () => {
 
   const otpVerifyFunction = () => {
     if (finalOtp.length == 6) {
-      dispatch(changePage("dashboard"));
+      dispatch(changePage("home"));
     }
   };
 

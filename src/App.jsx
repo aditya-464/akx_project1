@@ -10,7 +10,7 @@ function App() {
     <>
       {page == "login" && <Login></Login>}
       {page == "otp" && <Otp></Otp>}
-      {page == "dashboard" && <Dashboard></Dashboard>}
+      {page == "home" && <Dashboard></Dashboard>}
     </>
   );
 }

@@ -88,10 +88,18 @@ const DashboardComponent = () => {
         </div>
 
         <div className="bottom-charts-container">
-          <div style={{ width: "48%", marginLeft: "1rem" }}>
+          <div className="bottom-chart add-bottom-spacing">
             <p className="doughnut-chart-heading-text">Media count</p>
-            <div className="doughnut-chart-container">
-              <DoughnutChart></DoughnutChart>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <div className="doughnut-chart-container">
+                <DoughnutChart></DoughnutChart>
+              </div>
             </div>
             <div
               style={{
@@ -103,20 +111,21 @@ const DashboardComponent = () => {
                 borderBottomRightRadius: "10px",
               }}
             ></div>
-            <div
-              style={{
-                width: "100%",
-                height: "5rem",
-                backgroundColor: "white",
-                marginBottom: "5rem !important",
-              }}
-            ></div>
+            {/* <div className="bottom-charts-bottom-spacing"></div> */}
           </div>
 
-          <div style={{ width: "48%", marginLeft: "1rem" }}>
+          <div className="bottom-chart">
             <p className="doughnut-chart-heading-text">Media approval count</p>
-            <div className="doughnut-chart-container">
-              <PieChart></PieChart>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <div className="doughnut-chart-container">
+                <PieChart></PieChart>
+              </div>
             </div>
             <div
               style={{
@@ -128,16 +137,10 @@ const DashboardComponent = () => {
                 borderBottomRightRadius: "10px",
               }}
             ></div>
-            <div
-              style={{
-                width: "100%",
-                height: "5rem",
-                backgroundColor: "white",
-                marginBottom: "5rem !important",
-              }}
-            ></div>
+            {/* <div className="bottom-charts-bottom-spacing"></div> */}
           </div>
         </div>
+        <div className="bottom-charts-bottom-spacing"></div>
       </div>
     </>
   );

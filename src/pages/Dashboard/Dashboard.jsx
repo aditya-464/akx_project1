@@ -385,17 +385,17 @@ const Dashboard = () => {
             >
               <NavbarDropdown options={options}></NavbarDropdown>
             </div>
-            <div className="bell-icon">
+            {/* <div className="bell-icon">
               <VscBellDot size={24}></VscBellDot>
-            </div>
+            </div> */}
             <div id="navbar-admin-details">
               <div id="navbar-admin-logo">
                 <img src={user_img} alt="" />
               </div>
-              <div id="navbar-admin-text">
+              {/* <div id="navbar-admin-text">
                 <p id="admin-username">{username}</p>
                 <p id="admin-fullname">John Doe</p>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
