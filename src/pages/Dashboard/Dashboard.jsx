@@ -30,7 +30,7 @@ const Dashboard = () => {
   // const [media, setMedia] = useState(true);
   // const [users, setUsers] = useState(false);
   const [search, setSearch] = useState("");
-  const [dashboardComponent, setDashboardComponent] = useState("media");
+  const [dashboardComponent, setDashboardComponent] = useState("logout");
   const [data, setData] = useState("");
   const [data_media, setData_media] = useState("");
   const { username } = useSelector((state) => state.page);

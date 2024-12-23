@@ -35,8 +35,8 @@
   cursor: pointer;
 }
 
-.logout-yes-button:hover{
-    background-color: #ebeced;
+.logout-yes-button:hover {
+  background-color: #ebeced;
 }
 
 .logout-no-button {
@@ -53,4 +53,24 @@
 
 .logout-no-button:hover {
   background-color: #03b57a;
+}
+
+/* Mobile Responsiveness CSS */
+@media only screen and (max-width: 500px) {
+  .logout-form {
+    margin-top: 5rem;
+  }
+
+  .logout-ask-text {
+    font-size: 16px;
+    text-align: center;
+  }
+
+  .logout-no-button {
+    font-size: 12px;
+  }
+
+  .logout-yes-button {
+    font-size: 12px;
+  }
 }
