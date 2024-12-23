@@ -379,10 +379,10 @@ const Dashboard = () => {
             <div
               className="dashboard-nav-searchbar"
               style={{
-                visibility:
+                display:
                   dashboardComponent == "users" || dashboardComponent == "media"
-                    ? "visible"
-                    : "hidden",
+                    ? "block"
+                    : "none",
               }}
             >
               <input
@@ -406,10 +406,10 @@ const Dashboard = () => {
             <div
               className="dashboard-navbar-dropdown"
               style={{
-                visibility:
+                display:
                   dashboardComponent == "users" || dashboardComponent == "media"
-                    ? "visible"
-                    : "hidden",
+                    ? "block"
+                    : "none",
               }}
             >
               <NavbarDropdown options={options}></NavbarDropdown>
