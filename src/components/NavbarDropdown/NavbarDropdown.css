@@ -99,6 +99,6 @@
 
 @media only screen and (max-width:500px) {
   .navbar-dropdown{
-    width: 20vw !important;
+    width: 160px !important;
   }
 }

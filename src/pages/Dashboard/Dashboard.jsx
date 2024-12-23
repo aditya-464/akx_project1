@@ -8,14 +8,12 @@ import user_img from "../../assets/images/user.webp";
 import { useSelector, useDispatch } from "react-redux";
 
 import { IoFilter, IoSearch } from "react-icons/io5";
-import { VscBellDot } from "react-icons/vsc";
+// import { VscBellDot } from "react-icons/vsc";
 import { AiFillHome } from "react-icons/ai";
 import { FaUser } from "react-icons/fa6";
-import { MdPermMedia, MdLogout } from "react-icons/md";
-import { FiLogOut } from "react-icons/fi";
+import { MdPermMedia } from "react-icons/md";
 import { SlLogout } from "react-icons/sl";
-import { GrTransaction } from "react-icons/gr";
-import { IoMdSettings } from "react-icons/io";
+import { HiOutlineMenuAlt1 } from "react-icons/hi";
 
 import MediaData from "../../components/MediaData/MediaData.jsx";
 import LoginFormDropdown from "../../components/LoginFormDropdown/LoginFormDropdown.jsx";
@@ -29,8 +27,9 @@ const Dashboard = () => {
   // Function to toggle the popup
   // const [media, setMedia] = useState(true);
   // const [users, setUsers] = useState(false);
+  const [isNavOpen, setIsNavOpen] = useState(false);
   const [search, setSearch] = useState("");
-  const [dashboardComponent, setDashboardComponent] = useState("logout");
+  const [dashboardComponent, setDashboardComponent] = useState("users");
   const [data, setData] = useState("");
   const [data_media, setData_media] = useState("");
   const { username } = useSelector((state) => state.page);
@@ -231,6 +230,27 @@ const Dashboard = () => {
     }
   };
 
+  // const navDiv = document.getElementById("dashboard-navigation-div");
+  // const menuIcon = document.querySelector(".navbar-menu-icon");
+
+  // menuIcon.addEventListener("click", () => {
+  //   navDiv.classList.add("active");
+  // });
+
+  // navDiv.addEventListener("click", (e) => {
+  //   if (e.target.classList.contains("dashboard-navigation-item")) {
+  //     navDiv.classList.remove("active");
+  //   }
+  // });
+
+  const toggleNav = () => {
+    setIsNavOpen(!isNavOpen);
+  };
+
+  const closeNav = () => {
+    setIsNavOpen(false);
+  };
+
   useEffect(() => {
     const dashboardDoc = document.getElementById("dashboard-dashboard-item");
     const userDoc = document.getElementById("dashboard-users-item");
@@ -289,7 +309,11 @@ const Dashboard = () => {
 
   return (
     <div id="dashboard-container">
-      <div id="dashboard-navigation-div">
+      <div
+        id="dashboard-navigation-div"
+        className={isNavOpen ? "active" : ""}
+        onClick={closeNav}
+      >
         <div id="company-details">DSMS</div>
         {/* <div className="partition-line"></div> */}
         <div id="dashboard-navigation-list-div">
@@ -351,24 +375,29 @@ const Dashboard = () => {
       </div>
       <div id="dashboard-content-div">
         <div id="dashboard-content-navbar">
-          <div
-            className="dashboard-nav-searchbar"
-            style={{
-              visibility:
-                dashboardComponent == "users" || dashboardComponent == "media"
-                  ? "visible"
-                  : "hidden",
-            }}
-          >
-            <input
-              className="dashboard-search-input"
-              placeholder="Search here..."
-              value={search}
-              onChange={(e) => {
-                handleSearchInput(e.target.value);
+          <div className="dashboard-navbar-left-side">
+            <div
+              className="dashboard-nav-searchbar"
+              style={{
+                visibility:
+                  dashboardComponent == "users" || dashboardComponent == "media"
+                    ? "visible"
+                    : "hidden",
               }}
-            ></input>
-            <IoSearch size={14} color="#5e6a72"></IoSearch>
+            >
+              <input
+                className="dashboard-search-input"
+                placeholder="Search here..."
+                value={search}
+                onChange={(e) => {
+                  handleSearchInput(e.target.value);
+                }}
+              ></input>
+              <IoSearch size={14} color="#5e6a72"></IoSearch>
+            </div>
+            <div className="navbar-menu-icon" onClick={toggleNav}>
+              <HiOutlineMenuAlt1 size={28} color="#36454f" />
+            </div>
           </div>
           <div
             className="dashboard-navbar-right-side"
