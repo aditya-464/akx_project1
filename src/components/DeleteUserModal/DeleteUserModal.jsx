@@ -23,7 +23,7 @@ const DeleteUserModal = ({ show, close, userDetails }) => {
             </p> */}
 
             <p className="delete-user-ask-text">
-              Are you sure, you wan't to delete
+              Do you wan't to delete
               <p className="delete-user-name">{userDetails.name}?</p>
             </p>
             <div className="delete-user-buttons-container">

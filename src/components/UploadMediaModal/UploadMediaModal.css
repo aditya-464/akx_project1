@@ -154,3 +154,18 @@
   color: #36454f;
   font-family: "Poppins", sans-serif !important;
 }
+
+
+
+
+/* Mobile Responsiveness CSS */
+
+@media only screen and (max-width : 500px) {
+  .popup-container-media{
+    width: 80%;
+  }
+
+  .popup-container-media p{
+    font-size: 12px;
+  }
+}

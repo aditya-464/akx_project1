@@ -1,5 +1,4 @@
 #users-data-container {
-  width: 100%;
   background-color: #f1f2f2;
   margin-top: 3rem;
   padding: 1rem 2rem;
@@ -14,6 +13,8 @@
   display: flex;
   align-items: center;
   margin-top: 1rem;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 2rem;
 }
 
 .users-heading-id {
@@ -73,6 +74,7 @@
   height: 1px;
   background-color: #ebeced;
   margin-top: 1rem;
+  display: none;
 }
 
 #users-data-content-div {
@@ -157,50 +159,55 @@
 
 @media only screen and (max-width: 500px) {
   #users-data-headings-div {
-    /* overflow-x: auto; */
+    width: max-content;
   }
 
-  #users-data-content-div{
+  #users-data-content-div {
     max-height: 65vh;
   }
 
+  .users-data-item-div {
+    width: max-content;
+  }
+
   .users-heading-id {
-    min-width: 15vw;
+    width: 15vw;
   }
 
   .users-heading-image {
-    min-width: 20vw;
+    width: 20vw;
   }
 
   .users-heading-name {
-    min-width: 30vw;
+    width: 30vw;
   }
 
   .users-heading-mobile {
-    min-width: 25vw;
+    width: 25vw;
   }
 
   .users-heading-email {
-    min-width: 50vw;
+    width: 50vw;
   }
 
   .users-heading-created-on {
-    min-width: 40vw;
+    width: 40vw;
   }
 
   .users-data-option-div {
-    min-width: 10vw;
+    width: 15vw;
   }
 
   .popup-menu {
     position: absolute;
     top: 50%;
-    left: 160vw;
+    /* left: 160vw; */
+    right: 2rem;
     min-width: 90px;
     /* transform: translateY(5px); */
   }
 
-  .popup-menu-item{
+  .popup-menu-item {
     font-size: 11px;
   }
 }

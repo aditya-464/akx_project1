@@ -431,4 +431,8 @@
   #dashboard-create-user-button p {
     font-size: 11px;
   }
+
+  #dashboard-create-media-button p{
+    font-size: 11px;
+  }
 }

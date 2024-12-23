@@ -12,5 +12,6 @@ html {
   font-size: 62.5%;
   font-family: "Poppins", sans-serif !important;
   scroll-behavior: smooth;
-  background-color: #FAF9F6;
+  /* background-color: #FAF9F6; */
+  background-color: white;
 }

@@ -3,7 +3,9 @@
   margin-top: 3rem;
   padding: 1rem 2rem;
   border-radius: 7px;
-  overflow-y: scroll;
+  overflow-y: auto;
+  overflow-x: auto;
+  scroll-behavior: smooth;
   position: relative;
 }
 
@@ -11,6 +13,8 @@
   display: flex;
   align-items: center;
   margin-top: 1rem;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 2rem;
 }
 
 .media-heading-id {
@@ -70,6 +74,7 @@
   height: 1px;
   background-color: #ebeced;
   margin-top: 1rem;
+  display: none;
 }
 
 #media-data-content-div {
@@ -147,4 +152,61 @@
 
 .popup-menu-item-media:hover {
   background-color: #f4f4f4;
+}
+
+/* Mobiile responsiveness CSS */
+
+@media only screen and (max-width: 500px) {
+  #media-data-headings-div {
+    width: max-content;
+  }
+
+  #media-data-content-div {
+    max-height: 65vh;
+  }
+
+  .media-data-item-div{
+    width: max-content;
+  }
+
+  .media-heading-id {
+    width: 15vw;
+  }
+
+  .media-heading-image {
+    width: 20vw;
+  }
+
+  .media-heading-name {
+    width: 30vw;
+  }
+
+  .media-heading-size {
+    width: 25vw;
+  }
+
+  .media-heading-uploaded-by {
+    width: 30vw;
+  }
+
+  .media-heading-uploaded-at {
+    width: 40vw;
+  }
+
+  .media-data-option-div {
+    width: 15vw;
+  }
+
+  .popup-menu-media {
+    position: absolute;
+    top: 50%;
+    /* left: 145vw; */
+    right: 2rem;
+    min-width: 90px;
+    /* transform: translateY(5px); */
+  }
+
+  .popup-menu-item-media {
+    font-size: 11px;
+  }
 }

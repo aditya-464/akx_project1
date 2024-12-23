@@ -17,12 +17,9 @@ const DeleteMediaModal = ({ show, close, mediaDetails }) => {
         </div>
         <div className="delete-media-modal-body">
           <div className="delete-media-form">
-            <p className="delete-media-ask-text" style={{ display: "flex" }}>
-              Are you sure, you wan't to delete
-              <p style={{ fontWeight: "600", marginLeft: "1rem" }}>
-                {mediaDetails.name}
-              </p>
-              ?
+            <p className="delete-media-ask-text">
+              Do you wan't to delete
+              <p className="delete-media-name">{mediaDetails.name}?</p>
             </p>
             <div className="delete-media-buttons-container">
               <div className="delete-media-no-button" onClick={close}>

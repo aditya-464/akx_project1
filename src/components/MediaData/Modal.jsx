@@ -3,8 +3,6 @@ import React, { useEffect } from "react";
 import "./Modal.css"; // Add your modal styles here
 
 const Modal = ({ show, close, media }) => {
-  if (!show) return null;
-
   const renderMediaContent = () => {
     console.log(media);
     //
@@ -79,6 +77,8 @@ const Modal = ({ show, close, media }) => {
       openDocument(media.filePreview);
     }
   }, [media]);
+
+  if (!show) return null;
 
   return (
     <>

@@ -88,3 +88,17 @@
 .approve-media-no-button:hover {
   background-color: #ebeced;
 }
+
+/* Mobile Responsiveness */
+@media only screen and (max-width: 500px) {
+  .approve-media-ask-text {
+    font-size: 14px;
+    text-align: center;
+  }
+  .approve-media-no-button {
+    font-size: 12px;
+  }
+  .approve-media-yes-button {
+    font-size: 12px;
+  }
+}

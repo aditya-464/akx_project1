@@ -17,7 +17,7 @@ const ApproveMediaModal = ({ show, close }) => {
         <div className="approve-media-modal-body">
           <div className="approve-media-form">
             <p className="approve-media-ask-text">
-              Are you sure, you wan't to approve?
+              Do you wan't to approve this media?
             </p>
             <div className="approve-media-buttons-container">
               <div className="approve-media-no-button" onClick={close}>
