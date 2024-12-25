@@ -2,6 +2,16 @@ import React from "react";
 import "./DeleteUserModal.css";
 
 const DeleteUserModal = ({ show, close, userDetails }) => {
+  const handleDeleteUser = async () => {
+    try {
+      const id = userDetails.id;
+
+      
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   if (!show) return null;
 
   return (
@@ -24,13 +34,16 @@ const DeleteUserModal = ({ show, close, userDetails }) => {
 
             <p className="delete-user-ask-text">
               Do you wan't to delete
-              <p className="delete-user-name">{userDetails.name}?</p>
+              <span className="delete-user-name">{userDetails.name}?</span>
             </p>
             <div className="delete-user-buttons-container">
               <div className="delete-user-no-button" onClick={close}>
                 <p>No</p>
               </div>
-              <div className="delete-user-yes-button">
+              <div
+                className="delete-user-yes-button"
+                onClick={handleDeleteUser}
+              >
                 <p>Yes</p>
               </div>
             </div>

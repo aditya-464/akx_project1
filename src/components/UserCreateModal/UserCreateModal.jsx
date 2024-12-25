@@ -1,15 +1,20 @@
 import React, { useState } from "react";
 import "./UserCreateModal.css";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { refreshUser } from "../../redux/page";
 
 const UserCreateModal = ({ show, close }) => {
   const [formData, setFormData] = useState({
     name: "",
     mobile: "",
     email: "",
-    image: null,
-    createdAt: null,
+    brandingLogo: "",
+    userType: "USER",
+    // createdOn: null,
   });
   const [imagePreview, setImagePreview] = useState(null);
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -34,37 +39,39 @@ const UserCreateModal = ({ show, close }) => {
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = async (e) => {
+    try {
+      e.preventDefault();
+      const newUser = {
+        // id: data.length + 1,
+        name: formData.name,
+        mobile: formData.mobile,
+        email: formData.email,
+        // brandingLogo: imagePreview,
+        brandingLogo: "",
+        userType: "USER",
+        // createdOn: new Date().toISOString(),
+      };
 
-    // Create a new user object with the form data
-    const newUser = {
-      id: data.length + 1, // Simple ID generation
-      name: formData.name,
-      mobile: formData.mobile,
-      email: formData.email,
-      image: imagePreview, // Store the image preview as the URL
-      createdAt: new Date().toISOString(),
-    };
+      // const url = "http://84.247.171.46:8080/userProfile";
+      const tenantID = "vmodaqa";
 
-    // console.log(imagePreview);
+      const headers = {
+        "X-TenantID": tenantID,
+      };
 
-    // Update the data state with the new user
-    // setData((prevData) => [...prevData, newUser]);
+      // const response = await axios.get(url, { headers });
+      const response = await axios.post("/userProfile", newUser, { headers });
 
-    // Close the popup after submission
-    setIsPopupVisible(false);
+      if (response.status === 201) {
+        dispatch(refreshUser());
+      }
 
-    // Reset form data
-    // setFormData({
-    //   name: "",
-    //   mobile: "",
-    //   email: "",
-    //   image: null,
-    //   createdAt: null,
-    // });
-    // setImagePreview(null);
-    handleCloseModal();
+      // setIsPopupVisible(false);
+      handleCloseModal();
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   const handleCloseModal = () => {
@@ -146,9 +153,9 @@ const UserCreateModal = ({ show, close }) => {
               >
                 <p>Cancel</p>
               </div>
-              <div type="submit" className="user-create-submit-btn">
+              <button type="submit" className="user-create-submit-btn">
                 <p>Create</p>
-              </div>
+              </button>
             </div>
           </form>
         </div>

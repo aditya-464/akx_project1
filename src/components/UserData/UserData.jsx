@@ -3,10 +3,11 @@ import "./UserData.css";
 import { SlOptionsVertical } from "react-icons/sl";
 import DeleteUserModal from "../DeleteUserModal/DeleteUserModal";
 import EditUserModal from "../EditUserModal/EditUserModal";
+import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 
 const UserData = (props) => {
-  const { dummy_data } = props;
+  // const { dummy_data } = props;
 
   const [actualData, setActualData] = useState(null);
   const [visibleMenuId, setVisibleMenuId] = useState(null); // Tracks the menu's visibility
@@ -14,6 +15,7 @@ const UserData = (props) => {
   const [editUserDetails, setEditUserDetails] = useState("");
   const [deleteUserModalVisible, setdeleteUserModalVisible] = useState(false);
   const [deleteUserDetails, setDeleteUserDetails] = useState("");
+  const { refreshUserCount } = useSelector((state) => state.page);
 
   // Toggle menu visibility for a specific item
   const toggleMenu = (id) => {
@@ -72,7 +74,7 @@ const UserData = (props) => {
 
   useEffect(() => {
     getActualData();
-  }, []);
+  }, [refreshUserCount]);
 
   return (
     <div id="users-data-container">
