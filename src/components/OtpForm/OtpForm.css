@@ -123,8 +123,7 @@
   font-weight: 500;
 }
 
-/* Responsiveness CSS */
-/* For Mobile */
+/* Mobile Responsiveness CSS */
 
 @media only screen and (max-width: 500px) {
   .otp-form-container {
@@ -157,6 +156,48 @@
     max-height: 4rem;
     font-size: 18px;
     padding: 1rem;
+    margin-right: 0;
+  }
+
+  .otp-button{
+    width: 100%;
+  }
+}
+
+
+/* Tablet Responsiveness CSS */
+
+@media only screen and (max-width: 1199px) {
+  .otp-form-container {
+    width: 100%;
+  }
+
+  .otp-image-div {
+    width: 0;
+    display: none;
+  }
+
+  .otp-content-div{
+    width: 100%;
+  }
+
+  .otp-content{
+    width: 50%;
+  }
+
+  .otp-input-div{
+    justify-content: space-between;
+  }
+
+  .otp-ask-text{
+    font-size: 18px;
+  }
+
+  .otp-input{
+    width: 8rem;
+    height: 8rem;
+    font-size: 18px;
+    padding: 2rem;
     margin-right: 0;
   }
 

@@ -3,6 +3,7 @@ import "./UserData.css";
 import { SlOptionsVertical } from "react-icons/sl";
 import DeleteUserModal from "../DeleteUserModal/DeleteUserModal";
 import EditUserModal from "../EditUserModal/EditUserModal";
+import axios from "axios";
 
 const UserData = (props) => {
   const { dummy_data } = props;
@@ -48,6 +49,26 @@ const UserData = (props) => {
     setdeleteUserModalVisible(true);
     setVisibleMenuId(null); // Close the menu
   };
+
+  const getActualData = async () => {
+    try {
+      const url = "http://84.247.171.46:8080/userProfile";
+      const tenantID = "vmodaqa";
+
+      const headers = {
+        "X-TenantID": tenantID,
+      };
+
+      const response = await axios.get(url, { headers });
+      console.log(response);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  useEffect(() => {
+    getActualData();
+  }, []);
 
   return (
     <div id="users-data-container">

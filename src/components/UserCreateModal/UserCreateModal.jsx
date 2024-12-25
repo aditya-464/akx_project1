@@ -47,10 +47,10 @@ const UserCreateModal = ({ show, close }) => {
       createdAt: new Date().toISOString(),
     };
 
-    console.log(imagePreview);
+    // console.log(imagePreview);
 
     // Update the data state with the new user
-    setData((prevData) => [...prevData, newUser]);
+    // setData((prevData) => [...prevData, newUser]);
 
     // Close the popup after submission
     setIsPopupVisible(false);

@@ -166,8 +166,7 @@
   margin-top: 0.5rem;
 }
 
-/* Responsiveness CSS */
-/* For Mobile */
+/* Mobile Responsiveness CSS */
 
 @media only screen and (max-width: 500px) {
   .login-form-container {
@@ -189,6 +188,36 @@
 
   .login-ask-text{
     font-size: 16px;
+  }
+
+  .login-button{
+    width: 100%;
+  }
+}
+
+
+/* Tablet Responsiveness CSS */
+
+@media only screen and (max-width: 1199px) {
+  .login-form-container {
+    border-radius: 10px;
+    padding-bottom: 5rem;
+  }
+  .login-image-div {
+    width: 0;
+    display: none;
+  }
+
+  .login-content-div {
+    width: 100%;
+  }
+
+  .login-content {
+    width: 50%;
+  }
+
+  .login-ask-text{
+    font-size: 18px;
   }
 
   .login-button{
