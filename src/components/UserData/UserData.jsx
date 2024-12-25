@@ -8,6 +8,7 @@ import axios from "axios";
 const UserData = (props) => {
   const { dummy_data } = props;
 
+  const [actualData, setActualData] = useState(null);
   const [visibleMenuId, setVisibleMenuId] = useState(null); // Tracks the menu's visibility
   const [editUserModalVisible, setEditUserModalVisible] = useState(false);
   const [editUserDetails, setEditUserDetails] = useState("");
@@ -52,15 +53,18 @@ const UserData = (props) => {
 
   const getActualData = async () => {
     try {
-      const url = "http://84.247.171.46:8080/userProfile";
+      // const url = "http://84.247.171.46:8080/userProfile";
       const tenantID = "vmodaqa";
 
       const headers = {
         "X-TenantID": tenantID,
       };
 
-      const response = await axios.get(url, { headers });
-      console.log(response);
+      // const response = await axios.get(url, { headers });
+      const response = await axios.get("/userProfile", { headers });
+      if (response.data.data) {
+        setActualData(response.data.data);
+      }
     } catch (error) {
       console.log(error.message);
     }
@@ -72,7 +76,7 @@ const UserData = (props) => {
 
   return (
     <div id="users-data-container">
-      {dummy_data && (
+      {actualData && (
         <>
           <div id="users-data-headings-div">
             <div id="users-heading-checkbox"></div>
@@ -92,13 +96,16 @@ const UserData = (props) => {
 
           <div id="users-data-partition-horizontal"></div>
           <div id="users-data-content-div">
-            {dummy_data.map((item) => (
+            {actualData.map((item) => (
               <div key={item.id} className="users-data-item-div">
                 <p className="users-heading-id users-data-item">{item.id}</p>
                 <div className="users-heading-image users-data-item">
                   <img
                     className="users-data-image"
-                    src={item.image || "https://via.placeholder.com/40"} // Default placeholder if no image
+                    // src={item.brandingLogo || "https://via.placeholder.com/40"}
+                    src={
+                      "https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg?auto=compress&cs=tinysrgb&w=600"
+                    }
                     alt={item.name}
                   />
                 </div>
@@ -112,7 +119,7 @@ const UserData = (props) => {
                   {item.email}
                 </p>
                 <p className="users-heading-created-on users-data-item">
-                  {item.createdAt}
+                  {item.createdOn}
                 </p>
                 <div
                   className="users-data-option-div"
