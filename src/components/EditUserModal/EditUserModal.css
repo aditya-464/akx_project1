@@ -107,6 +107,7 @@
   border: none;
   border-radius: 7px;
   margin-top: 3rem;
+  font-family: "Poppins", sans-serif !important;
 }
 
 .edit-submit-btn:hover {

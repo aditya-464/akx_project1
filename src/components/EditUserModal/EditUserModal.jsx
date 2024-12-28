@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from "react";
 import "./EditUserModal.css";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { refreshUser } from "../../redux/page";
 
 const EditUserModal = ({ show, close, userDetails }) => {
-  if (!show) return null;
-
   const [formData, setFormData] = useState({
     name: "",
     mobile: "",
     email: "",
-    image: null,
-    createdAt: null,
+    brandingLogo: null,
+    userType: "USER",
   });
   const [imagePreview, setImagePreview] = useState(null);
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -36,36 +38,38 @@ const EditUserModal = ({ show, close, userDetails }) => {
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = async (e) => {
+    try {
+      e.preventDefault();
 
-    // Create a new user object with the form data
-    const newUser = {
-      id: data.length + 1, // Simple ID generation
-      name: formData.name,
-      mobile: formData.mobile,
-      email: formData.email,
-      image: imagePreview, // Store the image preview as the URL
-      createdAt: new Date().toISOString(),
-    };
+      const newUser = {
+        name: formData.name,
+        mobile: formData.mobile,
+        email: formData.email,
+        brandingLogo:
+          "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+      };
 
-    console.log(imagePreview);
+      const id = userDetails.id;
+      const tenantID = "vmodaqa";
 
-    // Update the data state with the new user
-    setData((prevData) => [...prevData, newUser]);
+      const headers = {
+        "X-TenantID": tenantID,
+      };
 
-    // Close the popup after submission
-    setIsPopupVisible(false);
+      const response = await axios.patch(`/userProfile/${id}`, newUser, {
+        headers,
+      });
 
-    // Reset form data
-    setFormData({
-      name: "",
-      mobile: "",
-      email: "",
-      image: null,
-      createdAt: null,
-    });
-    setImagePreview(null);
+      if (response.status === 200) {
+        dispatch(refreshUser());
+      }
+
+      handleCloseModal();
+    } catch (error) {
+      console.log(error.message);
+      handleCloseModal();
+    }
   };
 
   const handleInitialValuesFunc = () => {
@@ -80,9 +84,22 @@ const EditUserModal = ({ show, close, userDetails }) => {
     }
   };
 
+  const handleCloseModal = () => {
+    close();
+    setFormData({
+      name: "",
+      mobile: "",
+      email: "",
+      brandingLogo: null,
+    });
+    setImagePreview(null);
+  };
+
   useEffect(() => {
     handleInitialValuesFunc();
   }, [userDetails]);
+
+  if (!show) return null;
 
   return (
     <>
@@ -142,9 +159,9 @@ const EditUserModal = ({ show, close, userDetails }) => {
               <div className="edit-cancel-btn" onClick={close}>
                 <p>Cancel</p>
               </div>
-              <div type="submit" className="edit-submit-btn">
+              <button type="submit" className="edit-submit-btn">
                 <p>Update</p>
-              </div>
+              </button>
             </div>
           </form>
         </div>

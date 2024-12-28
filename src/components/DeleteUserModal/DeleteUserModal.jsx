@@ -1,15 +1,35 @@
 import React from "react";
 import "./DeleteUserModal.css";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { refreshUser } from "../../redux/page";
 
 const DeleteUserModal = ({ show, close, userDetails }) => {
+  const dispatch = useDispatch();
+
   const handleDeleteUser = async () => {
     try {
       const id = userDetails.id;
+      const tenant = "vmodaqa";
+      const headers = {
+        "X-TenantID": tenant,
+      };
+      const response = await axios.delete(`/userProfile/${id}`, { headers });
+      console.log(response);
 
-      
+      if (response.status === 200) {
+        dispatch(refreshUser());
+      }
+
+      handleCloseModal();
     } catch (error) {
       console.log(error.message);
+      handleCloseModal();
     }
+  };
+
+  const handleCloseModal = () => {
+    close();
   };
 
   if (!show) return null;
