@@ -2,8 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   page: "home",
-  username: "",
-  password: "",
+  tenant: "",
+  currentUser: {},
   refreshUserCount: 1,
   refreshMediaCount: 1,
   data_for_user: [
@@ -115,8 +115,14 @@ export const pageSlice = createSlice({
     changePage: (state, action) => {
       state.page = action.payload;
     },
-    changeUsername: (state, action) => {
-      state.username = action.payload;
+    // changeUsername: (state, action) => {
+    //   state.username = action.payload;
+    // },
+    setTenant: (state, action) => {
+      state.tenant = action.payload;
+    },
+    setCurrentUser: (state, action) => {
+      state.currentUser = action.payload;
     },
     refreshUser: (state, action) => {
       state.refreshUserCount += 1;
@@ -136,7 +142,8 @@ export const pageSlice = createSlice({
 // Action creators are generated for each case reducer function
 export const {
   changePage,
-  changeUsername,
+  setTenant,
+  setCurrentUser,
   refreshUser,
   refreshMedia,
   insertUser,

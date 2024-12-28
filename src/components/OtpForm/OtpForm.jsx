@@ -3,12 +3,14 @@ import "./OtpForm.css";
 import otp_img from "../../assets/images/login2.webp";
 import { useSelector, useDispatch } from "react-redux";
 import { changePage } from "../../redux/page";
+import axios from "axios";
 
 const OtpForm = () => {
   const [length, setLength] = useState(6);
   const [otp, setOtp] = useState(new Array(length).fill(""));
   const [finalOtp, setFinalOtp] = useState("");
   const [timeLeft, setTimeLeft] = useState(59);
+  const { currentUser, tenant } = useSelector((state) => state.page);
   const dispatch = useDispatch();
 
   const inputRefs = useRef([]);
@@ -72,9 +74,28 @@ const OtpForm = () => {
     return () => clearInterval(timerId); // Cleanup on unmount or re-render
   }, [timeLeft]);
 
-  const otpVerifyFunction = () => {
-    if (finalOtp.length == 6) {
-      dispatch(changePage("home"));
+  const otpVerifyFunction = async () => {
+    try {
+      if (finalOtp.length == 6 && currentUser && tenant) {
+        const headers = {
+          "X-TenantID": tenant,
+        };
+
+        const body = {
+          userId: currentUser.id,
+          otp: finalOtp,
+        };
+
+        const response = await axios.post("/userProfile/verify", body, {
+          headers,
+        });
+
+        if (response.status === 200) {
+          dispatch(changePage("home"));
+        }
+      }
+    } catch (error) {
+      console.log(error.message);
     }
   };
 

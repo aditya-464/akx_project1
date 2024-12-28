@@ -16,6 +16,7 @@ const LoginFormDropdown = (props) => {
     <Select
       className="login-form-dropdown"
       options={options}
+      disabled={options !== null ? false : true}
       placeholder="Search"
       labelField="name"
       valueField="name"

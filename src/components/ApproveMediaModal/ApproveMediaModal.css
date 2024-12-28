@@ -45,9 +45,16 @@
 }
 
 .approve-media-ask-text {
-  font-size: 18px;
+  font-size: 16px;
   color: #36454f;
   font-weight: 500;
+}
+
+.approve-media-name{
+  font-size: 18px;
+  display: inline-block;
+  font-weight: 600;
+  margin-left: 1rem;
 }
 
 .approve-media-buttons-container {

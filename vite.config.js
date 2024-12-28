@@ -8,6 +8,7 @@ export default defineConfig({
     proxy: {
       "/userProfile": "http://84.247.171.46:8080",
       "/media": "http://84.247.171.46:8080",
+      "/config": "http://84.247.171.46:8080",
     },
   },
 });

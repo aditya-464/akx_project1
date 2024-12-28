@@ -19,6 +19,8 @@ const MediaData = () => {
     useState(false);
   const [deleteMediaModalVisible, setdeleteMediaModalVisible] = useState(false);
   const [deleteMediaDetails, setDeleteMediaDetails] = useState("");
+  const [approveMediaDetails, setApproveMediaDetails] = useState("");
+  const [rejectMediaDetails, setRejectMediaDetails] = useState("");
 
   const [selectedMedia, setSelectedMedia] = useState(null);
   const dispatch = useDispatch();
@@ -60,17 +62,19 @@ const MediaData = () => {
     setVisibleMediaMenuId(null); // Close the menu after deleting
   };
 
-  const handleApprove = (mediaId) => {
-    console.log("Approving media item:", mediaId);
+  const handleApprove = (item) => {
+    // console.log("Approving media item:", mediaId);
     // Add logic for deleting media item
+    setApproveMediaDetails(item);
     setApproveMediaModalVisible(true);
     setVisibleMediaMenuId(null); // Close the menu after deleting
   };
 
-  const handleReject = (mediaId) => {
-    console.log("Rejecting media item:", mediaId);
+  const handleReject = (item) => {
+    // console.log("Rejecting media item:", mediaId);
     // Add logic for deleting media item
     // setApproveMediaModalVisible(true);
+    setRejectMediaDetails(item);
     setVisibleMediaMenuId(null);
   };
 
@@ -201,6 +205,7 @@ const MediaData = () => {
       <ApproveMediaModal
         show={approveMediaModalVisible}
         close={() => setApproveMediaModalVisible(false)}
+        mediaDetails={approveMediaDetails}
       ></ApproveMediaModal>
     </div>
   );
