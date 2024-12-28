@@ -3,6 +3,7 @@ import "./EditUserModal.css";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { refreshUser } from "../../redux/page";
+import { toast } from "react-toastify";
 
 const EditUserModal = ({ show, close, userDetails }) => {
   const [formData, setFormData] = useState({
@@ -38,6 +39,18 @@ const EditUserModal = ({ show, close, userDetails }) => {
     }
   };
 
+  const showSuccessToast = (message) => {
+    toast.success(message, {
+      position: "bottom-center",
+    });
+  };
+
+  const showErrorToast = (message) => {
+    toast.error(message, {
+      position: "bottom-center",
+    });
+  };
+
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
@@ -62,12 +75,14 @@ const EditUserModal = ({ show, close, userDetails }) => {
       });
 
       if (response.status === 200) {
+        showSuccessToast(response.data.message);
         dispatch(refreshUser());
       }
 
       handleCloseModal();
     } catch (error) {
       console.log(error.message);
+      showErrorToast(error.message);
       handleCloseModal();
     }
   };

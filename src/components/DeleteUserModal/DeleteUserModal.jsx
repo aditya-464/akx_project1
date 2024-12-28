@@ -3,9 +3,22 @@ import "./DeleteUserModal.css";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { refreshUser } from "../../redux/page";
+import { toast } from "react-toastify";
 
 const DeleteUserModal = ({ show, close, userDetails }) => {
   const dispatch = useDispatch();
+
+  const showSuccessToast = (message) => {
+    toast.success(message, {
+      position: "bottom-center",
+    });
+  };
+
+  const showErrorToast = (message) => {
+    toast.error(message, {
+      position: "bottom-center",
+    });
+  };
 
   const handleDeleteUser = async () => {
     try {
@@ -18,12 +31,14 @@ const DeleteUserModal = ({ show, close, userDetails }) => {
       console.log(response);
 
       if (response.status === 200) {
+        showSuccessToast(response.data.message);
         dispatch(refreshUser());
       }
 
       handleCloseModal();
     } catch (error) {
       console.log(error.message);
+      showErrorToast(error.message);
       handleCloseModal();
     }
   };

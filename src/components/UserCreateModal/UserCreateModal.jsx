@@ -3,6 +3,7 @@ import "./UserCreateModal.css";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { refreshUser } from "../../redux/page";
+import { toast } from "react-toastify";
 
 const UserCreateModal = ({ show, close }) => {
   const [formData, setFormData] = useState({
@@ -11,7 +12,6 @@ const UserCreateModal = ({ show, close }) => {
     email: "",
     brandingLogo: null,
     userType: "USER",
-    // createdOn: null,
   });
   const [imagePreview, setImagePreview] = useState(null);
   const dispatch = useDispatch();
@@ -39,11 +39,22 @@ const UserCreateModal = ({ show, close }) => {
     }
   };
 
+  const showSuccessToast = (message) => {
+    toast.success(message, {
+      position: "bottom-center",
+    });
+  };
+
+  const showErrorToast = (message) => {
+    toast.error(message, {
+      position: "bottom-center",
+    });
+  };
+
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
       const newUser = {
-        // id: data.length + 1,
         name: formData.name,
         mobile: formData.mobile,
         email: formData.email,
@@ -51,7 +62,6 @@ const UserCreateModal = ({ show, close }) => {
         brandingLogo:
           "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
         userType: "USER",
-        // createdOn: new Date().toISOString(),
       };
 
       // const url = "http://84.247.171.46:8080/userProfile";
@@ -65,13 +75,14 @@ const UserCreateModal = ({ show, close }) => {
       const response = await axios.post("/userProfile", newUser, { headers });
 
       if (response.status === 201) {
+        showSuccessToast(response.data.message);
         dispatch(refreshUser());
       }
 
-      // setIsPopupVisible(false);
       handleCloseModal();
     } catch (error) {
       console.log(error.message);
+      showErrorToast(error.message);
       handleCloseModal();
     }
   };
