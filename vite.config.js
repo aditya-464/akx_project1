@@ -6,7 +6,8 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      "/userProfile": "http://84.247.171.46:8080", // Replace with your backend URL
+      "/userProfile": "http://84.247.171.46:8080",
+      "/media": "http://84.247.171.46:8080",
     },
   },
 });

@@ -5,10 +5,14 @@ import Modal from "./Modal.jsx"; // Import the modal component
 import ApproveMediaModal from "../ApproveMediaModal/ApproveMediaModal.jsx";
 import DeleteMediaModal from "../DeleteMediaModal/DeleteMediaModal.jsx";
 import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
 
 const MediaData = () => {
-  const { data_for_media } = useSelector((state) => state.page);
+  const { data_for_media, refreshMediaCount } = useSelector(
+    (state) => state.page
+  );
 
+  const [actualData, setActualData] = useState(null);
   const [visibleMediaMenuId, setVisibleMediaMenuId] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [approveMediaModalVisible, setApproveMediaModalVisible] =
@@ -17,6 +21,7 @@ const MediaData = () => {
   const [deleteMediaDetails, setDeleteMediaDetails] = useState("");
 
   const [selectedMedia, setSelectedMedia] = useState(null);
+  const dispatch = useDispatch();
 
   // Toggle the visibility of the media menu
   const toggleMediaMenu = (id, e) => {
@@ -56,15 +61,46 @@ const MediaData = () => {
   };
 
   const handleApprove = (mediaId) => {
-    console.log("Deleting media item:", mediaId);
+    console.log("Approving media item:", mediaId);
     // Add logic for deleting media item
     setApproveMediaModalVisible(true);
     setVisibleMediaMenuId(null); // Close the menu after deleting
   };
 
+  const handleReject = (mediaId) => {
+    console.log("Rejecting media item:", mediaId);
+    // Add logic for deleting media item
+    // setApproveMediaModalVisible(true);
+    setVisibleMediaMenuId(null);
+  };
+
+  const getMediaLink = (val) => {
+    const link = "http://84.247.171.46" + val;
+    return link;
+  };
+
+  const getActualData = async () => {
+    try {
+      const tenant = "vmodaqa";
+      const headers = {
+        "X-TenantID": tenant,
+      };
+      const response = await axios.get("/media/all", { headers });
+      if (response.status === 200) {
+        setActualData(response.data.data);
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  useEffect(() => {
+    getActualData();
+  }, [refreshMediaCount]);
+
   return (
     <div id="media-data-container">
-      {data_for_media && (
+      {actualData && (
         <>
           <div id="media-data-headings-div">
             <div id="media-heading-checkbox"></div>
@@ -84,27 +120,28 @@ const MediaData = () => {
 
           <div id="media-data-partition-horizontal"></div>
           <div id="media-data-content-div">
-            {data_for_media.map((item) => (
+            {actualData.map((item) => (
               <div key={item.id} className="media-data-item-div">
                 <p className="media-heading-id media-data-item">{item.id}</p>
                 <div className="media-heading-image media-data-item">
                   <img
                     className="media-data-image"
-                    src={item.filePreview || "https://via.placeholder.com/40"} // Default placeholder if no image
-                    alt={item.name}
+                    // src={item.filePath || "https://via.placeholder.com/40"}
+                    // alt={item.fileName}
+                    src={getMediaLink(item.filePath)}
                   />
                 </div>
                 <p className="media-heading-name media-data-item">
-                  {item.name}
+                  {item.fileName}
                 </p>
                 <p className="media-heading-size media-data-item">
-                  {item.size}
+                  {(item.byteSize / (1024 * 1024)).toFixed(1)} MB
                 </p>
                 <p className="media-heading-uploaded-by media-data-item">
-                  {item.uploadedBy}
+                  {item.uploadedBy.name}
                 </p>
                 <p className="media-heading-uploaded-at media-data-item">
-                  {item.uploadedAt}
+                  {item.uploadDate}
                 </p>
                 <div
                   className="media-data-option-div"
@@ -133,6 +170,12 @@ const MediaData = () => {
                       onClick={() => handleApprove(item)}
                     >
                       Approve
+                    </p>
+                    <p
+                      className="popup-menu-item-media"
+                      onClick={() => handleReject(item)}
+                    >
+                      Reject
                     </p>
                   </div>
                 )}

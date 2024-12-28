@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import "./UploadMediaModal.css";
 import { useSelector, useDispatch } from "react-redux";
-import { insertMedia } from "../../redux/page";
+import { insertMedia, refreshMedia } from "../../redux/page";
 import LoginFormDropdown from "../LoginFormDropdown/LoginFormDropdown";
+import axios from "axios";
 
 const UploadMediaModal = ({ show, close }) => {
   // first get overall data to decide the id of new entry
@@ -38,7 +39,7 @@ const UploadMediaModal = ({ show, close }) => {
     file: null,
   });
   const [fileMediaPreview, setFileMediaPreview] = useState(null);
-  const { data_for_media } = useSelector((state) => state.page);
+  // const { data_for_media } = useSelector((state) => state.page);
   const dispatch = useDispatch();
 
   const handleMediaDropdownChange = (val) => {
@@ -76,36 +77,58 @@ const UploadMediaModal = ({ show, close }) => {
     }
   };
 
-  const handleMediaSubmit = () => {
-    if (formMediaData.file) {
-      let pdfFileView = "";
-      if (formMediaData.fileType == "pdf") {
-        pdfFileView = URL.createObjectURL(formMediaData.file);
+  const handleMediaSubmit = async () => {
+    try {
+      if (formMediaData.file) {
+        let pdfFileView = "";
+        if (formMediaData.fileType == "pdf") {
+          pdfFileView = URL.createObjectURL(formMediaData.file);
+        }
+
+        const fileSizeInBytes = formMediaData.file.size;
+        const fileSizeInMB = (fileSizeInBytes / (1024 * 1024)).toFixed(2); // Size in MB, rounded to 2 decimal places
+
+        const newMedia = new FormData();
+        newMedia.append("uploadedBy", "15");
+        newMedia.append("mediaType", "IMAGE");
+        newMedia.append("byteSize", fileSizeInBytes);
+        newMedia.append("file", formMediaData.file);
+
+        const tenant = "vmodaqa";
+        const headers = {
+          "X-TenantID": tenant,
+        };
+
+        const response = await axios.post("/media/upload", newMedia, {
+          headers,
+        });
+        console.log(response);
+        if (response.status === 201) {
+          dispatch(refreshMedia());
+        }
+
+        // Create a new media object to store file details
+        // const newMedia = {
+        //   name: formMediaData.file.name,
+        //   type: formMediaData.fileType,
+        //   size: fileSizeInMB + " MB",
+        //   filePreview:
+        //     formMediaData.fileType == "pdf" ? pdfFileView : fileMediaPreview,
+        //   uploadedBy: "Admin",
+        //   uploadedAt: new Date().toISOString(),
+        // };
+
+        // Update the data_media state with the new media item
+        // setData_media((prevData) => [...prevData, newMedia]);
+        // console.log(newMedia);
+        // dispatch(insertMedia(newMedia));
+        handleCloseModal();
+      } else {
+        alert("Please select a file!");
       }
-
-      // Get the file size in a human-readable format (e.g., KB, MB)
-      const fileSizeInBytes = formMediaData.file.size;
-      const fileSizeInMB = (fileSizeInBytes / (1024 * 1024)).toFixed(2); // Size in MB, rounded to 2 decimal places
-
-      // Create a new media object to store file details
-      const newMedia = {
-        id: data_for_media.length + 1, // Simple ID generation based on existing media
-        name: formMediaData.file.name,
-        type: formMediaData.fileType,
-        size: fileSizeInMB + " MB", // Store file size in MB
-        filePreview:
-          formMediaData.fileType == "pdf" ? pdfFileView : fileMediaPreview, // Store the file preview for image types
-        uploadedBy: "Admin",
-        uploadedAt: new Date().toISOString(),
-      };
-
-      // Update the data_media state with the new media item
-      // setData_media((prevData) => [...prevData, newMedia]);
-      // console.log(newMedia);
-      dispatch(insertMedia(newMedia));
-      close();
-    } else {
-      alert("Please select a file!");
+    } catch (error) {
+      console.log(error.message);
+      handleCloseModal();
     }
   };
 

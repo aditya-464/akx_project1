@@ -1,7 +1,34 @@
 import React from "react";
 import "./DeleteMediaModal.css";
+import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
+import { refreshMedia } from "../../redux/page";
 
 const DeleteMediaModal = ({ show, close, mediaDetails }) => {
+  const dispatch = useDispatch();
+
+  const handleDelete = async () => {
+    try {
+      const id = mediaDetails.id;
+      const tenant = "vmodaqa";
+      const headers = {
+        "X-TenantID": tenant,
+      };
+
+      const response = await axios.delete(`/media/${id}`, { headers });
+      if (response.status === 200) {
+        dispatch(refreshMedia());
+      }
+      handleCloseModal();
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const handleCloseModal = () => {
+    close();
+  };
+
   if (!show) return null;
 
   return (
@@ -19,13 +46,15 @@ const DeleteMediaModal = ({ show, close, mediaDetails }) => {
           <div className="delete-media-form">
             <p className="delete-media-ask-text">
               Do you wan't to delete
-              <p className="delete-media-name">{mediaDetails.name}?</p>
+              <span className="delete-media-name">
+                {mediaDetails.fileName}?
+              </span>
             </p>
             <div className="delete-media-buttons-container">
               <div className="delete-media-no-button" onClick={close}>
                 <p>No</p>
               </div>
-              <div className="delete-media-yes-button">
+              <div className="delete-media-yes-button" onClick={handleDelete}>
                 <p>Yes</p>
               </div>
             </div>
