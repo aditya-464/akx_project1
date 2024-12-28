@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { insertMedia, refreshMedia } from "../../redux/page";
 import LoginFormDropdown from "../LoginFormDropdown/LoginFormDropdown";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const UploadMediaModal = ({ show, close }) => {
   // first get overall data to decide the id of new entry
@@ -77,6 +78,18 @@ const UploadMediaModal = ({ show, close }) => {
     }
   };
 
+  const showSuccessToast = (message) => {
+    toast.success(message, {
+      position: "bottom-center",
+    });
+  };
+
+  const showErrorToast = (message) => {
+    toast.error(message, {
+      position: "bottom-center",
+    });
+  };
+
   const handleMediaSubmit = async () => {
     try {
       if (formMediaData.file) {
@@ -104,6 +117,7 @@ const UploadMediaModal = ({ show, close }) => {
         });
         console.log(response);
         if (response.status === 201) {
+          showSuccessToast(response.data.message);
           dispatch(refreshMedia());
         }
 
@@ -128,6 +142,7 @@ const UploadMediaModal = ({ show, close }) => {
       }
     } catch (error) {
       console.log(error.message);
+      showErrorToast(error.message);
       handleCloseModal();
     }
   };

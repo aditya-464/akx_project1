@@ -2,9 +2,22 @@ import React from "react";
 import "./ApproveMediaModal.css";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const ApproveMediaModal = ({ show, close, mediaDetails }) => {
   const dispatch = useDispatch();
+
+  const showSuccessToast = (message) => {
+    toast.success(message, {
+      position: "bottom-center",
+    });
+  };
+
+  const showErrorToast = (message) => {
+    toast.error(message, {
+      position: "bottom-center",
+    });
+  };
 
   const handleApprove = async () => {
     try {
@@ -23,9 +36,14 @@ const ApproveMediaModal = ({ show, close, mediaDetails }) => {
         }
       );
 
+      if (response.status === 200) {
+        showSuccessToast(response.data.message);
+      }
+
       handleCloseModal();
     } catch (error) {
       console.log(error.message);
+      showErrorToast(error.message);
       handleCloseModal();
     }
   };

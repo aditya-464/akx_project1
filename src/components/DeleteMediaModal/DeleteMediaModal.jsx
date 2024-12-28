@@ -3,9 +3,22 @@ import "./DeleteMediaModal.css";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { refreshMedia } from "../../redux/page";
+import { toast } from "react-toastify";
 
 const DeleteMediaModal = ({ show, close, mediaDetails }) => {
   const dispatch = useDispatch();
+
+  const showSuccessToast = (message) => {
+    toast.success(message, {
+      position: "bottom-center",
+    });
+  };
+
+  const showErrorToast = (message) => {
+    toast.error(message, {
+      position: "bottom-center",
+    });
+  };
 
   const handleDelete = async () => {
     try {
@@ -17,11 +30,14 @@ const DeleteMediaModal = ({ show, close, mediaDetails }) => {
 
       const response = await axios.delete(`/media/${id}`, { headers });
       if (response.status === 200) {
+        showSuccessToast(response.data.message);
         dispatch(refreshMedia());
       }
       handleCloseModal();
     } catch (error) {
+      handleCloseModal();
       console.log(error.message);
+      showErrorToast(error.message);
     }
   };
 
