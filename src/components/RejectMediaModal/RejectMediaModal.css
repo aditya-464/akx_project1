@@ -1,0 +1,111 @@
+/* Modal.css */
+.reject-media-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+.reject-media-modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  position: relative;
+  max-width: 80%;
+  max-height: 80%;
+  overflow: auto;
+}
+
+.reject-media-modal-header {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.close-btn {
+  background-color: transparent;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.reject-media-modal-media {
+  width: 100%;
+  max-height: 70vh;
+  object-fit: contain;
+}
+
+.reject-media-form {
+  margin: 2rem 3rem;
+}
+
+.reject-media-ask-text {
+  font-size: 16px;
+  color: #36454f;
+  font-weight: 500;
+}
+
+.reject-media-name {
+  font-size: 18px;
+  display: inline-block;
+  font-weight: 600;
+  margin-left: 1rem;
+}
+
+.reject-media-buttons-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.reject-media-yes-button {
+  text-align: center;
+  width: 45%;
+  background-color: #03c988;
+  padding: 1rem;
+  font-size: 14px;
+  border-radius: 7px;
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.reject-media-yes-button:hover {
+  background-color: #03b57a;
+}
+
+.reject-media-no-button {
+  text-align: center;
+  width: 45%;
+  background-color: #f1f2f2;
+  padding: 1rem;
+  font-size: 14px;
+  border-radius: 7px;
+  color: #36454f;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.reject-media-no-button:hover {
+  background-color: #ebeced;
+}
+
+/* Mobile Responsiveness */
+@media only screen and (max-width: 500px) {
+  .reject-media-ask-text {
+    font-size: 14px;
+    text-align: center;
+  }
+  .reject-media-no-button {
+    font-size: 12px;
+  }
+  .reject-media-yes-button {
+    font-size: 12px;
+  }
+}

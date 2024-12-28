@@ -6,6 +6,7 @@ import ApproveMediaModal from "../ApproveMediaModal/ApproveMediaModal.jsx";
 import DeleteMediaModal from "../DeleteMediaModal/DeleteMediaModal.jsx";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
+import RejectMediaModal from "../RejectMediaModal/RejectMediaModal.jsx";
 
 const MediaData = () => {
   const { data_for_media, refreshMediaCount } = useSelector(
@@ -17,6 +18,7 @@ const MediaData = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [approveMediaModalVisible, setApproveMediaModalVisible] =
     useState(false);
+  const [rejectMediaModalVisible, setRejectMediaModalVisible] = useState(false);
   const [deleteMediaModalVisible, setdeleteMediaModalVisible] = useState(false);
   const [deleteMediaDetails, setDeleteMediaDetails] = useState("");
   const [approveMediaDetails, setApproveMediaDetails] = useState("");
@@ -75,6 +77,7 @@ const MediaData = () => {
     // Add logic for deleting media item
     // setApproveMediaModalVisible(true);
     setRejectMediaDetails(item);
+    setRejectMediaModalVisible(true);
     setVisibleMediaMenuId(null);
   };
 
@@ -207,6 +210,12 @@ const MediaData = () => {
         close={() => setApproveMediaModalVisible(false)}
         mediaDetails={approveMediaDetails}
       ></ApproveMediaModal>
+
+      <RejectMediaModal
+        show={rejectMediaModalVisible}
+        close={() => setRejectMediaModalVisible(false)}
+        mediaDetails={rejectMediaDetails}
+      ></RejectMediaModal>
     </div>
   );
 };
