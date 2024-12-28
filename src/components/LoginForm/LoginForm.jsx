@@ -7,6 +7,7 @@ import LoginPageDropdown from "../LoginPageDropdown/LoginPageDropdown.jsx";
 import LoginFormDropdown from "../LoginFormDropdown/LoginFormDropdown.jsx";
 import CryptoJS from "crypto-js";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const LoginForm = () => {
   const [username, setUsername] = useState("");
@@ -14,6 +15,18 @@ const LoginForm = () => {
   const [dropdownVal, setDropdownVal] = useState("");
   const [options, setOptions] = useState(null);
   const dispatch = useDispatch();
+
+  const showSuccessToast = (message) => {
+    toast.success(message, {
+      position: "bottom-center",
+    });
+  };
+
+  const showErrorToast = (message) => {
+    toast.error(message, {
+      position: "bottom-center",
+    });
+  };
 
   const encrypt = (plainText, secretKey) => {
     const keyBytes = CryptoJS.enc.Utf8.parse(secretKey);
@@ -48,7 +61,8 @@ const LoginForm = () => {
         }
       }
     } catch (error) {
-      console.log(error);
+      console.log(error.message);
+      showErrorToast(error.message);
     }
   };
 

@@ -4,6 +4,7 @@ import otp_img from "../../assets/images/login2.webp";
 import { useSelector, useDispatch } from "react-redux";
 import { changePage } from "../../redux/page";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const OtpForm = () => {
   const [length, setLength] = useState(6);
@@ -74,6 +75,18 @@ const OtpForm = () => {
     return () => clearInterval(timerId); // Cleanup on unmount or re-render
   }, [timeLeft]);
 
+  const showSuccessToast = (message) => {
+    toast.success(message, {
+      position: "bottom-center",
+    });
+  };
+
+  const showErrorToast = (message) => {
+    toast.error(message, {
+      position: "bottom-center",
+    });
+  };
+
   const otpVerifyFunction = async () => {
     try {
       if (finalOtp.length == 6 && currentUser && tenant) {
@@ -96,6 +109,7 @@ const OtpForm = () => {
       }
     } catch (error) {
       console.log(error.message);
+      showErrorToast(error.message);
     }
   };
 
