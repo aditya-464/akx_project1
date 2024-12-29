@@ -168,7 +168,11 @@ const MediaData = () => {
                       className="media-data-image"
                       // src={item.filePath || "https://via.placeholder.com/40"}
                       // alt={item.fileName}
-                      src={getMediaLink(item.filePath)}
+                      src={
+                        item.mediaType === "IMAGE"
+                          ? getMediaLink(item.filePath)
+                          : "https://i.pinimg.com/564x/3c/00/86/3c00869f0e6f1cebb3125bf13512edc8.jpg"
+                      }
                     />
                   </div>
                   <p className="media-heading-name media-data-item">

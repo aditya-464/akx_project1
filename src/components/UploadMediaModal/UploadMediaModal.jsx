@@ -99,11 +99,24 @@ const UploadMediaModal = ({ show, close }) => {
         }
 
         const fileSizeInBytes = formMediaData.file.size;
-        const fileSizeInMB = (fileSizeInBytes / (1024 * 1024)).toFixed(2); // Size in MB, rounded to 2 decimal places
+        // const fileSizeInMB = (fileSizeInBytes / (1024 * 1024)).toFixed(2); // Size in MB, rounded to 2 decimal places
 
         const newMedia = new FormData();
-        newMedia.append("uploadedBy", "15");
-        newMedia.append("mediaType", "IMAGE");
+        let fileType = formMediaData.fileType.toUpperCase();
+        if (fileType === "PDF" || fileType === "DOC") {
+          fileType = "DOCUMENT";
+        }
+        if (
+          fileType === "EXCEL" ||
+          fileType === "TXT" ||
+          fileType === "PPT" ||
+          fileType === "PPTX"
+        ) {
+          fileType = "FILE";
+        }
+
+        newMedia.append("uploadedBy", "19");
+        newMedia.append("mediaType", fileType);
         newMedia.append("byteSize", fileSizeInBytes);
         newMedia.append("file", formMediaData.file);
 
