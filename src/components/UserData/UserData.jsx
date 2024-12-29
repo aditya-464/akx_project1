@@ -158,12 +158,27 @@ const UserData = (props) => {
             </div>
 
             <div id="users-data-partition-horizontal"></div>
-            <div id="users-data-content-div">
-              {actualData.map((item) => (
-                <div key={item.id} className="users-data-item-div">
-                  <p className="users-heading-id users-data-item">{item.id}</p>
-                  <div className="users-heading-image users-data-item">
-                    {/* <img
+            {actualData.length == 0 && (
+              <div
+                style={{
+                  textAlign: "center",
+                  fontSize: "14px",
+                  fontWeight: "500",
+                  margin: "2rem 0rem",
+                }}
+              >
+                <p>No data</p>
+              </div>
+            )}
+            {actualData.length > 0 && (
+              <div id="users-data-content-div">
+                {actualData.map((item) => (
+                  <div key={item.id} className="users-data-item-div">
+                    <p className="users-heading-id users-data-item">
+                      {item.id}
+                    </p>
+                    <div className="users-heading-image users-data-item">
+                      {/* <img
                       className="users-data-image"
                       // src={
                       //   item.brandingLogo ||
@@ -174,72 +189,73 @@ const UserData = (props) => {
                       }
                       alt={item.name}
                     /> */}
-                    <div
-                      style={{
-                        position: "relative",
-                        display: "inline-block",
-                      }}
-                    >
-                      <Avatar
-                        name={item.name}
-                        size="35"
-                        round={true}
-                        color="#d9dada"
-                        fgColor="black"
-                      />
                       <div
                         style={{
-                          position: "absolute",
-                          bottom: "5px",
-                          right: "-5px",
-                          width: "10px",
-                          height: "10px",
-                          backgroundColor: getStatusColor(item.userType),
-                          // border: "1px solid white",
-                          borderRadius: "50%",
+                          position: "relative",
+                          display: "inline-block",
                         }}
-                      ></div>
+                      >
+                        <Avatar
+                          name={item.name}
+                          size="35"
+                          round={true}
+                          color="#d9dada"
+                          fgColor="black"
+                        />
+                        <div
+                          style={{
+                            position: "absolute",
+                            bottom: "5px",
+                            right: "-5px",
+                            width: "10px",
+                            height: "10px",
+                            backgroundColor: getStatusColor(item.userType),
+                            // border: "1px solid white",
+                            borderRadius: "50%",
+                          }}
+                        ></div>
+                      </div>
                     </div>
-                  </div>
-                  <p className="users-heading-name users-data-item">
-                    {item.name}
-                  </p>
-                  <p className="users-heading-mobile users-data-item">
-                    {item.mobile}
-                  </p>
-                  <p className="users-heading-email users-data-item">
-                    {item.email}
-                  </p>
-                  <p className="users-heading-created-on users-data-item">
-                    {item.createdOn}
-                  </p>
-                  <div
-                    className="users-data-option-div"
-                    onClick={() => toggleMenu(item.id)} // Pass unique ID
-                  >
-                    <SlOptionsVertical size={12} />
-                  </div>
+                    <p className="users-heading-name users-data-item">
+                      {item.name}
+                    </p>
+                    <p className="users-heading-mobile users-data-item">
+                      {item.mobile}
+                    </p>
+                    <p className="users-heading-email users-data-item">
+                      {item.email}
+                    </p>
+                    <p className="users-heading-created-on users-data-item">
+                      {item.createdOn}
+                    </p>
+                    <div
+                      className="users-data-option-div"
+                      onClick={() => toggleMenu(item.id)} // Pass unique ID
+                    >
+                      <SlOptionsVertical size={12} />
+                    </div>
 
-                  {/* Popup Menu */}
-                  {visibleMenuId === item.id && (
-                    <div className="popup-menu">
-                      <p
-                        className="popup-menu-item"
-                        onClick={() => handleEdit(item)}
-                      >
-                        Edit
-                      </p>
-                      <p
-                        className="popup-menu-item"
-                        onClick={() => handleDelete(item)}
-                      >
-                        Delete
-                      </p>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
+                    {/* Popup Menu */}
+                    {visibleMenuId === item.id && (
+                      <div className="popup-menu">
+                        <p
+                          className="popup-menu-item"
+                          onClick={() => handleEdit(item)}
+                        >
+                          Edit
+                        </p>
+                        <p
+                          className="popup-menu-item"
+                          onClick={() => handleDelete(item)}
+                        >
+                          Delete
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
           </>
         }
 

@@ -41,25 +41,30 @@
   width: 20%;
   font-size: 12px;
   font-weight: 500;
+  padding-right: 1rem;
 }
 .media-heading-size {
   width: 20%;
   font-size: 12px;
   font-weight: 500;
+  padding-right: 1rem;
 }
 .media-heading-uploaded-by {
   width: 20%;
   font-size: 12px;
   font-weight: 500;
+  padding-right: 1rem;
 }
 .media-heading-uploaded-at {
   width: 20%;
   font-size: 12px;
   font-weight: 500;
+  padding-right: 1rem;
 }
 
 .media-data-item {
   font-weight: 400;
+  padding-right: 1rem;
 }
 
 .media-data-option-div {

@@ -113,6 +113,16 @@ const MediaData = () => {
     }
   };
 
+  const getClearData = (arr) => {
+    let newArr = [];
+    for (let i = 0; i < arr.length; i++) {
+      if (arr[i].uploadedBy.id == currentUser.id) {
+        newArr.push(arr[i]);
+      }
+    }
+    setActualData(newArr);
+  };
+
   const getActualData = async () => {
     try {
       const headers = {
@@ -120,7 +130,11 @@ const MediaData = () => {
       };
       const response = await axios.get("/media/all", { headers });
       if (response.status === 200) {
-        setActualData(response.data.data);
+        if (currentUser.userType === "USER") {
+          getClearData(response.data.data);
+        } else {
+          setActualData(response.data.data);
+        }
         // console.log(response.data.data);
       }
     } catch (error) {
@@ -164,6 +178,7 @@ const MediaData = () => {
   }
 
   return (
+    Array.isArray(actualData) &&
     actualData && (
       <div id="media-data-container">
         {
@@ -186,79 +201,97 @@ const MediaData = () => {
             </div>
 
             <div id="media-data-partition-horizontal"></div>
-            <div id="media-data-content-div">
-              {actualData.map((item) => (
-                <div key={item.id} className="media-data-item-div">
-                  <p className="media-heading-id media-data-item">{item.id}</p>
-                  <div
-                    className="media-heading-image media-data-item"
-                    onClick={() => {
-                      handleFilePreview(item);
-                    }}
-                  >
-                    <img
-                      className="media-data-image"
-                      // src={item.filePath || "https://via.placeholder.com/40"}
-                      // alt={item.fileName}
-                      src={
-                        item.mediaType === "IMAGE"
-                          ? getMediaLink(item.filePath)
-                          : "https://i.pinimg.com/564x/3c/00/86/3c00869f0e6f1cebb3125bf13512edc8.jpg"
-                      }
-                    />
-                  </div>
-                  <p className="media-heading-name media-data-item">
-                    {item.fileName}
-                  </p>
-                  <p className="media-heading-size media-data-item">
-                    {/* {(item.byteSize / (1024 * 1024)).toFixed(1)} MB */}
-                    {item.approvedStatus === true ? "Approved" : "Not Approved"}
-                  </p>
-                  <p className="media-heading-uploaded-by media-data-item">
-                    {item.uploadedBy.name}
-                  </p>
-                  <p className="media-heading-uploaded-at media-data-item">
-                    {item.uploadDate}
-                  </p>
-                  <div
-                    className="media-data-option-div"
-                    onClick={(e) => toggleMediaMenu(item.id, e)} // Pass event to stop propagation
-                  >
-                    <SlOptionsVertical size={12} />
-                  </div>
+            {actualData.length == 0 && (
+              <div
+                style={{
+                  textAlign: "center",
+                  fontSize: "14px",
+                  fontWeight: "500",
+                  margin: "2rem 0rem",
+                }}
+              >
+                <p>No data</p>
+              </div>
+            )}
+            {actualData.length > 0 && (
+              <div id="media-data-content-div">
+                {actualData.map((item) => (
+                  <div key={item.id} className="media-data-item-div">
+                    <p className="media-heading-id media-data-item">
+                      {item.id}
+                    </p>
+                    <div
+                      className="media-heading-image media-data-item"
+                      onClick={() => {
+                        handleFilePreview(item);
+                      }}
+                    >
+                      <img
+                        className="media-data-image"
+                        // src={item.filePath || "https://via.placeholder.com/40"}
+                        // alt={item.fileName}
+                        src={
+                          item.mediaType === "IMAGE"
+                            ? getMediaLink(item.filePath)
+                            : "https://i.pinimg.com/564x/3c/00/86/3c00869f0e6f1cebb3125bf13512edc8.jpg"
+                        }
+                      />
+                    </div>
+                    <p className="media-heading-name media-data-item">
+                      {item.fileName}
+                    </p>
+                    <p className="media-heading-size media-data-item">
+                      {/* {(item.byteSize / (1024 * 1024)).toFixed(1)} MB */}
+                      {item.approvedStatus === true
+                        ? "Approved"
+                        : "Not Approved"}
+                    </p>
+                    <p className="media-heading-uploaded-by media-data-item">
+                      {item.uploadedBy.name}
+                    </p>
+                    <p className="media-heading-uploaded-at media-data-item">
+                      {item.uploadDate}
+                    </p>
+                    <div
+                      className="media-data-option-div"
+                      onClick={(e) => toggleMediaMenu(item.id, e)} // Pass event to stop propagation
+                    >
+                      <SlOptionsVertical size={12} />
+                    </div>
 
-                  {/* Popup Menu */}
-                  {visibleMediaMenuId === item.id && (
-                    <div className="popup-menu-media">
-                      {/* <p
+                    {/* Popup Menu */}
+                    {visibleMediaMenuId === item.id && (
+                      <div className="popup-menu-media">
+                        {/* <p
                         className="popup-menu-item-media"
                         onClick={() => handleView(item)} // Pass entire media object
                       >
                         View
                       </p> */}
-                      <p
-                        className="popup-menu-item-media"
-                        onClick={() => handleApprove(item)}
-                      >
-                        Approve
-                      </p>
-                      <p
-                        className="popup-menu-item-media"
-                        onClick={() => handleReject(item)}
-                      >
-                        Reject
-                      </p>
-                      <p
-                        className="popup-menu-item-media"
-                        onClick={() => handleDelete(item)}
-                      >
-                        Delete
-                      </p>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
+                        <p
+                          className="popup-menu-item-media"
+                          onClick={() => handleApprove(item)}
+                        >
+                          Approve
+                        </p>
+                        <p
+                          className="popup-menu-item-media"
+                          onClick={() => handleReject(item)}
+                        >
+                          Reject
+                        </p>
+                        <p
+                          className="popup-menu-item-media"
+                          onClick={() => handleDelete(item)}
+                        >
+                          Delete
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
           </>
         }
 
