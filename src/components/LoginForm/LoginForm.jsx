@@ -56,8 +56,9 @@ const LoginForm = () => {
   const loginFunction = async () => {
     try {
       if (username != "" && password != "" && dropdownVal != "") {
-        const secretKey = import.meta.env.VITE_SECRET_KEY;
-        const encryptedKey = encrypt(password, secretKey);        
+        // const secretKey = import.meta.env.VITE_SECRET_KEY;
+        const secretKey = "BxYfjlrtknZyVcjYT3MwPg==";
+        const encryptedKey = encrypt(password, secretKey);
 
         const headers = {
           "X-TenantID": dropdownVal,
