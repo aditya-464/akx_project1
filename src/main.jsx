@@ -10,5 +10,7 @@ createRoot(document.getElementById("root")).render(
     <Provider store={store}>
       <App />
     </Provider>
+    {/* <FluentProvider theme={customTheme}>
+    </FluentProvider> */}
   </StrictMode>
 );

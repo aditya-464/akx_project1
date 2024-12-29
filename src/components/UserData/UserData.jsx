@@ -6,6 +6,7 @@ import EditUserModal from "../EditUserModal/EditUserModal";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { toast } from "react-toastify";
+import Avatar from "react-avatar";
 
 const UserData = (props) => {
   // const { dummy_data } = props;
@@ -91,6 +92,19 @@ const UserData = (props) => {
     getActualData();
   }, [refreshUserCount, tenant]);
 
+  const getStatusColor = (status) => {
+    switch (status) {
+      case "SUPER_ADMIN":
+        return "orange";
+      case "ORGANIZATIONAL_ADMIN":
+        return "green";
+      case "USER":
+        return "blue";
+      default:
+        return "white";
+    }
+  };
+
   return (
     actualData && (
       <div id="users-data-container">
@@ -118,7 +132,7 @@ const UserData = (props) => {
                 <div key={item.id} className="users-data-item-div">
                   <p className="users-heading-id users-data-item">{item.id}</p>
                   <div className="users-heading-image users-data-item">
-                    <img
+                    {/* <img
                       className="users-data-image"
                       // src={
                       //   item.brandingLogo ||
@@ -128,7 +142,31 @@ const UserData = (props) => {
                         "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
                       }
                       alt={item.name}
-                    />
+                    /> */}
+                    <div
+                      style={{ position: "relative", display: "inline-block" }}
+                    >
+                      <Avatar
+                        name={item.name}
+                        size="35"
+                        round={true}
+                        color="#d9dada"
+                        fgColor="black"
+                      />
+                      <div
+                        style={{
+                          position: "absolute",
+                          bottom: "5px",
+                          right: "-5px",
+                          width: "12px",
+                          height: "12px",
+                          backgroundColor: getStatusColor(item.userType),
+                          // backgroundColor: "red",
+                          border: "1px solid white",
+                          borderRadius: "50%",
+                        }}
+                      ></div>
+                    </div>
                   </div>
                   <p className="users-heading-name users-data-item">
                     {item.name}
