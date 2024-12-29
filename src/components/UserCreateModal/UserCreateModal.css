@@ -18,6 +18,7 @@
 
 /* Popup container */
 .popup-container {
+  max-height: 90%;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -31,6 +32,7 @@
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  overflow: auto;
 }
 
 /* Popup box styling */
@@ -176,6 +178,11 @@
 .login-fields-group-user input:focus {
   border: 1px solid rgba(3, 201, 136, 1);
   outline: none;
+}
+
+.user-type-field-heading {
+  font-size: 14px;
+  color: #36454f;
 }
 
 /* Mobile Responsiveness CSS */

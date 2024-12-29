@@ -4,6 +4,7 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { refreshUser } from "../../redux/page";
 import { toast } from "react-toastify";
+import LoginFormDropdown from "../LoginFormDropdown/LoginFormDropdown";
 
 const UserCreateModal = ({ show, close }) => {
   const [formData, setFormData] = useState({
@@ -14,8 +15,20 @@ const UserCreateModal = ({ show, close }) => {
     userType: "USER",
   });
   const [imagePreview, setImagePreview] = useState(null);
+  const [userType, setUserType] = useState("USER");
   const { currentUser, tenant } = useSelector((state) => state.page);
   const dispatch = useDispatch();
+
+  const options = [
+    {
+      id: 1,
+      name: "USER",
+    },
+    {
+      id: 2,
+      name: "ORGANIZATIONAL_ADMIN",
+    },
+  ];
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -62,7 +75,7 @@ const UserCreateModal = ({ show, close }) => {
         // brandingLogo: imagePreview,
         brandingLogo:
           "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
-        userType: "USER",
+        userType: userType,
       };
 
       // const url = "http://84.247.171.46:8080/userProfile";
@@ -140,6 +153,15 @@ const UserCreateModal = ({ show, close }) => {
                 className="input-field"
               />
             </div>
+            {currentUser.userType === "SUPER_ADMIN" && (
+              <div style={{ marginBottom: "2rem" }}>
+                <p className="user-type-field-heading">User Type</p>
+                <LoginFormDropdown
+                  options={options}
+                  returnValue={(val) => setUserType(val)}
+                ></LoginFormDropdown>
+              </div>
+            )}
             <div>
               <p className="file-label">Choose Profile Image</p>
               <input
