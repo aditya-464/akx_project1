@@ -30,10 +30,10 @@ const Dashboard = () => {
   // const [users, setUsers] = useState(false);
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [search, setSearch] = useState("");
-  const [dashboardComponent, setDashboardComponent] = useState("users");
+  const [dashboardComponent, setDashboardComponent] = useState("dashboard");
   const [data, setData] = useState("");
   const [data_media, setData_media] = useState("");
-  const { username } = useSelector((state) => state.page);
+  const { currentUser, tenant } = useSelector((state) => state.page);
   const [createUserModalVisible, setCreateUserModalVisible] = useState(false);
   const [uploadMediaModalVisible, setUploadMediaModalVisible] = useState(false);
 
@@ -330,18 +330,20 @@ const Dashboard = () => {
             </div>
             <p>Dashboard</p>
           </div>
-          <div
-            id="dashboard-users-item"
-            className="dashboard-navigation-item"
-            onClick={() => {
-              setDashboardComponent("users");
-            }}
-          >
-            <div className="dashboard-navigation-icons">
-              <FaUser size={14} color="white"></FaUser>
+          {currentUser.userType !== "USER" && (
+            <div
+              id="dashboard-users-item"
+              className="dashboard-navigation-item"
+              onClick={() => {
+                setDashboardComponent("users");
+              }}
+            >
+              <div className="dashboard-navigation-icons">
+                <FaUser size={14} color="white"></FaUser>
+              </div>
+              <p>Users</p>
             </div>
-            <p>Users</p>
-          </div>
+          )}
           <div
             id="dashboard-media-item"
             className="dashboard-navigation-item"
@@ -408,7 +410,9 @@ const Dashboard = () => {
               className="dashboard-navbar-dropdown"
               style={{
                 display:
-                  dashboardComponent == "users" || dashboardComponent == "media"
+                  (dashboardComponent == "users" ||
+                    dashboardComponent == "media") &&
+                  currentUser.userType === "SUPER_ADMIN"
                     ? "block"
                     : "none",
               }}
@@ -440,7 +444,7 @@ const Dashboard = () => {
             <DashboardComponent></DashboardComponent>
           )}
 
-          {dashboardComponent == "users" && (
+          {dashboardComponent == "users" && currentUser.userType !== "USER" && (
             <div className="dashboard-user">
               <div id="dashboard-content-today-details-div">
                 <p id="users-text">Users</p>

@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { toast } from "react-toastify";
 import Avatar from "react-avatar";
+import { ColorRing } from "react-loader-spinner";
 
 const UserData = (props) => {
   // const { dummy_data } = props;
@@ -105,6 +106,36 @@ const UserData = (props) => {
     }
   };
 
+  if (!actualData) {
+    return (
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "center",
+          marginTop: "5rem",
+        }}
+      >
+        <ColorRing
+          visible={!actualData ? true : false}
+          height="70"
+          width="70"
+          ariaLabel="color-ring-loading"
+          wrapperStyle={{}}
+          wrapperClass="color-ring-wrapper"
+          colors={[
+            "#03c988",
+            "#03c988",
+            "#03c988",
+            "#03c988",
+            "#03c988",
+            "#03c988",
+          ]}
+        />
+      </div>
+    );
+  }
+
   return (
     actualData && (
       <div id="users-data-container">
@@ -144,7 +175,10 @@ const UserData = (props) => {
                       alt={item.name}
                     /> */}
                     <div
-                      style={{ position: "relative", display: "inline-block" }}
+                      style={{
+                        position: "relative",
+                        display: "inline-block",
+                      }}
                     >
                       <Avatar
                         name={item.name}
@@ -158,11 +192,10 @@ const UserData = (props) => {
                           position: "absolute",
                           bottom: "5px",
                           right: "-5px",
-                          width: "12px",
-                          height: "12px",
+                          width: "10px",
+                          height: "10px",
                           backgroundColor: getStatusColor(item.userType),
-                          // backgroundColor: "red",
-                          border: "1px solid white",
+                          // border: "1px solid white",
                           borderRadius: "50%",
                         }}
                       ></div>

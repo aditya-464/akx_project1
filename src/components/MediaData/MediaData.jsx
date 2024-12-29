@@ -9,6 +9,7 @@ import axios from "axios";
 import RejectMediaModal from "../RejectMediaModal/RejectMediaModal.jsx";
 import FilePreviewModal from "../FilePreviewModal/FilePreviewModal.jsx";
 import { toast } from "react-toastify";
+import { ColorRing } from "react-loader-spinner";
 
 const MediaData = () => {
   const { currentUser, tenant, refreshMediaCount } = useSelector(
@@ -130,6 +131,36 @@ const MediaData = () => {
   useEffect(() => {
     getActualData();
   }, [refreshMediaCount]);
+
+  if (!actualData) {
+    return (
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "center",
+          marginTop: "5rem",
+        }}
+      >
+        <ColorRing
+          visible={!actualData ? true : false}
+          height="70"
+          width="70"
+          ariaLabel="color-ring-loading"
+          wrapperStyle={{}}
+          wrapperClass="color-ring-wrapper"
+          colors={[
+            "#03c988",
+            "#03c988",
+            "#03c988",
+            "#03c988",
+            "#03c988",
+            "#03c988",
+          ]}
+        />
+      </div>
+    );
+  }
 
   return (
     actualData && (
