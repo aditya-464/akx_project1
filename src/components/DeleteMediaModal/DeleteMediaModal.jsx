@@ -45,6 +45,11 @@ const DeleteMediaModal = ({ show, close, mediaDetails }) => {
     close();
   };
 
+  const getTruncatedName = (text) => {
+    const truncatedText = text.length > 15 ? text.slice(0, 15) + "..." : text;
+    return truncatedText;
+  };
+
   if (!show) return null;
 
   return (
@@ -63,7 +68,7 @@ const DeleteMediaModal = ({ show, close, mediaDetails }) => {
             <p className="delete-media-ask-text">
               Do you wan't to delete
               <span className="delete-media-name">
-                {mediaDetails.fileName}?
+                {getTruncatedName(mediaDetails.fileName)}?
               </span>
             </p>
             <div className="delete-media-buttons-container">

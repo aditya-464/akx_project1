@@ -55,6 +55,11 @@ const RejectMediaModal = ({ show, close, mediaDetails }) => {
     close();
   };
 
+  const getTruncatedName = (text) => {
+    const truncatedText = text.length > 15 ? text.slice(0, 15) + "..." : text;
+    return truncatedText;
+  };
+
   if (!show) return null;
   return (
     <div className="reject-media-modal-overlay" onClick={close}>
@@ -72,7 +77,7 @@ const RejectMediaModal = ({ show, close, mediaDetails }) => {
             <p className="reject-media-ask-text">
               Do you wan't to reject
               <span className="reject-media-name">
-                {mediaDetails.fileName}?
+                {getTruncatedName(mediaDetails.fileName)}?
               </span>
             </p>
             <div className="reject-media-buttons-container">

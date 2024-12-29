@@ -55,6 +55,11 @@ const ApproveMediaModal = ({ show, close, mediaDetails }) => {
     close();
   };
 
+  const getTruncatedName = (text) => {
+    const truncatedText = text.length > 15 ? text.slice(0, 15) + "..." : text;
+    return truncatedText;
+  };
+
   if (!show) return null;
   return (
     <div className="approve-media-modal-overlay" onClick={close}>
@@ -72,7 +77,7 @@ const ApproveMediaModal = ({ show, close, mediaDetails }) => {
             <p className="approve-media-ask-text">
               Do you wan't to approve
               <span className="approve-media-name">
-                {mediaDetails.fileName}?
+                {getTruncatedName(mediaDetails.fileName)}?
               </span>
             </p>
             <div className="approve-media-buttons-container">

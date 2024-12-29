@@ -47,6 +47,11 @@ const DeleteUserModal = ({ show, close, userDetails }) => {
     close();
   };
 
+  const getTruncatedName = (text) => {
+    const truncatedText = text.length > 15 ? text.slice(0, 15) + "..." : text;
+    return truncatedText;
+  };
+
   if (!show) return null;
 
   return (
@@ -69,7 +74,10 @@ const DeleteUserModal = ({ show, close, userDetails }) => {
 
             <p className="delete-user-ask-text">
               Do you wan't to delete
-              <span className="delete-user-name">{userDetails.name}?</span>
+              <span className="delete-user-name">
+                {" "}
+                {getTruncatedName(userDetails.name)}?
+              </span>
             </p>
             <div className="delete-user-buttons-container">
               <div className="delete-user-no-button" onClick={close}>
