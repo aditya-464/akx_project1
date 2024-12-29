@@ -6,6 +6,7 @@ import { refreshMedia } from "../../redux/page";
 import { toast } from "react-toastify";
 
 const DeleteMediaModal = ({ show, close, mediaDetails }) => {
+  const { currentUser, tenant } = useSelector((state) => state.page);
   const dispatch = useDispatch();
 
   const showSuccessToast = (message) => {
@@ -23,7 +24,6 @@ const DeleteMediaModal = ({ show, close, mediaDetails }) => {
   const handleDelete = async () => {
     try {
       const id = mediaDetails.id;
-      const tenant = "vmodaqa";
       const headers = {
         "X-TenantID": tenant,
       };

@@ -58,6 +58,7 @@ const LoginForm = () => {
 
         if (response.status === 200) {
           dispatch(setCurrentUser(response.data.data));
+          console.log(response.data.data);
           dispatch(setTenant(dropdownVal));
           dispatch(changePage("otp"));
           navigate('/otp');

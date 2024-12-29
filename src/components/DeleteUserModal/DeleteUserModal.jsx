@@ -1,11 +1,12 @@
 import React from "react";
 import "./DeleteUserModal.css";
 import axios from "axios";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { refreshUser } from "../../redux/page";
 import { toast } from "react-toastify";
 
 const DeleteUserModal = ({ show, close, userDetails }) => {
+  const { currentUser, tenant } = useSelector((state) => state.page);
   const dispatch = useDispatch();
 
   const showSuccessToast = (message) => {
@@ -23,7 +24,6 @@ const DeleteUserModal = ({ show, close, userDetails }) => {
   const handleDeleteUser = async () => {
     try {
       const id = userDetails.id;
-      const tenant = "vmodaqa";
       const headers = {
         "X-TenantID": tenant,
       };

@@ -11,7 +11,7 @@ import FilePreviewModal from "../FilePreviewModal/FilePreviewModal.jsx";
 import { toast } from "react-toastify";
 
 const MediaData = () => {
-  const { data_for_media, refreshMediaCount } = useSelector(
+  const { currentUser, tenant, refreshMediaCount } = useSelector(
     (state) => state.page
   );
 
@@ -114,7 +114,6 @@ const MediaData = () => {
 
   const getActualData = async () => {
     try {
-      const tenant = "vmodaqa";
       const headers = {
         "X-TenantID": tenant,
       };
@@ -197,18 +196,12 @@ const MediaData = () => {
                   {/* Popup Menu */}
                   {visibleMediaMenuId === item.id && (
                     <div className="popup-menu-media">
-                      <p
+                      {/* <p
                         className="popup-menu-item-media"
                         onClick={() => handleView(item)} // Pass entire media object
                       >
                         View
-                      </p>
-                      <p
-                        className="popup-menu-item-media"
-                        onClick={() => handleDelete(item)}
-                      >
-                        Delete
-                      </p>
+                      </p> */}
                       <p
                         className="popup-menu-item-media"
                         onClick={() => handleApprove(item)}
@@ -221,6 +214,12 @@ const MediaData = () => {
                       >
                         Reject
                       </p>
+                      <p
+                        className="popup-menu-item-media"
+                        onClick={() => handleDelete(item)}
+                      >
+                        Delete
+                      </p>
                     </div>
                   )}
                 </div>
@@ -230,11 +229,11 @@ const MediaData = () => {
         }
 
         {/* Modal to display the selected media */}
-        <Modal
+        {/* <Modal
           show={modalVisible}
           close={() => setModalVisible(false)}
           media={selectedMedia}
-        />
+        /> */}
 
         <DeleteMediaModal
           show={deleteMediaModalVisible}

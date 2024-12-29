@@ -639,7 +639,11 @@ const Dashboard = () => {
             </div>
           )}
 
-          {dashboardComponent == "logout" && <LogoutForm></LogoutForm>}
+          {dashboardComponent == "logout" && (
+            <LogoutForm
+              close={() => setDashboardComponent("dashboard")}
+            ></LogoutForm>
+          )}
         </div>
       </div>
     </div>

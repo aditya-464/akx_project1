@@ -2,7 +2,7 @@ import React from "react";
 import "./LogoutForm.css";
 import { useNavigate } from "react-router-dom";
 
-const LogoutForm = () => {
+const LogoutForm = ({ close }) => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -16,7 +16,7 @@ const LogoutForm = () => {
           <div className="logout-yes-button" onClick={handleLogout}>
             <p>Yes</p>
           </div>
-          <div className="logout-no-button">
+          <div className="logout-no-button" onClick={close}>
             <p>No</p>
           </div>
         </div>

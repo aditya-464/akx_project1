@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./EditUserModal.css";
 import axios from "axios";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { refreshUser } from "../../redux/page";
 import { toast } from "react-toastify";
 
@@ -14,6 +14,7 @@ const EditUserModal = ({ show, close, userDetails }) => {
     userType: "USER",
   });
   const [imagePreview, setImagePreview] = useState(null);
+  const { currentUser, tenant } = useSelector((state) => state.page);
   const dispatch = useDispatch();
 
   const handleChange = (e) => {
@@ -64,10 +65,10 @@ const EditUserModal = ({ show, close, userDetails }) => {
       };
 
       const id = userDetails.id;
-      const tenantID = "vmodaqa";
+      // const tenantID = "vmodaqa";
 
       const headers = {
-        "X-TenantID": tenantID,
+        "X-TenantID": tenant,
       };
 
       const response = await axios.patch(`/userProfile/${id}`, newUser, {

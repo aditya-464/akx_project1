@@ -40,7 +40,8 @@ const UploadMediaModal = ({ show, close }) => {
     file: null,
   });
   const [fileMediaPreview, setFileMediaPreview] = useState(null);
-  // const { data_for_media } = useSelector((state) => state.page);
+  const { currentUser, tenant } = useSelector((state) => state.page);
+
   const dispatch = useDispatch();
 
   const handleMediaDropdownChange = (val) => {
@@ -93,13 +94,13 @@ const UploadMediaModal = ({ show, close }) => {
   const handleMediaSubmit = async () => {
     try {
       if (formMediaData.file) {
-        let pdfFileView = "";
-        if (formMediaData.fileType == "pdf") {
-          pdfFileView = URL.createObjectURL(formMediaData.file);
-        }
+        // let pdfFileView = "";
+        // if (formMediaData.fileType == "pdf") {
+        //   pdfFileView = URL.createObjectURL(formMediaData.file);
+        // }
+        // const fileSizeInMB = (fileSizeInBytes / (1024 * 1024)).toFixed(2); // Size in MB, rounded to 2 decimal places
 
         const fileSizeInBytes = formMediaData.file.size;
-        // const fileSizeInMB = (fileSizeInBytes / (1024 * 1024)).toFixed(2); // Size in MB, rounded to 2 decimal places
 
         const newMedia = new FormData();
         let fileType = formMediaData.fileType.toUpperCase();
@@ -115,12 +116,11 @@ const UploadMediaModal = ({ show, close }) => {
           fileType = "FILE";
         }
 
-        newMedia.append("uploadedBy", "19");
+        newMedia.append("uploadedBy", currentUser.id);
         newMedia.append("mediaType", fileType);
         newMedia.append("byteSize", fileSizeInBytes);
         newMedia.append("file", formMediaData.file);
 
-        const tenant = "vmodaqa";
         const headers = {
           "X-TenantID": tenant,
         };
@@ -151,7 +151,7 @@ const UploadMediaModal = ({ show, close }) => {
         // dispatch(insertMedia(newMedia));
         handleCloseModal();
       } else {
-        alert("Please select a file!");
+        showErrorToast("Please select a file!");
       }
     } catch (error) {
       console.log(error.message);

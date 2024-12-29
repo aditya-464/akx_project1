@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./UserCreateModal.css";
 import axios from "axios";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { refreshUser } from "../../redux/page";
 import { toast } from "react-toastify";
 
@@ -14,6 +14,7 @@ const UserCreateModal = ({ show, close }) => {
     userType: "USER",
   });
   const [imagePreview, setImagePreview] = useState(null);
+  const { currentUser, tenant } = useSelector((state) => state.page);
   const dispatch = useDispatch();
 
   const handleChange = (e) => {
@@ -65,10 +66,10 @@ const UserCreateModal = ({ show, close }) => {
       };
 
       // const url = "http://84.247.171.46:8080/userProfile";
-      const tenantID = "vmodaqa";
+      // const tenantID = "vmodaqa";
 
       const headers = {
-        "X-TenantID": tenantID,
+        "X-TenantID": tenant,
       };
 
       // const response = await axios.get(url, { headers });

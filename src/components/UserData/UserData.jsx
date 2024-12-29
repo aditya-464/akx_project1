@@ -17,6 +17,7 @@ const UserData = (props) => {
   const [deleteUserModalVisible, setdeleteUserModalVisible] = useState(false);
   const [deleteUserDetails, setDeleteUserDetails] = useState("");
   const { refreshUserCount } = useSelector((state) => state.page);
+  const { currentUser, tenant } = useSelector((state) => state.page);
 
   // Toggle menu visibility for a specific item
   const toggleMenu = (id) => {
@@ -69,10 +70,10 @@ const UserData = (props) => {
   const getActualData = async () => {
     try {
       // const url = "http://84.247.171.46:8080/userProfile";
-      const tenantID = "vmodaqa";
+      // const tenantID = "vmodaqa";
 
       const headers = {
-        "X-TenantID": tenantID,
+        "X-TenantID": tenant,
       };
 
       // const response = await axios.get(url, { headers });

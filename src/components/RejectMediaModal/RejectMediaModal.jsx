@@ -5,6 +5,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 const RejectMediaModal = ({ show, close, mediaDetails }) => {
+  const { currentUser, tenant } = useSelector((state) => state.page);
   const dispatch = useDispatch();
 
   const showSuccessToast = (message) => {
@@ -23,9 +24,9 @@ const RejectMediaModal = ({ show, close, mediaDetails }) => {
     try {
       const id = mediaDetails.id;
       const headers = {
-        "X-TenantID": "vmodaqa",
+        "X-TenantID": tenant,
       };
-      const approvedBy = 19;
+      const approvedBy = currentUser.id;
       const status = false;
 
       const response = await axios.put(
