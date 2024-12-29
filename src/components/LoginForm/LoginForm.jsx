@@ -2,13 +2,18 @@ import React, { useEffect, useState } from "react";
 import "./LoginForm.css";
 import login_img from "../../assets/images/login2.webp";
 import { useSelector, useDispatch } from "react-redux";
-import { changePage, setCurrentUser, setTenant } from "../../redux/page.js";
+import {
+  changePage,
+  setCurrentUser,
+  setTenant,
+  setTenantOptions,
+} from "../../redux/page.js";
 import LoginPageDropdown from "../LoginPageDropdown/LoginPageDropdown.jsx";
 import LoginFormDropdown from "../LoginFormDropdown/LoginFormDropdown.jsx";
 import CryptoJS from "crypto-js";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
   const [username, setUsername] = useState("");
@@ -61,7 +66,7 @@ const LoginForm = () => {
           console.log(response.data.data);
           dispatch(setTenant(dropdownVal));
           dispatch(changePage("otp"));
-          navigate('/otp');
+          navigate("/otp");
         }
       }
     } catch (error) {
@@ -108,6 +113,7 @@ const LoginForm = () => {
           };
           arr.push(obj);
         }
+        dispatch(setTenantOptions(arr));
         setOptions(arr);
       }
     } catch (error) {

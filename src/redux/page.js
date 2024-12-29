@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   page: "home",
   tenant: "",
+  tenantOptions: [],
   currentUser: {},
   refreshUserCount: 1,
   refreshMediaCount: 1,
@@ -121,6 +122,9 @@ export const pageSlice = createSlice({
     setTenant: (state, action) => {
       state.tenant = action.payload;
     },
+    setTenantOptions: (state, action) => {
+      state.tenantOptions = action.payload;
+    },
     setCurrentUser: (state, action) => {
       state.currentUser = action.payload;
     },
@@ -143,6 +147,7 @@ export const pageSlice = createSlice({
 export const {
   changePage,
   setTenant,
+  setTenantOptions,
   setCurrentUser,
   refreshUser,
   refreshMedia,

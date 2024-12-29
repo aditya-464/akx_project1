@@ -22,6 +22,7 @@ import DashboardComponent from "../../components/DashboardComponent/DashboardCom
 import LogoutForm from "../../components/LogoutForm/LogoutForm.jsx";
 import UserCreateModal from "../../components/UserCreateModal/UserCreateModal.jsx";
 import UploadMediaModal from "../../components/UploadMediaModal/UploadMediaModal.jsx";
+import { setTenant } from "../../redux/page.js";
 
 const Dashboard = () => {
   // Function to toggle the popup
@@ -412,7 +413,11 @@ const Dashboard = () => {
                     : "none",
               }}
             >
-              <NavbarDropdown options={options}></NavbarDropdown>
+              <NavbarDropdown
+                returnValue={(val) => {
+                  // dispatch(setTenant(val.name))
+                }}
+              ></NavbarDropdown>
             </div>
             {/* <div className="bell-icon">
               <VscBellDot size={24}></VscBellDot>

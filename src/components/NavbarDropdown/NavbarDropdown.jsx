@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Select from "react-dropdown-select";
 import "./NavbarDropdown.css";
 import { IoIosArrowDown } from "react-icons/io";
+import { useSelector, useDispatch } from "react-redux";
 
 // const options = [
 //   {
@@ -30,30 +31,43 @@ import { IoIosArrowDown } from "react-icons/io";
 //   },
 // ];
 
-const NavbarDropdown = (props) => {
-  const { options } = props;
+const NavbarDropdown = ({ returnValue }) => {
+  const { tenantOptions, tenant } = useSelector((state) => state.page);
 
   const [option, setOption] = useState("");
 
   const handleSetOption = (values) => {
-    console.log(values[0]);
+    returnValue(values[0]);
   };
 
+  useEffect(() => {
+    // Set a specific option as the initial one
+    if (tenantOptions && tenantOptions.length > 0) {
+      const defaultOption = tenantOptions.find((opt) => opt.name === tenant);
+      if (defaultOption) {
+        setOption([defaultOption]); // Wrap in an array since react-dropdown-select expects an array
+      }
+    }
+  }, [tenantOptions]);
+
   return (
-    <Select
-      className="navbar-dropdown"
-      options={options}
-      labelField="name"
-      valueField="name"
-      placeholder="Select brand..."
-      dropdownHandleRenderer={() => (
-        // <span style={{ width: "20px", height: "20px" }}>▼</span>
-        <div className="dropdown-icon-div">
-          <IoIosArrowDown color="#36454f" />
-        </div>
-      )}
-      onChange={(values) => handleSetOption(values)}
-    />
+    tenantOptions && (
+      <Select
+        values={option}
+        className="navbar-dropdown"
+        options={tenantOptions}
+        labelField="name"
+        valueField="name"
+        placeholder="Select brand..."
+        dropdownHandleRenderer={() => (
+          // <span style={{ width: "20px", height: "20px" }}>▼</span>
+          <div className="dropdown-icon-div">
+            <IoIosArrowDown color="#36454f" />
+          </div>
+        )}
+        onChange={(values) => handleSetOption(values)}
+      />
+    )
   );
 };
 

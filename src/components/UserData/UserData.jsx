@@ -89,7 +89,7 @@ const UserData = (props) => {
 
   useEffect(() => {
     getActualData();
-  }, [refreshUserCount]);
+  }, [refreshUserCount, tenant]);
 
   return (
     actualData && (
