@@ -121,6 +121,7 @@ const MediaData = () => {
       const response = await axios.get("/media/all", { headers });
       if (response.status === 200) {
         setActualData(response.data.data);
+        // console.log(response.data.data);
       }
     } catch (error) {
       console.log(error.message);
@@ -172,7 +173,8 @@ const MediaData = () => {
               <p className="media-heading-id">Id</p>
               <p className="media-heading-image">Preview</p>
               <p className="media-heading-name">Name</p>
-              <p className="media-heading-size">Size</p>
+              {/* <p className="media-heading-size">Size</p> */}
+              <p className="media-heading-size">Status</p>
               <p className="media-heading-uploaded-by">Uploaded By</p>
               <p className="media-heading-uploaded-at">Uploaded At</p>
               <div
@@ -209,7 +211,8 @@ const MediaData = () => {
                     {item.fileName}
                   </p>
                   <p className="media-heading-size media-data-item">
-                    {(item.byteSize / (1024 * 1024)).toFixed(1)} MB
+                    {/* {(item.byteSize / (1024 * 1024)).toFixed(1)} MB */}
+                    {item.approvedStatus === true ? "Approved" : "Not Approved"}
                   </p>
                   <p className="media-heading-uploaded-by media-data-item">
                     {item.uploadedBy.name}

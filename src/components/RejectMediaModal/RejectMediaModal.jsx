@@ -3,6 +3,7 @@ import "./RejectMediaModal.css";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { refreshMedia } from "../../redux/page";
 
 const RejectMediaModal = ({ show, close, mediaDetails }) => {
   const { currentUser, tenant } = useSelector((state) => state.page);
@@ -38,6 +39,7 @@ const RejectMediaModal = ({ show, close, mediaDetails }) => {
       );
 
       if (response.status === 200) {
+        dispatch(refreshMedia());
         showSuccessToast(response.data.message);
       }
 
