@@ -13,7 +13,7 @@ function App() {
       {page == "login" && <Login></Login>}
       {page == "otp" && <Otp></Otp>}
       {page == "home" && <Dashboard></Dashboard>}
-      <ToastContainer autoClose={2500}></ToastContainer>
+      <ToastContainer autoClose={2500} limit={1}></ToastContainer>
     </>
   );
 }
