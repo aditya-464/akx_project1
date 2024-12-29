@@ -419,7 +419,7 @@ const Dashboard = () => {
             >
               <NavbarDropdown
                 returnValue={(val) => {
-                  dispatch(setTenant(val.name))
+                  dispatch(setTenant(val));
                 }}
               ></NavbarDropdown>
             </div>
