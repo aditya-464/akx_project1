@@ -145,7 +145,7 @@ const MediaData = () => {
 
   useEffect(() => {
     getActualData();
-  }, [refreshMediaCount]);
+  }, [refreshMediaCount, tenant]);
 
   if (!actualData) {
     return (
