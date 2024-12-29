@@ -8,6 +8,7 @@ import LoginFormDropdown from "../LoginFormDropdown/LoginFormDropdown.jsx";
 import CryptoJS from "crypto-js";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
   const [username, setUsername] = useState("");
@@ -15,6 +16,7 @@ const LoginForm = () => {
   const [dropdownVal, setDropdownVal] = useState("");
   const [options, setOptions] = useState(null);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const showSuccessToast = (message) => {
     toast.success(message, {
@@ -58,6 +60,7 @@ const LoginForm = () => {
           dispatch(setCurrentUser(response.data.data));
           dispatch(setTenant(dropdownVal));
           dispatch(changePage("otp"));
+          navigate('/otp');
         }
       }
     } catch (error) {

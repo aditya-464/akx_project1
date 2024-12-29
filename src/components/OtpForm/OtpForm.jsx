@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { changePage } from "../../redux/page";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const OtpForm = () => {
   const [length, setLength] = useState(6);
@@ -13,6 +14,7 @@ const OtpForm = () => {
   const [timeLeft, setTimeLeft] = useState(59);
   const { currentUser, tenant } = useSelector((state) => state.page);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const inputRefs = useRef([]);
 
@@ -105,6 +107,7 @@ const OtpForm = () => {
 
         if (response.status === 200) {
           dispatch(changePage("home"));
+          navigate("/home");
         }
       }
     } catch (error) {

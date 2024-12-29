@@ -1,13 +1,19 @@
 import React from "react";
 import "./LogoutForm.css";
+import { useNavigate } from "react-router-dom";
 
 const LogoutForm = () => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    navigate("/login");
+  };
   return (
     <div className="logout-container">
       <div className="logout-form">
         <p className="logout-ask-text">Are you sure, you wan't to logout?</p>
         <div className="logout-buttons-container">
-          <div className="logout-yes-button">
+          <div className="logout-yes-button" onClick={handleLogout}>
             <p>Yes</p>
           </div>
           <div className="logout-no-button">
