@@ -35,12 +35,22 @@ const LoginForm = () => {
     });
   };
 
+  // const encrypt = (plainText, secretKey) => {
+  //   const keyBytes = CryptoJS.enc.Utf8.parse(secretKey);
+  //   const encrypted = CryptoJS.AES.encrypt(plainText, keyBytes, {
+  //     mode: CryptoJS.mode.ECB,
+  //   }).toString();
+  //   return encrypted;
+  // };
+
   const encrypt = (plainText, secretKey) => {
     const keyBytes = CryptoJS.enc.Utf8.parse(secretKey);
     const encrypted = CryptoJS.AES.encrypt(plainText, keyBytes, {
       mode: CryptoJS.mode.ECB,
+      padding: CryptoJS.pad.Pkcs7, // Ensure padding is applied
     }).toString();
-    return encrypted;
+
+    return encrypted; // Base64 encoded string
   };
 
   const loginFunction = async () => {
@@ -48,6 +58,9 @@ const LoginForm = () => {
       if (username != "" && password != "" && dropdownVal != "") {
         const secretKey = import.meta.env.VITE_SECRET_KEY;
         const encryptedKey = encrypt(password, secretKey);
+
+        console.log(encryptedKey);
+        
 
         const headers = {
           "X-TenantID": dropdownVal,
