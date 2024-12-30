@@ -61,6 +61,8 @@ const DoughnutChart = ({ actualData }) => {
       ],
     };
 
+    console.log(actualData);
+
     setFinalData(data);
   };
 
@@ -68,7 +70,24 @@ const DoughnutChart = ({ actualData }) => {
     getMediaValues();
   }, [actualData]);
 
-  return finalData && <Doughnut data={finalData} options={options} />;
+  if (actualData && Object.keys(actualData.mediaTypeCounts).length === 0) {
+    return (
+      <div
+        style={{
+          textAlign: "center",
+          fontSize: "14px",
+          fontWeight: "500",
+          // margin: "2rem 0rem",
+        }}
+      >
+        <p>No data</p>
+      </div>
+    );
+  }
+
+  return (
+    actualData && finalData && <Doughnut data={finalData} options={options} />
+  );
 };
 
 export default DoughnutChart;

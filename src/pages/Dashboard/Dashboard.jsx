@@ -411,7 +411,8 @@ const Dashboard = () => {
               style={{
                 display:
                   (dashboardComponent == "users" ||
-                    dashboardComponent == "media") &&
+                    dashboardComponent == "media" ||
+                    dashboardComponent == "dashboard") &&
                   currentUser.userType === "SUPER_ADMIN"
                     ? "block"
                     : "none",

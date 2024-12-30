@@ -122,7 +122,7 @@ const DashboardComponent = () => {
 
   return (
     <>
-      {/* <p id="dashboard-heading-text">Dashboard</p> */}
+      <p id="dashboard-heading-text">Dashboard</p>
       {actualData && (
         <div className="dashboard-component-container">
           <div className="dashboard-left-section">
