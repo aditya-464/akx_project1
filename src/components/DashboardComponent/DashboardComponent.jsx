@@ -28,6 +28,9 @@ import AreaChartComp from "../Charts/AreaChartComp";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { MdPermMedia } from "react-icons/md";
+import { FaUser, FaUserTie } from "react-icons/fa6";
+import { BsBriefcaseFill } from "react-icons/bs";
 
 const DashboardComponent = () => {
   const { currentUser, tenant } = useSelector((state) => state.page);
@@ -115,65 +118,131 @@ const DashboardComponent = () => {
     <>
       {/* <p id="dashboard-heading-text">Dashboard</p> */}
       <div className="dashboard-component-container">
-        <div className="area-chart-container">
-          <p className="area-chart-heading-text">User creation count</p>
-          <AreaChartComp></AreaChartComp>
-        </div>
-
-        <div className="bottom-charts-container">
-          <div className="bottom-chart add-bottom-spacing">
-            <p className="doughnut-chart-heading-text">Media count</p>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <div className="doughnut-chart-container">
-                <DoughnutChart></DoughnutChart>
+        <div className="dashboard-left-section">
+          <div className="dashboard-component-left-top-section">
+            <div className="dashboard-text-data-group">
+              <div className="total-users-div">
+                <p className="total-users-heading">Users</p>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <p className="total-users-count">
+                    10
+                    <span style={{ fontSize: "16px", fontWeight: "600" }}>
+                      +
+                    </span>
+                  </p>
+                  <FaUser size={"15"}></FaUser>
+                </div>
+                <p className="total-users-sub-heading">Active users count</p>
+              </div>
+              <div className="total-media-div">
+                <p className="total-media-heading">Media</p>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <p className="total-media-count">25</p>
+                  <MdPermMedia size={"16"}></MdPermMedia>
+                </div>
+                <p className="total-media-sub-heading">Present Media count</p>
+              </div>
+              <div className="total-client-div">
+                <p className="total-client-heading">Clients</p>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <p className="total-client-count">2</p>
+                  <BsBriefcaseFill size={"17"}></BsBriefcaseFill>
+                </div>
+                <p className="total-client-sub-heading">
+                  Current clients count
+                </p>
               </div>
             </div>
-            <div
-              style={{
-                width: "100%",
-                height: "2rem",
-                backgroundColor: "#f1f2f2",
-                marginBottom: "5rem !important",
-                borderBottomLeftRadius: "10px",
-                borderBottomRightRadius: "10px",
-              }}
-            ></div>
-            {/* <div className="bottom-charts-bottom-spacing"></div> */}
+            <div className="area-chart-container">
+              <p className="area-chart-heading-text">User creation count</p>
+              <AreaChartComp></AreaChartComp>
+            </div>
           </div>
 
-          <div className="bottom-chart">
-            <p className="doughnut-chart-heading-text">Media approval count</p>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <div className="doughnut-chart-container">
-                <PieChart></PieChart>
-              </div>
-            </div>
-            <div
-              style={{
-                width: "100%",
-                height: "2rem",
-                backgroundColor: "#f1f2f2",
-                marginBottom: "5rem !important",
-                borderBottomLeftRadius: "10px",
-                borderBottomRightRadius: "10px",
-              }}
-            ></div>
-            {/* <div className="bottom-charts-bottom-spacing"></div> */}
+          <div className="dashboard-component-left-bottom-section">
+            
           </div>
         </div>
-        <div className="bottom-charts-bottom-spacing"></div>
+
+        <div className="dashboard-right-section">
+          <div className="dashboard-component-right-top-section">
+            <div className="bottom-charts-container">
+              <div className="bottom-chart add-bottom-spacing">
+                <p className="doughnut-chart-heading-text">Media count</p>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <div className="doughnut-chart-container">
+                    <DoughnutChart></DoughnutChart>
+                  </div>
+                </div>
+                <div
+                  style={{
+                    width: "100%",
+                    height: "2rem",
+                    backgroundColor: "#f1f2f2",
+                    marginBottom: "5rem !important",
+                    borderBottomLeftRadius: "10px",
+                    borderBottomRightRadius: "10px",
+                  }}
+                ></div>
+                {/* <div className="bottom-charts-bottom-spacing"></div> */}
+              </div>
+
+              <div className="bottom-chart">
+                <p className="doughnut-chart-heading-text">
+                  Media approval count
+                </p>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <div className="doughnut-chart-container">
+                    <PieChart></PieChart>
+                  </div>
+                </div>
+                <div
+                  style={{
+                    width: "100%",
+                    height: "2rem",
+                    backgroundColor: "#f1f2f2",
+                    marginBottom: "5rem !important",
+                    borderBottomLeftRadius: "10px",
+                    borderBottomRightRadius: "10px",
+                  }}
+                ></div>
+                {/* <div className="bottom-charts-bottom-spacing"></div> */}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* <div className="bottom-charts-bottom-spacing"></div> */}
       </div>
     </>
   );
