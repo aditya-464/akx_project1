@@ -1,0 +1,225 @@
+#recent-users-data-container {
+  background-color: #f1f2f2;
+  margin-top: 3rem;
+  padding: 2rem;
+  border-radius: 10px;
+  overflow-y: auto; 
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  position: relative;
+}
+
+.recent-users-text {
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 2.5rem;
+}
+
+#recent-users-data-headings-div {
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 2rem;
+}
+
+.recent-users-heading-id {
+  width: 10%;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.recent-users-heading-image {
+  width: 15%;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.recent-users-data-image {
+  width: 35px;
+  height: 35px;
+  object-fit: cover;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.recent-users-heading-name {
+  width: 20%;
+  font-size: 12px;
+  font-weight: 500;
+  padding-right: 1rem;
+}
+.recent-users-heading-mobile {
+  width: 20%;
+  font-size: 12px;
+  font-weight: 500;
+  padding-right: 1rem;
+}
+.recent-users-heading-email {
+  width: 35%;
+  font-size: 12px;
+  font-weight: 500;
+  padding-right: 1rem;
+}
+
+/* .recent-users-heading-created-on {
+  width: 20%;
+  font-size: 12px;
+  font-weight: 500;
+  padding-right: 1rem;
+} */
+
+.recent-users-data-item {
+  font-weight: 400;
+  padding-right: 1rem;
+}
+
+.recent-users-data-option-div {
+  width: 5%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+#recent-users-data-partition-horizontal {
+  width: 100%;
+  height: 1px;
+  background-color: #ebeced;
+  margin-top: 1rem;
+  display: none;
+}
+
+#recent-users-data-content-div {
+  padding-top: 1rem;
+  max-height: 50vh;
+  /* overflow-y: scroll;
+    position: relative; */
+}
+
+.recent-users-data-item-div {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #ebeced;
+  padding: 1rem 0;
+}
+
+.recent-users-data-option-div {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  cursor: pointer;
+  padding-left: 1rem;
+}
+
+/* options pop-up */
+/* Container for the entire menu */
+.recent-users-data-item-div {
+  width: auto;
+  display: flex;
+  align-items: center;
+  position: relative; /* Ensure popup is positioned relative to the user row */
+  /* padding: 0.5rem 1rem; */
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.recent-users-data-item {
+  margin: 0;
+  /* padding: 0.5rem; */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Options button styles */
+.recent-users-data-option-div {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+/* Popup Menu Styling */
+.popup-menu {
+  position: absolute;
+  top: 50%; /* Adjusted to align below the options icon */
+  right: 0; /* Align to the right edge of the row */
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  padding: 0.5rem 0;
+  min-width: 100px;
+}
+
+/* Popup Menu Items */
+.popup-menu-item {
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  color: #333;
+  transition: background-color 0.2s ease;
+}
+
+.popup-menu-item:hover {
+  background-color: #f4f4f4;
+}
+
+/* Mobiile responsiveness CSS */
+
+@media only screen and (max-width: 500px) {
+  #recent-users-data-headings-div {
+    width: max-content;
+  }
+
+  #recent-users-data-content-div {
+    max-height: 65vh;
+  }
+
+  .recent-users-data-item-div {
+    width: max-content;
+  }
+
+  .recent-users-heading-id {
+    width: 15vw;
+  }
+
+  .recent-users-heading-image {
+    width: 20vw;
+  }
+
+  .recent-users-heading-name {
+    width: 30vw;
+  }
+
+  .recent-users-heading-mobile {
+    width: 25vw;
+  }
+
+  .recent-users-heading-email {
+    width: 50vw;
+  }
+
+  .recent-users-heading-created-on {
+    width: 40vw;
+  }
+
+  .recent-users-data-option-div {
+    width: 15vw;
+  }
+
+  .popup-menu {
+    position: absolute;
+    top: 50%;
+    /* left: 160vw; */
+    right: 2rem;
+    min-width: 90px;
+    /* transform: translateY(5px); */
+  }
+
+  .popup-menu-item {
+    font-size: 11px;
+  }
+}

@@ -9,7 +9,7 @@ export const data = {
   datasets: [
     {
       label: "# of Files",
-      data: [72, 28],
+      data: [1, 1],
       backgroundColor: ["#1a7851", "#002a19"],
       borderColor: ["#f1f2f2", "#f1f2f2"],
       borderWidth: 1,
