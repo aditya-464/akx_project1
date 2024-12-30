@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./DashboardComponent.css";
 // import {
 //   BarChart,
@@ -25,8 +25,13 @@ import "./DashboardComponent.css";
 import DoughnutChart from "../Charts/DoughnutChart";
 import PieChart from "../Charts/PieChart";
 import AreaChartComp from "../Charts/AreaChartComp";
+import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const DashboardComponent = () => {
+  const { currentUser, tenant } = useSelector((state) => state.page);
+
   const data1 = [
     {
       name: "Jan",
@@ -77,6 +82,34 @@ const DashboardComponent = () => {
       val: 16,
     },
   ];
+
+  const showSuccessToast = (message) => {
+    toast.success(message, {
+      position: "bottom-center",
+    });
+  };
+
+  const showErrorToast = (message) => {
+    toast.error(message, {
+      position: "bottom-center",
+    });
+  };
+
+  const getActualData = async () => {
+    try {
+      const headers = {
+        "X-TenantID": tenant,
+      };
+      const response = await axios.get("/dashboard/count", { headers });
+    } catch (error) {
+      console.log(error.message);
+      showErrorToast(error.message);
+    }
+  };
+
+  useEffect(() => {
+    getActualData();
+  }, [tenant]);
 
   return (
     <>

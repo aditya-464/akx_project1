@@ -1,3 +1,7 @@
+.react-dropdown-select {
+  position: relative !important; /* Set parent to relative */
+}
+
 .react-dropdown-select-dropdown {
   position: absolute !important;
 }
@@ -46,6 +50,12 @@
 /* dropdown menu container */
 
 .react-dropdown-select-dropdown {
+  position: absolute !important; /* Keep it positioned absolutely */
+  top: 110% !important; /* Place it right below the select box */
+  left: 0 !important;
+  z-index: 1000; /* Ensure it appears above other elements */
+
+  /*  */
   background-color: #f1f2f2 !important;
   padding: 1rem 0rem !important;
   max-height: 25rem; /* Limit the height */
@@ -93,12 +103,10 @@
   color: #36454f !important; /* Light gray on hover */
 }
 
-
-
 /* Mobile Responsiveness CSS */
 
-@media only screen and (max-width:500px) {
-  .navbar-dropdown{
+@media only screen and (max-width: 500px) {
+  .navbar-dropdown {
     width: 160px !important;
   }
 }

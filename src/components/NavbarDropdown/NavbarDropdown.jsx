@@ -37,7 +37,9 @@ const NavbarDropdown = ({ returnValue }) => {
   const [option, setOption] = useState("");
 
   const handleSetOption = (values) => {
-    returnValue(values[0].name);
+    if (values.length > 0) {
+      returnValue(values[0].name);
+    }
   };
 
   useEffect(() => {
