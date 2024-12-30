@@ -127,6 +127,21 @@ const AreaChartComp = ({ actualData }) => {
     getUserDataset();
   }, [actualData]);
 
+  if (actualData && Object.keys(actualData.usersByMonth).length === 0) {
+    return (
+      <div
+        style={{
+          textAlign: "center",
+          fontSize: "14px",
+          fontWeight: "500",
+          // margin: "2rem 0rem",
+        }}
+      >
+        <p>No data</p>
+      </div>
+    );
+  }
+
   return (
     finalData && (
       <>

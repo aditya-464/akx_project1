@@ -9,10 +9,11 @@ import { toast } from "react-toastify";
 import Avatar from "react-avatar";
 import { ColorRing } from "react-loader-spinner";
 
-const RecentUserData = (props) => {
+const RecentUserData = ({ completeData }) => {
   // const { dummy_data } = props;
 
   const [actualData, setActualData] = useState(null);
+
   const [visibleMenuId, setVisibleMenuId] = useState(null); // Tracks the menu's visibility
   const [editUserModalVisible, setEditUserModalVisible] = useState(false);
   const [editUserDetails, setEditUserDetails] = useState("");
@@ -57,38 +58,46 @@ const RecentUserData = (props) => {
   //     setVisibleMenuId(null); // Close the menu
   //   };
 
-  const showSuccessToast = (message) => {
-    toast.success(message, {
-      position: "bottom-center",
-    });
-  };
+  // const showSuccessToast = (message) => {
+  //   toast.success(message, {
+  //     position: "bottom-center",
+  //   });
+  // };
 
-  const showErrorToast = (message) => {
-    toast.error(message, {
-      position: "bottom-center",
-    });
-  };
+  // const showErrorToast = (message) => {
+  //   toast.error(message, {
+  //     position: "bottom-center",
+  //   });
+  // };
 
-  const getActualData = async () => {
-    try {
-      const headers = {
-        "X-TenantID": tenant,
-      };
+  // const getActualData = async () => {
+  //   try {
+  //     const headers = {
+  //       "X-TenantID": tenant,
+  //     };
 
-      // const response = await axios.get(url, { headers });
-      const response = await axios.get("/userProfile", { headers });
-      if (response.data.data) {
-        setActualData(response.data.data);
-      }
-    } catch (error) {
-      console.log(error.message);
-      showErrorToast(error.message);
-    }
+  //     // const response = await axios.get(url, { headers });
+  //     const response = await axios.get("/userProfile", { headers });
+  //     if (response.data.data) {
+  //       setActualData(response.data.data);
+  //     }
+  //   } catch (error) {
+  //     console.log(error.message);
+  //     showErrorToast(error.message);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   getActualData();
+  // }, [refreshUserCount, tenant]);
+
+  const getActualData = () => {
+    setActualData(completeData.recentUser);
   };
 
   useEffect(() => {
     getActualData();
-  }, [refreshUserCount, tenant]);
+  }, [completeData]);
 
   const getStatusColor = (status) => {
     switch (status) {

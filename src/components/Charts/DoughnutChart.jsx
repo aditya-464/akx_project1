@@ -61,7 +61,7 @@ const DoughnutChart = ({ actualData }) => {
       ],
     };
 
-    console.log(actualData);
+    // console.log(actualData);
 
     setFinalData(data);
   };

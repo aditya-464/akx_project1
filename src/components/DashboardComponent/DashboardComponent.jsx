@@ -32,6 +32,7 @@ import { MdPermMedia } from "react-icons/md";
 import { FaUser, FaUserTie } from "react-icons/fa6";
 import { BsBriefcaseFill } from "react-icons/bs";
 import RecentUserData from "../RecentUserData/RecentUserData";
+import { ColorRing } from "react-loader-spinner";
 
 const DashboardComponent = () => {
   const { currentUser, tenant, refreshUserCount, refreshMediaCount } =
@@ -251,7 +252,7 @@ const DashboardComponent = () => {
             </div>
 
             <div className="dashboard-component-left-bottom-section">
-              <RecentUserData></RecentUserData>
+              <RecentUserData completeData={actualData}></RecentUserData>
             </div>
           </div>
 
@@ -316,6 +317,34 @@ const DashboardComponent = () => {
           </div>
 
           {/* <div className="bottom-charts-bottom-spacing"></div> */}
+        </div>
+      )}
+
+      {!actualData && (
+        <div
+          style={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+            marginTop: "5rem",
+          }}
+        >
+          <ColorRing
+            visible={!actualData ? true : false}
+            height="70"
+            width="70"
+            ariaLabel="color-ring-loading"
+            wrapperStyle={{}}
+            wrapperClass="color-ring-wrapper"
+            colors={[
+              "#03c988",
+              "#03c988",
+              "#03c988",
+              "#03c988",
+              "#03c988",
+              "#03c988",
+            ]}
+          />
         </div>
       )}
     </>
