@@ -33,6 +33,10 @@ html {
   font-weight: 500;
 }
 
+input{
+  font-family: "Poppins", sans-serif !important;
+}
+
 /* .Toastify__progress-bar--success {
   background-color: #4caf50 !important;
 }

@@ -23,6 +23,8 @@ import LogoutForm from "../../components/LogoutForm/LogoutForm.jsx";
 import UserCreateModal from "../../components/UserCreateModal/UserCreateModal.jsx";
 import UploadMediaModal from "../../components/UploadMediaModal/UploadMediaModal.jsx";
 import { setTenant } from "../../redux/page.js";
+import UserDataFilterModal from "../../components/UserDataFilterModal/UserDataFilterModal.jsx";
+import MediaDataFilterModal from "../../components/MediaDataFilterModal/MediaDataFilterModal.jsx";
 
 const Dashboard = () => {
   // Function to toggle the popup
@@ -35,7 +37,9 @@ const Dashboard = () => {
   const [data_media, setData_media] = useState("");
   const { currentUser, tenant } = useSelector((state) => state.page);
   const [createUserModalVisible, setCreateUserModalVisible] = useState(false);
+  const [userFilterModalVisible, setUserFilterModalVisible] = useState(false);
   const [uploadMediaModalVisible, setUploadMediaModalVisible] = useState(false);
+  const [mediaFilterModalVisible, setMediaFilterModalVisible] = useState(false);
 
   const dispatch = useDispatch();
   const options = [
@@ -92,8 +96,16 @@ const Dashboard = () => {
     setCreateUserModalVisible(true);
   };
 
+  const handleUserFilterVisibility = () => {
+    setUserFilterModalVisible(true);
+  };
+
   const handleUploadMediaFunc = () => {
     setUploadMediaModalVisible(true);
+  };
+
+  const handleMediaFilterVisibility = () => {
+    setMediaFilterModalVisible(true);
   };
 
   const togglePopup = () => {
@@ -450,10 +462,13 @@ const Dashboard = () => {
               <div id="dashboard-content-today-details-div">
                 <p id="users-text">Users</p>
                 <div className="dashboard-user-buttons">
-                  <div id="dashboard-filter-button">
+                  <div
+                    onClick={() => handleUserFilterVisibility()}
+                    id="dashboard-filter-button"
+                  >
                     <IoFilter size={14} />
 
-                    <p>Filter</p>
+                    <p>Filters</p>
                   </div>
                   <div
                     onClick={() => handleCreateUserFunc()}
@@ -538,6 +553,10 @@ const Dashboard = () => {
                   <div className="overlay" onClick={togglePopup}></div>
                 </>
               )} */}
+              <UserDataFilterModal
+                show={userFilterModalVisible}
+                close={() => setUserFilterModalVisible(false)}
+              ></UserDataFilterModal>
 
               <UserCreateModal
                 show={createUserModalVisible}
@@ -555,7 +574,10 @@ const Dashboard = () => {
               <div id="dashboard-content-today-details-div">
                 <p id="users-text">Media</p>
                 <div className="dashboard-user-buttons">
-                  <div id="dashboard-filter-button">
+                  <div
+                    onClick={() => handleMediaFilterVisibility()}
+                    id="dashboard-filter-button"
+                  >
                     <IoFilter size={14} />
                     <p>Filters</p>
                   </div>
@@ -636,6 +658,11 @@ const Dashboard = () => {
                   ></div>
                 </>
               )} */}
+              <MediaDataFilterModal
+                show={mediaFilterModalVisible}
+                close={() => setMediaFilterModalVisible(false)}
+              ></MediaDataFilterModal>
+
               <UploadMediaModal
                 show={uploadMediaModalVisible}
                 close={() => setUploadMediaModalVisible(false)}
