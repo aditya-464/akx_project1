@@ -237,22 +237,25 @@ const UserData = ({ userFilterApi }) => {
                     </div>
 
                     {/* Popup Menu */}
-                    {visibleMenuId === item.id && (
-                      <div className="popup-menu">
-                        <p
-                          className="popup-menu-item"
-                          onClick={() => handleEdit(item)}
-                        >
-                          Edit
-                        </p>
-                        <p
-                          className="popup-menu-item"
-                          onClick={() => handleDelete(item)}
-                        >
-                          Delete
-                        </p>
-                      </div>
-                    )}
+                    {visibleMenuId === item.id &&
+                      (currentUser.userType === "SUPER_ADMIN" ||
+                        (currentUser.userType === "ORGANIZATIONAL_ADMIN" &&
+                          item.userType !== "SUPER_ADMIN")) && (
+                        <div className="popup-menu">
+                          <p
+                            className="popup-menu-item"
+                            onClick={() => handleEdit(item)}
+                          >
+                            Edit
+                          </p>
+                          <p
+                            className="popup-menu-item"
+                            onClick={() => handleDelete(item)}
+                          >
+                            Delete
+                          </p>
+                        </div>
+                      )}
                   </div>
                 ))}
               </div>

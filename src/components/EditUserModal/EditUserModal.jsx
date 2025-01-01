@@ -4,6 +4,18 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { refreshUser } from "../../redux/page";
 import { toast } from "react-toastify";
+import LoginFormDropdown from "../LoginFormDropdown/LoginFormDropdown";
+
+const options = [
+  {
+    id: 1,
+    name: "USER",
+  },
+  {
+    id: 2,
+    name: "ORGANIZATIONAL_ADMIN",
+  },
+];
 
 const EditUserModal = ({ show, close, userDetails }) => {
   const [formData, setFormData] = useState({
@@ -11,9 +23,10 @@ const EditUserModal = ({ show, close, userDetails }) => {
     mobile: "",
     email: "",
     brandingLogo: null,
-    userType: "USER",
+    userType: "",
   });
   const [imagePreview, setImagePreview] = useState(null);
+  const [userType, setUserType] = useState(userDetails.userType);
   const { currentUser, tenant } = useSelector((state) => state.page);
   const dispatch = useDispatch();
 
@@ -96,6 +109,7 @@ const EditUserModal = ({ show, close, userDetails }) => {
         email: userDetails.email,
         image: userDetails.image,
         createdAt: userDetails.createdAt,
+        userType: userDetails.userType,
       });
     }
   };
@@ -115,7 +129,7 @@ const EditUserModal = ({ show, close, userDetails }) => {
     handleInitialValuesFunc();
   }, [userDetails]);
 
-  if (!show) return null;
+  if (!show) return <></>;
 
   return (
     <>
@@ -155,6 +169,16 @@ const EditUserModal = ({ show, close, userDetails }) => {
                 className="input-field"
               />
             </div>
+            {currentUser.userType === "SUPER_ADMIN" && userDetails && (
+              <div style={{ marginBottom: "2rem" }}>
+                <p className="user-type-field-heading">User Type</p>
+                <LoginFormDropdown
+                  options={options}
+                  defaultValue={userDetails.userType}
+                  returnValue={(val) => setUserType(val)}
+                ></LoginFormDropdown>
+              </div>
+            )}
             <div>
               <p className="file-label">Choose Profile Image</p>
               <input

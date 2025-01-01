@@ -185,6 +185,7 @@ const LoginForm = () => {
             ></LoginPageDropdown> */}
             <LoginFormDropdown
               options={options}
+              defaultValue={"vmodaqa"}
               returnValue={(val) => setDropdownVal(val)}
             ></LoginFormDropdown>
           </div>
