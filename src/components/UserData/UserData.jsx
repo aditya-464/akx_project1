@@ -9,9 +9,7 @@ import { toast } from "react-toastify";
 import Avatar from "react-avatar";
 import { ColorRing } from "react-loader-spinner";
 
-const UserData = (props) => {
-  // const { dummy_data } = props;
-
+const UserData = ({ userFilterApi }) => {
   const [actualData, setActualData] = useState(null);
   const [visibleMenuId, setVisibleMenuId] = useState(null); // Tracks the menu's visibility
   const [editUserModalVisible, setEditUserModalVisible] = useState(false);
@@ -71,17 +69,20 @@ const UserData = (props) => {
 
   const getActualData = async () => {
     try {
-      // const url = "http://84.247.171.46:8080/userProfile";
-      // const tenantID = "vmodaqa";
-
       const headers = {
         "X-TenantID": tenant,
       };
 
-      // const response = await axios.get(url, { headers });
-      const response = await axios.get("/userProfile", { headers });
-      if (response.data.data) {
-        setActualData(response.data.data);
+      if (userFilterApi == null) {
+        const response = await axios.get("/userProfile", { headers });
+        if (response.data.data) {
+          setActualData(response.data.data);
+        }
+      } else {
+        const response = await axios.get(userFilterApi, { headers });
+        if (response.data.data) {
+          setActualData(response.data.data);
+        }
       }
     } catch (error) {
       console.log(error.message);
@@ -91,7 +92,7 @@ const UserData = (props) => {
 
   useEffect(() => {
     getActualData();
-  }, [refreshUserCount, tenant]);
+  }, [refreshUserCount, tenant, userFilterApi]);
 
   const getStatusColor = (status) => {
     switch (status) {

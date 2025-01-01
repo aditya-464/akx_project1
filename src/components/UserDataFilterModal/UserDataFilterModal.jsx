@@ -12,12 +12,11 @@ const options = [
   "Users",
 ];
 
-const UserDataFilterModal = ({ show, close }) => {
+const UserDataFilterModal = ({ show, close, getUserFilterApi }) => {
   const { currentUser, tenant } = useSelector((state) => state.page);
   const dispatch = useDispatch();
   const [searchId, setSearchId] = useState("");
   const [searchName, setSearchName] = useState("");
-  const [isFilterApplied, setIsFilterApplied] = useState(false);
 
   const initialSelectedOptions = options.reduce((acc, option) => {
     acc[option] = false;
@@ -28,10 +27,36 @@ const UserDataFilterModal = ({ show, close }) => {
     initialSelectedOptions
   );
 
+  // const handleChangeCheckBox = (event) => {
+  //   const { value, checked } = event.target;
+
+  //   // If "Most Recent" is selected, automatically uncheck "Least Recent", and vice versa
+  //   if (value === "Most Recent" && checked) {
+  //     setSelectedOptions({
+  //       "Most Recent": true,
+  //       "Least Recent": false,
+  //       "Organizational Admins": selectedOptions["Organizational Admins"],
+  //       Users: selectedOptions["Users"],
+  //     });
+  //   } else if (value === "Least Recent" && checked) {
+  //     setSelectedOptions({
+  //       "Most Recent": false,
+  //       "Least Recent": true,
+  //       "Organizational Admins": selectedOptions["Organizational Admins"],
+  //       Users: selectedOptions["Users"],
+  //     });
+  //   } else {
+  //     // For other options, simply update the state
+  //     setSelectedOptions((prevOptions) => ({
+  //       ...prevOptions,
+  //       [value]: checked,
+  //     }));
+  //   }
+  // };
+
   const handleChangeCheckBox = (event) => {
     const { value, checked } = event.target;
 
-    // If "Most Recent" is selected, automatically uncheck "Least Recent", and vice versa
     if (value === "Most Recent" && checked) {
       setSelectedOptions({
         "Most Recent": true,
@@ -46,8 +71,21 @@ const UserDataFilterModal = ({ show, close }) => {
         "Organizational Admins": selectedOptions["Organizational Admins"],
         Users: selectedOptions["Users"],
       });
+    } else if (value === "Organizational Admins" && checked) {
+      setSelectedOptions({
+        "Most Recent": selectedOptions["Most Recent"],
+        "Least Recent": selectedOptions["Least Recent"],
+        "Organizational Admins": true,
+        Users: false,
+      });
+    } else if (value === "Users" && checked) {
+      setSelectedOptions({
+        "Most Recent": selectedOptions["Most Recent"],
+        "Least Recent": selectedOptions["Least Recent"],
+        "Organizational Admins": false,
+        Users: true,
+      });
     } else {
-      // For other options, simply update the state
       setSelectedOptions((prevOptions) => ({
         ...prevOptions,
         [value]: checked,
@@ -56,14 +94,46 @@ const UserDataFilterModal = ({ show, close }) => {
   };
 
   const handleApplyFilter = () => {
-    console.log(selectedOptions);
-    setIsFilterApplied(true);
+    const filterAPI = {};
+    if (searchId !== "") {
+      filterAPI["id"] = searchId;
+    }
+    if (searchName !== "") {
+      filterAPI["name"] = searchName;
+    }
+    if (selectedOptions["Least Recent"] === true) {
+      filterAPI["sortBy"] = "createdOn";
+      filterAPI["order"] = "asc";
+    }
+    if (selectedOptions["Most Recent"] === true) {
+      filterAPI["sortBy"] = "createdOn";
+      filterAPI["order"] = "desc";
+    }
+    if (selectedOptions["Organizational Admins"] === true) {
+      filterAPI["userType"] = "ORGANIZATIONAL_ADMIN";
+    }
+    if (selectedOptions["Users"] === true) {
+      filterAPI["userType"] = "USER";
+    }
+
+    let result = "";
+    result = Object.entries(filterAPI)
+      .map(([key, value]) => `${key}=${value}`) // Format each key-value pair as "key=value"
+      .join("&");
+
+    if (result === "") {
+      getUserFilterApi(null);
+    } else {
+      const userFilterUrl = "/userProfile?" + result;
+      getUserFilterApi(userFilterUrl);
+    }
+
     handleClose();
   };
 
   const handleClearAll = () => {
+    getUserFilterApi(null);
     close();
-    setIsFilterApplied(false);
     setSearchId("");
     setSearchName("");
     setSelectedOptions(initialSelectedOptions);

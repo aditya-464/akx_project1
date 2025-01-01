@@ -36,6 +36,8 @@ const Dashboard = () => {
   const [data, setData] = useState("");
   const [data_media, setData_media] = useState("");
   const { currentUser, tenant } = useSelector((state) => state.page);
+  const [userFilterApi, setUserFilterApi] = useState(null);
+  const [mediaFilterApi, setMediaFilterApi] = useState(null);
   const [createUserModalVisible, setCreateUserModalVisible] = useState(false);
   const [userFilterModalVisible, setUserFilterModalVisible] = useState(false);
   const [uploadMediaModalVisible, setUploadMediaModalVisible] = useState(false);
@@ -556,6 +558,7 @@ const Dashboard = () => {
               <UserDataFilterModal
                 show={userFilterModalVisible}
                 close={() => setUserFilterModalVisible(false)}
+                getUserFilterApi={(val) => setUserFilterApi(val)}
               ></UserDataFilterModal>
 
               <UserCreateModal
@@ -564,7 +567,12 @@ const Dashboard = () => {
               ></UserCreateModal>
 
               <div id="dashboard-content-user-details-div">
-                {data && <UserData dummy_data={data}></UserData>}
+                {data && (
+                  <UserData
+                    userFilterApi={userFilterApi}
+                    dummy_data={data}
+                  ></UserData>
+                )}
               </div>
             </div>
           )}
