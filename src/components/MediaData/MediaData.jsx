@@ -11,7 +11,7 @@ import FilePreviewModal from "../FilePreviewModal/FilePreviewModal.jsx";
 import { toast } from "react-toastify";
 import { ColorRing } from "react-loader-spinner";
 
-const MediaData = () => {
+const MediaData = ({ mediaFilterApi }) => {
   const { currentUser, tenant, refreshMediaCount } = useSelector(
     (state) => state.page
   );
@@ -128,14 +128,25 @@ const MediaData = () => {
       const headers = {
         "X-TenantID": tenant,
       };
-      const response = await axios.get("/media/all", { headers });
-      if (response.status === 200) {
-        if (currentUser.userType === "USER") {
-          getClearData(response.data.data);
-        } else {
-          setActualData(response.data.data);
+
+      if (mediaFilterApi == null) {
+        const response = await axios.get("/media/all", { headers });
+        if (response.status === 200) {
+          if (currentUser.userType === "USER") {
+            getClearData(response.data.data);
+          } else {
+            setActualData(response.data.data);
+          }
         }
-        // console.log(response.data.data);
+      } else {
+        const response = await axios.get(mediaFilterApi, { headers });
+        if (response.status === 200) {
+          if (currentUser.userType === "USER") {
+            getClearData(response.data.data);
+          } else {
+            setActualData(response.data.data);
+          }
+        }
       }
     } catch (error) {
       console.log(error.message);
@@ -145,7 +156,7 @@ const MediaData = () => {
 
   useEffect(() => {
     getActualData();
-  }, [refreshMediaCount, tenant]);
+  }, [refreshMediaCount, tenant, mediaFilterApi]);
 
   if (!actualData) {
     return (

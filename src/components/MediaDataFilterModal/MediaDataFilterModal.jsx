@@ -16,14 +16,13 @@ const options = [
   "Video",
 ];
 
-const MediaDataFilterModal = ({ show, close }) => {
+const MediaDataFilterModal = ({ show, close, getMediaFilterApi }) => {
   const { currentUser, tenant } = useSelector((state) => state.page);
   const dispatch = useDispatch();
   const [searchId, setSearchId] = useState("");
   const [searchName, setSearchName] = useState("");
   const [uploadedByName, setUploadedByName] = useState("");
   const [approvedByName, setApprovedByName] = useState("");
-  const [isFilterApplied, setIsFilterApplied] = useState(false);
 
   const initialSelectedOptions = options.reduce((acc, option) => {
     acc[option] = false;
@@ -70,14 +69,83 @@ const MediaDataFilterModal = ({ show, close }) => {
   };
 
   const handleApplyFilter = () => {
-    console.log(selectedOptions);
-    setIsFilterApplied(true);
+    const filterAPI = {};
+    if (searchId !== "") {
+      filterAPI["id"] = searchId;
+    }
+    if (searchName !== "") {
+      filterAPI["fileName"] = searchName;
+    }
+    if (uploadedByName !== "") {
+      filterAPI["uploadedByName"] = uploadedByName;
+    }
+    // if (approvedByName !== "") {
+    //   filterAPI["approvedByName"] = approvedByName;
+    // }
+    if (selectedOptions["Least Recent"] === true) {
+      filterAPI["sortBy"] = "uploadDate";
+      filterAPI["order"] = "asc";
+    }
+    if (selectedOptions["Most Recent"] === true) {
+      filterAPI["sortBy"] = "uploadDate";
+      filterAPI["order"] = "desc";
+    }
+    if (selectedOptions["Approved"] === true) {
+      filterAPI["approvedStatus"] = "true";
+    }
+    if (selectedOptions["Not Approved"] === true) {
+      filterAPI["approvedStatus"] = "false";
+    }
+    if (selectedOptions["Image"] === true) {
+      if (filterAPI.hasOwnProperty("mediaTypes")) {
+        filterAPI["mediaTypes"] += "IMAGE,";
+      } else {
+        filterAPI["mediaTypes"] = "IMAGE,";
+      }
+    }
+    if (selectedOptions["Document"] === true) {
+      if (filterAPI.hasOwnProperty("mediaTypes")) {
+        filterAPI["mediaTypes"] += "DOCUMENT,FILE,";
+      } else {
+        filterAPI["mediaTypes"] = "DOCUMENT,FILE,";
+      }
+    }
+    if (selectedOptions["Audio"] === true) {
+      if (filterAPI.hasOwnProperty("mediaTypes")) {
+        filterAPI["mediaTypes"] += "AUDIO,";
+      } else {
+        filterAPI["mediaTypes"] = "AUDIO,";
+      }
+    }
+    if (selectedOptions["Video"] === true) {
+      if (filterAPI.hasOwnProperty("mediaTypes")) {
+        filterAPI["mediaTypes"] += "VIDEO,";
+      } else {
+        filterAPI["mediaTypes"] = "VIDEO,";
+      }
+    }
+
+    if (filterAPI.hasOwnProperty("mediaTypes")) {
+      filterAPI["mediaTypes"] = filterAPI["mediaTypes"].slice(0, -1);
+    }
+
+    let result = "";
+    result = Object.entries(filterAPI)
+      .map(([key, value]) => `${key}=${value}`) // Format each key-value pair as "key=value"
+      .join("&");
+
+    if (result === "") {
+      getMediaFilterApi(null);
+    } else {
+      const mediaFilterUrl = "/media/all?" + result;
+      getMediaFilterApi(mediaFilterUrl);
+    }
     handleClose();
   };
 
   const handleClearAll = () => {
+    getMediaFilterApi(null);
     close();
-    setIsFilterApplied(false);
     setSearchId("");
     setSearchName("");
     setUploadedByName("");

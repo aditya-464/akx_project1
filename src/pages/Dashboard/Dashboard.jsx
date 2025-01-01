@@ -245,19 +245,6 @@ const Dashboard = () => {
     }
   };
 
-  // const navDiv = document.getElementById("dashboard-navigation-div");
-  // const menuIcon = document.querySelector(".navbar-menu-icon");
-
-  // menuIcon.addEventListener("click", () => {
-  //   navDiv.classList.add("active");
-  // });
-
-  // navDiv.addEventListener("click", (e) => {
-  //   if (e.target.classList.contains("dashboard-navigation-item")) {
-  //     navDiv.classList.remove("active");
-  //   }
-  // });
-
   const toggleNav = () => {
     setIsNavOpen(!isNavOpen);
   };
@@ -337,6 +324,8 @@ const Dashboard = () => {
             className="dashboard-navigation-item"
             onClick={() => {
               setDashboardComponent("dashboard");
+              setUserFilterApi(null);
+              setMediaFilterApi(null);
             }}
           >
             <div className="dashboard-navigation-icons">
@@ -350,6 +339,7 @@ const Dashboard = () => {
               className="dashboard-navigation-item"
               onClick={() => {
                 setDashboardComponent("users");
+                setMediaFilterApi(null);
               }}
             >
               <div className="dashboard-navigation-icons">
@@ -363,6 +353,7 @@ const Dashboard = () => {
             className="dashboard-navigation-item"
             onClick={() => {
               setDashboardComponent("media");
+              setUserFilterApi(null);
             }}
           >
             <div className="dashboard-navigation-icons">
@@ -375,6 +366,8 @@ const Dashboard = () => {
             className="dashboard-navigation-item"
             onClick={() => {
               setDashboardComponent("logout");
+              setUserFilterApi(null);
+              setMediaFilterApi(null);
             }}
           >
             <div className="dashboard-navigation-icons">
@@ -382,12 +375,6 @@ const Dashboard = () => {
             </div>
             <p>Logout</p>
           </div>
-          {/* <div className="dashboard-navigation-item">
-            <div className="dashboard-navigation-icons">
-              <IoMdSettings size={14} color="white"></IoMdSettings>
-            </div>
-            <p>Settings</p>
-          </div> */}
         </div>
       </div>
       <div id="dashboard-content-div">
@@ -398,7 +385,7 @@ const Dashboard = () => {
               style={{
                 display:
                   dashboardComponent == "users" || dashboardComponent == "media"
-                    ? "block"
+                    ? "none"
                     : "none",
               }}
             >
@@ -453,8 +440,6 @@ const Dashboard = () => {
           </div>
         </div>
         <div id="dashboard-content-details">
-          {/* <div id="dashboard-content-user-graph-div"></div> */}
-
           {dashboardComponent == "dashboard" && (
             <DashboardComponent></DashboardComponent>
           )}
@@ -481,80 +466,6 @@ const Dashboard = () => {
                 </div>
               </div>
 
-              {/* pop-up */}
-              {/* {isPopupVisible && (
-                <>
-                  <div className="popup-container">
-                    <div className="popup">
-                      <p id="enter-user-details-text">Enter User Details</p>
-                      <form onSubmit={handleSubmit} className="popup-form">
-                        <div className="login-fields-group-user">
-                          <p>Name</p>
-                          <input
-                            type="text"
-                            name="name"
-                            value={formData.name}
-                            onChange={handleChange}
-                            // placeholder="Enter your name"
-                            required
-                            className="input-field"
-                          />
-                          <p>Mobile</p>
-                          <input
-                            type="text"
-                            name="mobile"
-                            value={formData.mobile}
-                            onChange={handleChange}
-                            // placeholder="Enter your mobile number"
-                            required
-                            className="input-field"
-                          />
-                          <p>Email</p>
-                          <input
-                            type="email"
-                            name="email"
-                            value={formData.email}
-                            onChange={handleChange}
-                            // placeholder="Enter your email"
-                            required
-                            className="input-field"
-                          />
-                        </div>
-                        <div>
-                          <p className="file-label">Choose Profile Image</p>
-                          <input
-                            type="file"
-                            accept="image/*"
-                            onChange={handleImageChange}
-                            className="input-field"
-                          />
-                          {imagePreview && (
-                            <img
-                              src={imagePreview}
-                              alt="Profile Preview"
-                              className="profile-img-preview"
-                            />
-                          )}
-                        </div>
-
-                        <div className="user-create-buttons-div">
-                          <div
-                            className="user-create-cancel-btn"
-                            onClick={close}
-                          >
-                            <p>Cancel</p>
-                          </div>
-                          <div type="submit" className="user-create-submit-btn">
-                            <p>Create</p>
-                          </div>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-
-                  <div className="overlay" onClick={togglePopup}></div>
-                </>
-              )} */}
               <UserDataFilterModal
                 show={userFilterModalVisible}
                 close={() => setUserFilterModalVisible(false)}
@@ -567,12 +478,7 @@ const Dashboard = () => {
               ></UserCreateModal>
 
               <div id="dashboard-content-user-details-div">
-                {data && (
-                  <UserData
-                    userFilterApi={userFilterApi}
-                    dummy_data={data}
-                  ></UserData>
-                )}
+                {data && <UserData userFilterApi={userFilterApi}></UserData>}
               </div>
             </div>
           )}
@@ -598,77 +504,10 @@ const Dashboard = () => {
                 </div>
               </div>
 
-              {/* Pop-up */}
-              {/* {isMediaPopupVisible && (
-                <>
-                  <div className="popup-container-media">
-                    <div className="popup-media">
-                      <p id="upload-media-text">Upload Media</p>
-                      <form
-                        onSubmit={handleMediaSubmit}
-                        className="popup-form-media"
-                      >
-                        <div>
-                          <p>Select File Format</p>
-                          <select
-                            name="fileType"
-                            value={formMediaData.fileType}
-                            onChange={handleMediaDropdownChange}
-                            className="input-field-media"
-                          >
-                            <option value="">-- Select File Format --</option>
-                            <option value="image">Image</option>
-                            <option value="pdf">PDF</option>
-                            <option value="doc">Word Document</option>
-                            <option value="excel">Excel</option>
-                            <option value="txt">Text File</option>
-                          </select>
-                        </div>
-                        <div>
-                          <p className="file-label-media">Choose File</p>
-                          <input
-                            type="file"
-                            accept={getAcceptedMediaFileTypes(
-                              formMediaData.fileType
-                            )}
-                            onChange={handleMediaFileChange}
-                            className="input-field-media"
-                          />
-                          {fileMediaPreview && (
-                            <div className="media-preview-container">
-                              {formMediaData.fileType === "image" && (
-                                <img
-                                  src={fileMediaPreview}
-                                  alt="Media Preview"
-                                  className="media-img-preview"
-                                />
-                              )}
-                              {formMediaData.fileType !== "image" && (
-                                <p className="media-doc-preview">
-                                  Selected File:{" "}
-                                  {formMediaData.file?.name ||
-                                    "No file selected"}
-                                </p>
-                              )}
-                            </div>
-                          )}
-                        </div>
-                        <button type="submit" className="submit-btn-media">
-                          <p>Upload Media</p>
-                        </button>
-                      </form>
-                    </div>
-                  </div>
-
-                  <div
-                    className="overlay-media"
-                    onClick={toggleMediaPopup}
-                  ></div>
-                </>
-              )} */}
               <MediaDataFilterModal
                 show={mediaFilterModalVisible}
                 close={() => setMediaFilterModalVisible(false)}
+                getMediaFilterApi={(val) => setMediaFilterApi(val)}
               ></MediaDataFilterModal>
 
               <UploadMediaModal
@@ -678,7 +517,7 @@ const Dashboard = () => {
 
               <div id="dashboard-content-user-details-div">
                 {data_media && (
-                  <MediaData dummy_data_media={data_media}></MediaData>
+                  <MediaData mediaFilterApi={mediaFilterApi}></MediaData>
                 )}
               </div>
             </div>
