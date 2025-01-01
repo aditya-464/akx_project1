@@ -1,14 +1,14 @@
 #dashboard-heading-text {
   font-size: 20px;
   font-weight: 600;
-  margin-left: 2rem;
+  margin-left: 0.5rem;
   margin-bottom: 2.5rem;
 }
 
 .dashboard-component-container {
   height: auto;
   background-color: white;
-  padding-left: 2rem;
+  padding-left: 0.5rem;
   color: #36454f !important;
   margin-top: 2rem;
   display: flex;
@@ -66,8 +66,8 @@
   /* display: none; */
 }
 
-.dashboard-component-left-bottom-section {
-}
+/* .dashboard-component-left-bottom-section {
+} */
 
 .dashboard-right-section {
   width: 30%;

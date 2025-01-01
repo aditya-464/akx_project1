@@ -66,3 +66,28 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 } */
+
+/* Global styles to target all scrollbars */
+*::-webkit-scrollbar {
+  width: 5px; /* Width of the scrollbar */
+}
+
+*::-webkit-scrollbar-track {
+  background-color: #f2f3f3; /* Background of the scrollbar track */
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #d9dada; /* Scrollbar thumb color */
+  border-radius: 5px; /* Rounded corners for the thumb */
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: #a9a9a9; /* Thumb color on hover */
+}
+
+/* For Firefox */
+
+/* * {
+  scrollbar-width: thin;
+  scrollbar-color: #c1c2c2 #f2f3f3;
+} */

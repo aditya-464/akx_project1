@@ -3,8 +3,11 @@
   margin-top: 3rem;
   padding: 1rem 2rem;
   border-radius: 7px;
-  overflow-y: auto;
-  overflow-x: auto;
+  /* temp-changes */
+  /* overflow-y: auto; */
+  /* overflow-x: auto; */
+  z-index: 1;
+  /* temp-changes */
   scroll-behavior: smooth;
   position: relative;
 }
@@ -84,7 +87,9 @@
 
 #users-data-content-div {
   padding-top: 1rem;
-  max-height: 50vh;
+  /* max-height: 50vh;    */
+
+  /*  */
   /* overflow-y: scroll;
   position: relative; */
 }
@@ -141,7 +146,7 @@
   border: 1px solid #ddd;
   border-radius: 5px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
+  z-index: 1000 !important;
   padding: 0.5rem 0;
   min-width: 100px;
 }

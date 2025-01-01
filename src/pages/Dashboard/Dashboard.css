@@ -504,6 +504,52 @@
   }
 
   #dashboard-create-media-button p {
-    font-size: 11px;
+    font-size: 11px;  
   }
 }
+
+
+
+
+/* scroll bar changes not working */
+
+/* #dashboard-content-details::-webkit-scrollbar {
+  width: 2px !important;
+}
+
+#dashboard-content-details::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 10px; 
+}
+
+#dashboard-content-details::-webkit-scrollbar-track {
+  background: red; 
+}
+
+
+#dashboard-content-div::-webkit-scrollbar {
+  width: 2px !important;
+}
+
+#dashboard-content-div::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 10px; 
+}
+
+#dashboard-content-div::-webkit-scrollbar-track {
+  background: red; 
+}
+
+
+#dashboard-container::-webkit-scrollbar {
+  width: 2px !important;
+}
+
+#dashboard-container::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 10px; 
+}
+
+#dashboard-container::-webkit-scrollbar-track {
+  background: red; 
+} */

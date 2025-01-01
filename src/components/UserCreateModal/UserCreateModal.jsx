@@ -12,10 +12,10 @@ const UserCreateModal = ({ show, close }) => {
     mobile: "",
     email: "",
     brandingLogo: null,
-    userType: "USER",
+    userType: "",
   });
   const [imagePreview, setImagePreview] = useState(null);
-  const [userType, setUserType] = useState("USER");
+  const [userType, setUserType] = useState("");
   const { currentUser, tenant } = useSelector((state) => state.page);
   const dispatch = useDispatch();
 
@@ -67,33 +67,36 @@ const UserCreateModal = ({ show, close }) => {
 
   const handleSubmit = async (e) => {
     try {
-      e.preventDefault();
-      const newUser = {
-        name: formData.name,
-        mobile: formData.mobile,
-        email: formData.email,
-        // brandingLogo: imagePreview,
-        brandingLogo:
-          "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
-        userType: userType,
-      };
+      if (
+        formData.name != "" &&
+        formData.email != "" &&
+        formData.mobile != "" &&
+        userType != ""
+      ) {
+        e.preventDefault();
+        const newUser = {
+          name: formData.name,
+          mobile: formData.mobile,
+          email: formData.email,
+          // brandingLogo: imagePreview,
+          brandingLogo:
+            "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+          userType: userType,
+        };
 
-      // const url = "http://84.247.171.46:8080/userProfile";
-      // const tenantID = "vmodaqa";
+        const headers = {
+          "X-TenantID": tenant,
+        };
 
-      const headers = {
-        "X-TenantID": tenant,
-      };
+        const response = await axios.post("/userProfile", newUser, { headers });
 
-      // const response = await axios.get(url, { headers });
-      const response = await axios.post("/userProfile", newUser, { headers });
+        if (response.status === 201) {
+          showSuccessToast(response.data.message);
+          dispatch(refreshUser());
+        }
 
-      if (response.status === 201) {
-        showSuccessToast(response.data.message);
-        dispatch(refreshUser());
+        handleCloseModal();
       }
-
-      handleCloseModal();
     } catch (error) {
       console.log(error.message);
       showErrorToast(error.message);
