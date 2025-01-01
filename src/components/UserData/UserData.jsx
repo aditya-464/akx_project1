@@ -94,6 +94,10 @@ const UserData = ({ userFilterApi }) => {
     getActualData();
   }, [refreshUserCount, tenant, userFilterApi]);
 
+  // useEffect(() => {
+  //   if (!actualData) return;
+  // }, [actualData]);
+
   const getStatusColor = (status) => {
     switch (status) {
       case "SUPER_ADMIN":
@@ -105,6 +109,25 @@ const UserData = ({ userFilterApi }) => {
       default:
         return "white";
     }
+  };
+
+  const handleSortingOfData = (val) => {
+    let tempData = [...actualData]; // Use a copy of the data to avoid mutating state directly
+
+    if (val === "name" || val === "email") {
+      tempData.sort((a, b) => {
+        if (a[val] && b[val]) {
+          return a[val].localeCompare(b[val]);
+        }
+        return 0;
+      });
+    } else if (val === "mobile" || val === "id") {
+      tempData.sort((a, b) => a[val] - b[val]);
+    } else if (val === "createdOn") {
+      tempData.sort((a, b) => new Date(a[val]) - new Date(b[val]));
+    }
+
+    setActualData(tempData);
   };
 
   if (!actualData) {
@@ -144,12 +167,42 @@ const UserData = ({ userFilterApi }) => {
           <>
             <div id="users-data-headings-div">
               <div id="users-heading-checkbox"></div>
-              <p className="users-heading-id">Id</p>
+              <p
+                className="users-heading-id"
+                style={{ cursor: "pointer" }}
+                onClick={() => handleSortingOfData("id")}
+              >
+                Id
+              </p>
               <p className="users-heading-image">Image</p>
-              <p className="users-heading-name">Name</p>
-              <p className="users-heading-mobile">Mobile</p>
-              <p className="users-heading-email">Email</p>
-              <p className="users-heading-created-on">Created At</p>
+              <p
+                className="users-heading-name"
+                style={{ cursor: "pointer" }}
+                onClick={() => handleSortingOfData("name")}
+              >
+                Name
+              </p>
+              <p
+                className="users-heading-mobile"
+                style={{ cursor: "pointer" }}
+                onClick={() => handleSortingOfData("mobile")}
+              >
+                Mobile
+              </p>
+              <p
+                className="users-heading-email"
+                style={{ cursor: "pointer" }}
+                onClick={() => handleSortingOfData("email")}
+              >
+                Email
+              </p>
+              <p
+                className="users-heading-created-on"
+                style={{ cursor: "pointer" }}
+                onClick={() => handleSortingOfData("createdOn")}
+              >
+                Created On
+              </p>
               <div
                 className="users-data-option-div"
                 style={{ visibility: "hidden" }}

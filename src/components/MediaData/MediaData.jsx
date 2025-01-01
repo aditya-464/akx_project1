@@ -158,6 +158,36 @@ const MediaData = ({ mediaFilterApi }) => {
     getActualData();
   }, [refreshMediaCount, tenant, mediaFilterApi]);
 
+  const handleSortingOfData = (val) => {
+    let tempData = [...actualData];
+
+    if (val === "name" || val === "fileName") {
+      tempData.sort((a, b) => {
+        if (a[val] && b[val]) {
+          return a[val].localeCompare(b[val]);
+        }
+        return 0;
+      });
+    } else if (val === "approvedStatus") {
+      tempData.sort((a, b) => {
+        return a[val] === b[val] ? 0 : a[val] ? -1 : 1;
+      });
+    } else if (val === "uploadedBy") {
+      tempData.sort((a, b) => {
+        if (a[val]["name"] && b[val]["name"]) {
+          return a[val]["name"].localeCompare(b[val]["name"]);
+        }
+        return 0;
+      });
+    } else if (val === "id") {
+      tempData.sort((a, b) => a[val] - b[val]);
+    } else if (val === "uploadDate") {
+      tempData.sort((a, b) => new Date(a[val]) - new Date(b[val]));
+    }
+
+    setActualData(tempData);
+  };
+
   if (!actualData) {
     return (
       <div
@@ -196,13 +226,43 @@ const MediaData = ({ mediaFilterApi }) => {
           <>
             <div id="media-data-headings-div">
               <div id="media-heading-checkbox"></div>
-              <p className="media-heading-id">Id</p>
+              <p
+                className="media-heading-id"
+                style={{ cursor: "pointer" }}
+                onClick={() => handleSortingOfData("id")}
+              >
+                Id
+              </p>
               <p className="media-heading-image">Preview</p>
-              <p className="media-heading-name">Name</p>
+              <p
+                className="media-heading-name"
+                style={{ cursor: "pointer" }}
+                onClick={() => handleSortingOfData("fileName")}
+              >
+                Name
+              </p>
               {/* <p className="media-heading-size">Size</p> */}
-              <p className="media-heading-size">Status</p>
-              <p className="media-heading-uploaded-by">Uploaded By</p>
-              <p className="media-heading-uploaded-at">Uploaded At</p>
+              <p
+                className="media-heading-size"
+                style={{ cursor: "pointer" }}
+                onClick={() => handleSortingOfData("approvedStatus")}
+              >
+                Status
+              </p>
+              <p
+                className="media-heading-uploaded-by"
+                style={{ cursor: "pointer" }}
+                onClick={() => handleSortingOfData("id")}
+              >
+                Uploaded By
+              </p>
+              <p
+                className="media-heading-uploaded-at"
+                style={{ cursor: "pointer" }}
+                onClick={() => handleSortingOfData("uploadDate")}
+              >
+                Uploaded At
+              </p>
               <div
                 className="media-data-option-div"
                 style={{ visibility: "hidden" }}
