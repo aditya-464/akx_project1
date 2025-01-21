@@ -253,58 +253,90 @@ const Dashboard = () => {
     setIsNavOpen(false);
   };
 
+  // useEffect(() => {
+  //   const dashboardDoc = document.getElementById("dashboard-dashboard-item");
+  //   const userDoc = document.getElementById("dashboard-users-item");
+  //   const mediaDoc = document.getElementById("dashboard-media-item");
+  //   const logoutDoc = document.getElementById("dashboard-logout-item");
+
+  //   if (dashboardComponent == "dashboard") {
+  //     if (userDoc.classList.contains("active-navigation-item")) {
+  //       userDoc.classList.remove("active-navigation-item");
+  //     }
+  //     if (mediaDoc.classList.contains("active-navigation-item")) {
+  //       mediaDoc.classList.remove("active-navigation-item");
+  //     }
+  //     if (logoutDoc.classList.contains("active-navigation-item")) {
+  //       logoutDoc.classList.remove("active-navigation-item");
+  //     }
+  //     dashboardDoc.classList.add("active-navigation-item");
+  //   }
+  //   if (dashboardComponent == "users") {
+  //     if (dashboardDoc.classList.contains("active-navigation-item")) {
+  //       dashboardDoc.classList.remove("active-navigation-item");
+  //     }
+  //     if (mediaDoc.classList.contains("active-navigation-item")) {
+  //       mediaDoc.classList.remove("active-navigation-item");
+  //     }
+  //     if (logoutDoc.classList.contains("active-navigation-item")) {
+  //       logoutDoc.classList.remove("active-navigation-item");
+  //     }
+  //     userDoc.classList.add("active-navigation-item");
+  //   }
+  //   if (dashboardComponent == "media") {
+  //     if (dashboardDoc.classList.contains("active-navigation-item")) {
+  //       dashboardDoc.classList.remove("active-navigation-item");
+  //     }
+  //     if (userDoc.classList.contains("active-navigation-item")) {
+  //       userDoc.classList.remove("active-navigation-item");
+  //     }
+  //     if (logoutDoc.classList.contains("active-navigation-item")) {
+  //       logoutDoc.classList.remove("active-navigation-item");
+  //     }
+  //     mediaDoc.classList.add("active-navigation-item");
+  //   }
+  //   if (dashboardComponent == "logout") {
+  //     if (dashboardDoc.classList.contains("active-navigation-item")) {
+  //       dashboardDoc.classList.remove("active-navigation-item");
+  //     }
+  //     if (userDoc.classList.contains("active-navigation-item")) {
+  //       userDoc.classList.remove("active-navigation-item");
+  //     }
+  //     if (mediaDoc.classList.contains("active-navigation-item")) {
+  //       mediaDoc.classList.remove("active-navigation-item");
+  //     }
+  //     logoutDoc.classList.add("active-navigation-item");
+  //   }
+  // }, [dashboardComponent]);
+
   useEffect(() => {
     const dashboardDoc = document.getElementById("dashboard-dashboard-item");
     const userDoc = document.getElementById("dashboard-users-item");
     const mediaDoc = document.getElementById("dashboard-media-item");
     const logoutDoc = document.getElementById("dashboard-logout-item");
 
-    if (dashboardComponent == "dashboard") {
-      if (userDoc.classList.contains("active-navigation-item")) {
-        userDoc.classList.remove("active-navigation-item");
-      }
-      if (mediaDoc.classList.contains("active-navigation-item")) {
-        mediaDoc.classList.remove("active-navigation-item");
-      }
-      if (logoutDoc.classList.contains("active-navigation-item")) {
-        logoutDoc.classList.remove("active-navigation-item");
-      }
+    if (dashboardComponent === "dashboard" && dashboardDoc) {
+      userDoc?.classList.remove("active-navigation-item");
+      mediaDoc?.classList.remove("active-navigation-item");
+      logoutDoc?.classList.remove("active-navigation-item");
       dashboardDoc.classList.add("active-navigation-item");
     }
-    if (dashboardComponent == "users") {
-      if (dashboardDoc.classList.contains("active-navigation-item")) {
-        dashboardDoc.classList.remove("active-navigation-item");
-      }
-      if (mediaDoc.classList.contains("active-navigation-item")) {
-        mediaDoc.classList.remove("active-navigation-item");
-      }
-      if (logoutDoc.classList.contains("active-navigation-item")) {
-        logoutDoc.classList.remove("active-navigation-item");
-      }
+    if (dashboardComponent === "users" && userDoc) {
+      dashboardDoc?.classList.remove("active-navigation-item");
+      mediaDoc?.classList.remove("active-navigation-item");
+      logoutDoc?.classList.remove("active-navigation-item");
       userDoc.classList.add("active-navigation-item");
     }
-    if (dashboardComponent == "media") {
-      if (dashboardDoc.classList.contains("active-navigation-item")) {
-        dashboardDoc.classList.remove("active-navigation-item");
-      }
-      if (userDoc.classList.contains("active-navigation-item")) {
-        userDoc.classList.remove("active-navigation-item");
-      }
-      if (logoutDoc.classList.contains("active-navigation-item")) {
-        logoutDoc.classList.remove("active-navigation-item");
-      }
+    if (dashboardComponent === "media" && mediaDoc) {
+      dashboardDoc?.classList.remove("active-navigation-item");
+      userDoc?.classList.remove("active-navigation-item");
+      logoutDoc?.classList.remove("active-navigation-item");
       mediaDoc.classList.add("active-navigation-item");
     }
-    if (dashboardComponent == "logout") {
-      if (dashboardDoc.classList.contains("active-navigation-item")) {
-        dashboardDoc.classList.remove("active-navigation-item");
-      }
-      if (userDoc.classList.contains("active-navigation-item")) {
-        userDoc.classList.remove("active-navigation-item");
-      }
-      if (mediaDoc.classList.contains("active-navigation-item")) {
-        mediaDoc.classList.remove("active-navigation-item");
-      }
+    if (dashboardComponent === "logout" && logoutDoc) {
+      dashboardDoc?.classList.remove("active-navigation-item");
+      userDoc?.classList.remove("active-navigation-item");
+      mediaDoc?.classList.remove("active-navigation-item");
       logoutDoc.classList.add("active-navigation-item");
     }
   }, [dashboardComponent]);
