@@ -459,6 +459,7 @@ const Dashboard = () => {
             >
               <NavbarDropdown
                 returnValue={(val) => {
+                  sessionStorage.setItem("tenant", val);
                   dispatch(setTenant(val));
                 }}
               ></NavbarDropdown>

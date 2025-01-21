@@ -106,6 +106,8 @@ const LoginForm = () => {
         showErrorToast("Please fill all fields")
       }
     } catch (error) {
+      console.log(error.response.data.message);
+      
       showErrorToast(error.response.data.message);
     }
   };
