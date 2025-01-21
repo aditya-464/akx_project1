@@ -5,7 +5,9 @@ const initialState = {
   page: sessionStorage.getItem("page") || "login",
   // tenant: "",
   tenant: sessionStorage.getItem("tenant") || "",
-  tenantOptions: [],
+  tenantOptions: sessionStorage.getItem("tenantOptions")
+    ? JSON.parse(sessionStorage.getItem("tenantOptions"))
+    : [],
   // currentUser: {},
   currentUser: sessionStorage.getItem("currentUser")
     ? JSON.parse(sessionStorage.getItem("currentUser"))

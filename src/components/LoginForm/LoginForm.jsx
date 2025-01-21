@@ -130,6 +130,7 @@ const LoginForm = () => {
           };
           arr.push(obj);
         }
+        sessionStorage.setItem("tenantOptions", JSON.stringify(arr));
         dispatch(setTenantOptions(arr));
         setOptions(arr);
       }

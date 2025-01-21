@@ -46,20 +46,20 @@ const Dashboard = () => {
   const [mediaFilterModalVisible, setMediaFilterModalVisible] = useState(false);
 
   const dispatch = useDispatch();
-  const options = [
-    {
-      id: 1,
-      name: "Leanne Graham",
-    },
-    {
-      id: 2,
-      name: "Erin Howell",
-    },
-    {
-      id: 3,
-      name: "Alex Graham",
-    },
-  ];
+  // const options = [
+  //   {
+  //     id: 1,
+  //     name: "Leanne Graham",
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "Erin Howell",
+  //   },
+  //   {
+  //     id: 3,
+  //     name: "Alex Graham",
+  //   },
+  // ];
 
   useEffect(() => {
     setData(dummy_data);
@@ -72,11 +72,11 @@ const Dashboard = () => {
   };
 
   // media
-  const [formMediaData, setFormMediaData] = useState({
-    fileType: "",
-    file: null,
-  });
-  const [fileMediaPreview, setFileMediaPreview] = useState(null);
+  // const [formMediaData, setFormMediaData] = useState({
+  //   fileType: "",
+  //   file: null,
+  // });
+  // const [fileMediaPreview, setFileMediaPreview] = useState(null);
   const [isMediaPopupVisible, setIsMediaPopupVisible] = useState(false);
 
   const toggleMediaPopup = () => {
@@ -117,135 +117,135 @@ const Dashboard = () => {
   };
 
   // Handle form input changes
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setFormData((prevData) => ({
+  //     ...prevData,
+  //     [name]: value,
+  //   }));
+  // };
 
   // Handle profile image upload
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setFormData((prevData) => ({
-        ...prevData,
-        profileImage: file,
-      }));
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
+  // const handleImageChange = (e) => {
+  //   const file = e.target.files[0];
+  //   if (file) {
+  //     setFormData((prevData) => ({
+  //       ...prevData,
+  //       profileImage: file,
+  //     }));
+  //     const reader = new FileReader();
+  //     reader.onloadend = () => {
+  //       setImagePreview(reader.result);
+  //     };
+  //     reader.readAsDataURL(file);
+  //   }
+  // };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
 
-    // Create a new user object with the form data
-    const newUser = {
-      id: data.length + 1, // Simple ID generation
-      name: formData.name,
-      mobile: formData.mobile,
-      email: formData.email,
-      image: imagePreview, // Store the image preview as the URL
-      createdAt: new Date().toISOString(),
-    };
+  //   // Create a new user object with the form data
+  //   const newUser = {
+  //     id: data.length + 1, // Simple ID generation
+  //     name: formData.name,
+  //     mobile: formData.mobile,
+  //     email: formData.email,
+  //     image: imagePreview, // Store the image preview as the URL
+  //     createdAt: new Date().toISOString(),
+  //   };
 
-    console.log(imagePreview);
+  //   console.log(imagePreview);
 
-    // Update the data state with the new user
-    setData((prevData) => [...prevData, newUser]);
+  //   // Update the data state with the new user
+  //   setData((prevData) => [...prevData, newUser]);
 
-    // Close the popup after submission
-    setIsPopupVisible(false);
+  //   // Close the popup after submission
+  //   setIsPopupVisible(false);
 
-    // Reset form data
-    setFormData({
-      name: "",
-      mobile: "",
-      email: "",
-      image: null,
-      createdAt: null,
-    });
-    setImagePreview(null);
-  };
+  //   // Reset form data
+  //   setFormData({
+  //     name: "",
+  //     mobile: "",
+  //     email: "",
+  //     image: null,
+  //     createdAt: null,
+  //   });
+  //   setImagePreview(null);
+  // };
 
   // media functions -
 
-  const handleMediaDropdownChange = (e) => {
-    setFormMediaData((prev) => ({ ...prev, fileType: e.target.value }));
-  };
+  // const handleMediaDropdownChange = (e) => {
+  //   setFormMediaData((prev) => ({ ...prev, fileType: e.target.value }));
+  // };
 
-  const handleMediaFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setFormMediaData((prev) => ({ ...prev, file }));
-      if (formMediaData.fileType === "image") {
-        const reader = new FileReader();
-        reader.onloadend = () => setFileMediaPreview(reader.result);
-        reader.readAsDataURL(file);
-      } else {
-        setFileMediaPreview(null); // No preview for non-image files
-      }
-    }
-  };
+  // const handleMediaFileChange = (e) => {
+  //   const file = e.target.files[0];
+  //   if (file) {
+  //     setFormMediaData((prev) => ({ ...prev, file }));
+  //     if (formMediaData.fileType === "image") {
+  //       const reader = new FileReader();
+  //       reader.onloadend = () => setFileMediaPreview(reader.result);
+  //       reader.readAsDataURL(file);
+  //     } else {
+  //       setFileMediaPreview(null); // No preview for non-image files
+  //     }
+  //   }
+  // };
 
-  const getAcceptedMediaFileTypes = (type) => {
-    switch (type) {
-      case "image":
-        return "image/*";
-      case "pdf":
-        return ".pdf";
-      case "doc":
-        return ".doc,.docx";
-      case "excel":
-        return ".xls,.xlsx";
-      case "txt":
-        return ".txt";
-      default:
-        return "";
-    }
-  };
+  // const getAcceptedMediaFileTypes = (type) => {
+  //   switch (type) {
+  //     case "image":
+  //       return "image/*";
+  //     case "pdf":
+  //       return ".pdf";
+  //     case "doc":
+  //       return ".doc,.docx";
+  //     case "excel":
+  //       return ".xls,.xlsx";
+  //     case "txt":
+  //       return ".txt";
+  //     default:
+  //       return "";
+  //   }
+  // };
 
-  const handleMediaSubmit = (e) => {
-    e.preventDefault();
+  // const handleMediaSubmit = (e) => {
+  //   e.preventDefault();
 
-    if (formMediaData.file) {
-      let pdfFileView = "";
-      if (formMediaData.fileType == "pdf") {
-        pdfFileView = URL.createObjectURL(formMediaData.file);
-      }
+  //   if (formMediaData.file) {
+  //     let pdfFileView = "";
+  //     if (formMediaData.fileType == "pdf") {
+  //       pdfFileView = URL.createObjectURL(formMediaData.file);
+  //     }
 
-      // Get the file size in a human-readable format (e.g., KB, MB)
-      const fileSizeInBytes = formMediaData.file.size;
-      const fileSizeInMB = (fileSizeInBytes / (1024 * 1024)).toFixed(2); // Size in MB, rounded to 2 decimal places
+  //     // Get the file size in a human-readable format (e.g., KB, MB)
+  //     const fileSizeInBytes = formMediaData.file.size;
+  //     const fileSizeInMB = (fileSizeInBytes / (1024 * 1024)).toFixed(2); // Size in MB, rounded to 2 decimal places
 
-      // Create a new media object to store file details
-      const newMedia = {
-        id: data_media.length + 1, // Simple ID generation based on existing media
-        name: formMediaData.file.name,
-        type: formMediaData.fileType,
-        size: fileSizeInMB + " MB", // Store file size in MB
-        filePreview:
-          formMediaData.fileType == "pdf" ? pdfFileView : fileMediaPreview, // Store the file preview for image types
-        uploadedBy: "Admin",
-        uploadedAt: new Date().toISOString(),
-      };
+  //     // Create a new media object to store file details
+  //     const newMedia = {
+  //       id: data_media.length + 1, // Simple ID generation based on existing media
+  //       name: formMediaData.file.name,
+  //       type: formMediaData.fileType,
+  //       size: fileSizeInMB + " MB", // Store file size in MB
+  //       filePreview:
+  //         formMediaData.fileType == "pdf" ? pdfFileView : fileMediaPreview, // Store the file preview for image types
+  //       uploadedBy: "Admin",
+  //       uploadedAt: new Date().toISOString(),
+  //     };
 
-      // Update the data_media state with the new media item
-      setData_media((prevData) => [...prevData, newMedia]);
+  //     // Update the data_media state with the new media item
+  //     setData_media((prevData) => [...prevData, newMedia]);
 
-      // Show success message
+  //     // Show success message
 
-      // Close the popup after submission
-      toggleMediaPopup();
-    } else {
-      alert("Please select a file!");
-    }
-  };
+  //     // Close the popup after submission
+  //     toggleMediaPopup();
+  //   } else {
+  //     alert("Please select a file!");
+  //   }
+  // };
 
   const toggleNav = () => {
     setIsNavOpen(!isNavOpen);
