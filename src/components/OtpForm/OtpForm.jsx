@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import "./OtpForm.css";
 import otp_img from "../../assets/images/login2.webp";
 import { useSelector, useDispatch } from "react-redux";
-import { changePage } from "../../redux/page";
+import { changePage, setHomeComponent } from "../../redux/page";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -107,7 +107,9 @@ const OtpForm = () => {
 
         if (response.status === 200) {
           sessionStorage.setItem("page", "home");
+          sessionStorage.setItem("homeComponent", "dashboard");
           dispatch(changePage("home"));
+          dispatch(setHomeComponent("dashboard"));
           navigate("/home");
         }
       }

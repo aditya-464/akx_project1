@@ -136,6 +136,9 @@ export const pageSlice = createSlice({
     setCurrentUser: (state, action) => {
       state.currentUser = action.payload;
     },
+    setHomeComponent: (state, action) => {
+      state.homeComponent = action.payload;
+    },
     refreshUser: (state, action) => {
       state.refreshUserCount += 1;
     },
@@ -157,6 +160,7 @@ export const {
   setTenant,
   setTenantOptions,
   setCurrentUser,
+  setHomeComponent,
   refreshUser,
   refreshMedia,
   insertUser,
