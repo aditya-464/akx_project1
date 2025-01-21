@@ -68,17 +68,26 @@ const EditUserModal = ({ show, close, userDetails }) => {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
+      let newUser = {};
 
-      const newUser = {
-        name: formData.name,
-        mobile: formData.mobile,
-        email: formData.email,
-        brandingLogo:
-          "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
-      };
+      if (userDetails.email === formData.email) {
+        newUser = {
+          name: formData.name,
+          mobile: formData.mobile,
+          brandingLogo:
+            "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+        };
+      } else {
+        newUser = {
+          name: formData.name,
+          mobile: formData.mobile,
+          email: formData.email,
+          brandingLogo:
+            "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+        };
+      }
 
       const id = userDetails.id;
-      // const tenantID = "vmodaqa";
 
       const headers = {
         "X-TenantID": tenant,
