@@ -8,7 +8,6 @@ import {
   setTenant,
   setTenantOptions,
 } from "../../redux/page.js";
-import LoginPageDropdown from "../LoginPageDropdown/LoginPageDropdown.jsx";
 import LoginFormDropdown from "../LoginFormDropdown/LoginFormDropdown.jsx";
 import CryptoJS from "crypto-js";
 import axios from "axios";
@@ -18,7 +17,8 @@ import { useNavigate } from "react-router-dom";
 const LoginForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [dropdownVal, setDropdownVal] = useState("");
+  const [user, setUser] = useState("");
+  // const [dropdownVal, setDropdownVal] = useState("");
   const [options, setOptions] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -33,6 +33,19 @@ const LoginForm = () => {
     toast.error(message, {
       position: "bottom-center",
     });
+  };
+
+  const isValidUser = () => {
+    if (options !== null) {
+      for (let i = 0; i < options.length; i++) {
+        if (options[i].name === user) {
+          return true;
+        }
+      }
+      showErrorToast("Invalid user");
+      return false;
+    }
+    return false;
   };
 
   // const encrypt = (plainText, secretKey) => {
@@ -55,13 +68,16 @@ const LoginForm = () => {
 
   const loginFunction = async () => {
     try {
-      if (username != "" && password != "" && dropdownVal != "") {
+      if (username != "" && password != "" && user != "") {
+        if (!isValidUser()) {
+          return;
+        }
         // const secretKey = import.meta.env.VITE_SECRET_KEY;
         const secretKey = "BxYfjlrtknZyVcjYT3MwPg==";
         const encryptedKey = encrypt(password, secretKey);
 
         const headers = {
-          "X-TenantID": dropdownVal,
+          "X-TenantID": user,
         };
         const loginData = {
           email: username,
@@ -73,7 +89,7 @@ const LoginForm = () => {
         });
 
         if (response.status === 200) {
-          sessionStorage.setItem("tenant", dropdownVal);
+          sessionStorage.setItem("tenant", user);
           sessionStorage.setItem(
             "currentUser",
             JSON.stringify(response.data.data)
@@ -81,30 +97,18 @@ const LoginForm = () => {
 
           // console.log(response.data.data);
           dispatch(setCurrentUser(response.data.data));
-          dispatch(setTenant(dropdownVal));
+          dispatch(setTenant(user));
           dispatch(changePage("otp"));
           navigate("/otp");
         }
+      }
+      else{
+        showErrorToast("Please fill all fields")
       }
     } catch (error) {
       showErrorToast(error.response.data.message);
     }
   };
-
-  // const options = [
-  //   {
-  //     id: 1,
-  //     name: "Leanne Graham",
-  //   },
-  //   {
-  //     id: 2,
-  //     name: "Erin Howell",
-  //   },
-  //   {
-  //     id: 3,
-  //     name: "Ervi Howell",
-  //   },
-  // ];
 
   const handleSelect = (selectedOption) => {
     console.log("Selected:", selectedOption);
@@ -132,9 +136,12 @@ const LoginForm = () => {
         sessionStorage.setItem("tenantOptions", JSON.stringify(arr));
         dispatch(setTenantOptions(arr));
         setOptions(arr);
+
+        console.log(arr);
       }
     } catch (error) {
-      console.log(error.message);
+      // console.log(error.message);
+      showErrorToast(error.response.data.message);
     }
   };
 
@@ -177,24 +184,24 @@ const LoginForm = () => {
           </div>
 
           <div className="login-fields-group">
-            <p>Select User</p>
-            {/* <input
-              type="password"
-              value={password}
+            <p>User</p>
+            <input
+              className="login-fields-input"
+              value={user}
               onChange={(e) => {
-                setPassword(e.target.value);
+                setUser(e.target.value);
               }}
-            /> */}
-            {/* <LoginPageDropdown
-              options={options}
-              onSelect={handleSelect}
-            ></LoginPageDropdown> */}
+            />
+          </div>
+
+          {/* <div className="login-fields-group">
+            <p>Select User</p>
             <LoginFormDropdown
               options={options}
               defaultValue={"vmodaqa"}
               returnValue={(val) => setDropdownVal(val)}
             ></LoginFormDropdown>
-          </div>
+          </div> */}
 
           {/* <div className="stay-logged-in-div">
             <input
