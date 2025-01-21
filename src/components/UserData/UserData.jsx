@@ -130,6 +130,18 @@ const UserData = ({ userFilterApi }) => {
     setActualData(tempData);
   };
 
+  const getReadableDate = (val) => {
+    const date = new Date(val);
+
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const year = date.getFullYear();
+
+    const formattedDate = `${day}-${month}-${year}`;
+
+    return formattedDate;
+  };
+
   if (!actualData) {
     return (
       <div
@@ -280,7 +292,7 @@ const UserData = ({ userFilterApi }) => {
                       {item.email}
                     </p>
                     <p className="users-heading-created-on users-data-item">
-                      {item.createdOn}
+                      {getReadableDate(item.createdOn)}
                     </p>
                     <div
                       className="users-data-option-div"

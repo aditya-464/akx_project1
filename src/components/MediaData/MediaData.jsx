@@ -203,6 +203,18 @@ const MediaData = ({ mediaFilterApi }) => {
     }
   };
 
+  const getReadableDate = (val) => {
+    const date = new Date(val);
+
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const year = date.getFullYear();
+
+    const formattedDate = `${day}-${month}-${year}`;
+
+    return formattedDate;
+  };
+
   if (!actualData) {
     return (
       <div
@@ -336,7 +348,7 @@ const MediaData = ({ mediaFilterApi }) => {
                       {item.uploadedBy.name}
                     </p>
                     <p className="media-heading-uploaded-at media-data-item">
-                      {item.uploadDate}
+                      {getReadableDate(item.uploadDate)}
                     </p>
                     <div
                       className="media-data-option-div"
