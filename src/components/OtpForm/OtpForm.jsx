@@ -106,6 +106,7 @@ const OtpForm = () => {
         });
 
         if (response.status === 200) {
+          sessionStorage.setItem("page", "home");
           dispatch(changePage("home"));
           navigate("/home");
         }

@@ -30,12 +30,14 @@ const Dashboard = () => {
   // Function to toggle the popup
   // const [media, setMedia] = useState(true);
   // const [users, setUsers] = useState(false);
+  const { currentUser, tenant, homeComponent } = useSelector(
+    (state) => state.page
+  );
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [search, setSearch] = useState("");
-  const [dashboardComponent, setDashboardComponent] = useState("dashboard");
+  const [dashboardComponent, setDashboardComponent] = useState(homeComponent);
   const [data, setData] = useState("");
   const [data_media, setData_media] = useState("");
-  const { currentUser, tenant } = useSelector((state) => state.page);
   const [userFilterApi, setUserFilterApi] = useState(null);
   const [mediaFilterApi, setMediaFilterApi] = useState(null);
   const [createUserModalVisible, setCreateUserModalVisible] = useState(false);
@@ -355,6 +357,7 @@ const Dashboard = () => {
             id="dashboard-dashboard-item"
             className="dashboard-navigation-item"
             onClick={() => {
+              sessionStorage.setItem("homeComponent", "dashboard");
               setDashboardComponent("dashboard");
               setUserFilterApi(null);
               setMediaFilterApi(null);
@@ -370,6 +373,7 @@ const Dashboard = () => {
               id="dashboard-users-item"
               className="dashboard-navigation-item"
               onClick={() => {
+                sessionStorage.setItem("homeComponent", "users");
                 setDashboardComponent("users");
                 setMediaFilterApi(null);
               }}
@@ -384,6 +388,7 @@ const Dashboard = () => {
             id="dashboard-media-item"
             className="dashboard-navigation-item"
             onClick={() => {
+              sessionStorage.setItem("homeComponent", "media");
               setDashboardComponent("media");
               setUserFilterApi(null);
             }}
@@ -397,6 +402,7 @@ const Dashboard = () => {
             id="dashboard-logout-item"
             className="dashboard-navigation-item"
             onClick={() => {
+              sessionStorage.setItem("homeComponent", "logout");
               setDashboardComponent("logout");
               setUserFilterApi(null);
               setMediaFilterApi(null);

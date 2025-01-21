@@ -188,6 +188,21 @@ const MediaData = ({ mediaFilterApi }) => {
     setActualData(tempData);
   };
 
+  const isPermitted = (item) => {
+    if (
+      currentUser.userType === "ORGANIZATIONAL_ADMIN" ||
+      currentUser.userType === "SUPER_ADMIN"
+    ) {
+      return true;
+    } else {
+      if (item.uploadedBy.id === currentUser.id) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  };
+
   if (!actualData) {
     return (
       <div
@@ -331,7 +346,7 @@ const MediaData = ({ mediaFilterApi }) => {
                     </div>
 
                     {/* Popup Menu */}
-                    {visibleMediaMenuId === item.id && (
+                    {visibleMediaMenuId === item.id && isPermitted(item) && (
                       <div className="popup-menu-media">
                         {/* <p
                         className="popup-menu-item-media"
@@ -339,18 +354,24 @@ const MediaData = ({ mediaFilterApi }) => {
                       >
                         View
                       </p> */}
-                        <p
-                          className="popup-menu-item-media"
-                          onClick={() => handleApprove(item)}
-                        >
-                          Approve
-                        </p>
-                        <p
-                          className="popup-menu-item-media"
-                          onClick={() => handleReject(item)}
-                        >
-                          Reject
-                        </p>
+                        {(currentUser.userType === "SUPER_ADMIN" ||
+                          currentUser.userType === "ORGANIZATIONAL_ADMIN") && (
+                          <>
+                            <p
+                              className="popup-menu-item-media"
+                              onClick={() => handleApprove(item)}
+                            >
+                              Approve
+                            </p>
+                            <p
+                              className="popup-menu-item-media"
+                              onClick={() => handleReject(item)}
+                            >
+                              Reject
+                            </p>
+                          </>
+                        )}
+
                         <p
                           className="popup-menu-item-media"
                           onClick={() => handleDelete(item)}

@@ -1,10 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  page: "home",
-  tenant: "",
+  // page: "home",
+  page: sessionStorage.getItem("page") || "login",
+  // tenant: "",
+  tenant: sessionStorage.getItem("tenant") || "",
   tenantOptions: [],
-  currentUser: {},
+  // currentUser: {},
+  currentUser: sessionStorage.getItem("currentUser")
+    ? JSON.parse(sessionStorage.getItem("currentUser"))
+    : {},
+  homeComponent: sessionStorage.getItem("homeComponent") || "dashboard",
   refreshUserCount: 1,
   refreshMediaCount: 1,
   data_for_user: [
