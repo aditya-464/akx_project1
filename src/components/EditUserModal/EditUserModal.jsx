@@ -95,9 +95,8 @@ const EditUserModal = ({ show, close, userDetails }) => {
 
       handleCloseModal();
     } catch (error) {
-      console.log(error.message);
-      showErrorToast(error.message);
-      handleCloseModal();
+      close();
+      showErrorToast(error.response.data.message);
     }
   };
 

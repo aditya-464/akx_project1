@@ -45,8 +45,8 @@ const RejectMediaModal = ({ show, close, mediaDetails }) => {
 
       handleCloseModal();
     } catch (error) {
-      console.log(error.message);
-      showErrorToast(error.message);
+      // console.log(error.message);
+      showErrorToast(error.response.data.message);
       handleCloseModal();
     }
   };

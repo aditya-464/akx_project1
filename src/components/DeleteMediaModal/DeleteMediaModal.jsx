@@ -36,8 +36,8 @@ const DeleteMediaModal = ({ show, close, mediaDetails }) => {
       handleCloseModal();
     } catch (error) {
       handleCloseModal();
-      console.log(error.message);
-      showErrorToast(error.message);
+      // console.log(error.message);
+      showErrorToast(error.response.data.message);
     }
   };
 

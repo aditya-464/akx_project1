@@ -154,8 +154,8 @@ const UploadMediaModal = ({ show, close }) => {
         showErrorToast("Please select a file!");
       }
     } catch (error) {
-      console.log(error.message);
-      showErrorToast(error.message);
+      // console.log(error.message);
+      showErrorToast(error.response.data.message);
       handleCloseModal();
     }
   };
