@@ -74,6 +74,9 @@ const MediaDataFilterModal = ({ show, close, getMediaFilterApi }) => {
       filterAPI["uploadedById"] = currentUser.id;
     }
 
+    filterAPI["sortBy"] = "uploadDate";
+    filterAPI["order"] = "desc";
+
     if (searchId !== "") {
       filterAPI["id"] = searchId;
     }

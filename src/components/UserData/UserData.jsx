@@ -95,7 +95,7 @@ const UserData = ({ userFilterApi }) => {
       };
 
       if (userFilterApi == null) {
-        const response = await axios.get("/userProfile", { headers });
+        const response = await axios.get("/userProfile?sortBy=createdOn&order=desc", { headers });
         if (response.data.data) {
           setActualData(response.data.data);
         }

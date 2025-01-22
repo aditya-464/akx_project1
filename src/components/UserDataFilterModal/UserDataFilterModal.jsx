@@ -94,7 +94,11 @@ const UserDataFilterModal = ({ show, close, getUserFilterApi }) => {
   };
 
   const handleApplyFilter = () => {
-    const filterAPI = {};
+    let filterAPI = {};
+
+    filterAPI["sortBy"] = "createdOn";
+    filterAPI["order"] = "desc";
+
     if (searchId !== "") {
       filterAPI["id"] = searchId;
     }

@@ -162,7 +162,7 @@ const MediaData = ({ mediaFilterApi }) => {
       if (mediaFilterApi === null) {
         if (currentUser.userType === "USER") {
           const response = await axios.get(
-            `/media/all?uploadedById=${currentUser.id}`,
+            `/media/all?uploadedById=${currentUser.id}&sortBy=uploadDate&order=desc`,
             {
               headers,
             }
@@ -171,7 +171,7 @@ const MediaData = ({ mediaFilterApi }) => {
             setActualData(response.data.data);
           }
         } else {
-          const response = await axios.get("/media/all", { headers });
+          const response = await axios.get("/media/all?sortBy=uploadDate&order=desc", { headers });
           if (response.status === 200) {
             setActualData(response.data.data);
           }
