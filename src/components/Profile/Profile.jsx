@@ -111,6 +111,16 @@ const Profile = ({ show, close }) => {
     close();
   };
 
+  const getUserTagColor = () => {
+    if (currentUser.userType === "USER") {
+      return "blue";
+    } else if (currentUser.userType === "SUPER_ADMIN") {
+      return "orange";
+    } else {
+      return "green";
+    }
+  };
+
   if (!show) return <></>;
 
   return (
@@ -122,6 +132,17 @@ const Profile = ({ show, close }) => {
           <div className="profile-image-container">
             <img src={currentUser.brandingLogo} alt="profile_image" />
             <div
+              style={{
+                position: "relative",
+                backgroundColor: getUserTagColor(),
+                width: "25px",
+                height: "25px",
+                borderRadius: "50%",
+                right: "25px",
+                bottom: "25px",
+              }}
+            ></div>
+            {/* <div
               className="profile-image-update-button"
               onClick={() => {
                 if (!isDisabled) {
@@ -131,7 +152,6 @@ const Profile = ({ show, close }) => {
               style={{ display: "none" }}
             >
               <FaCamera size={20} color="#36454f"></FaCamera>
-              {/* Hidden input for image selection*/}
               <input
                 type="file"
                 id="imageUpload"
@@ -139,7 +159,7 @@ const Profile = ({ show, close }) => {
                 style={{ display: "none" }}
                 onChange={handleImageChange}
               />
-            </div>
+            </div> */}
           </div>
 
           <div className="profile-fields-group">
