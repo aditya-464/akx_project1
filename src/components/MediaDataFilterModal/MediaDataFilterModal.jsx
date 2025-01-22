@@ -69,7 +69,11 @@ const MediaDataFilterModal = ({ show, close, getMediaFilterApi }) => {
   };
 
   const handleApplyFilter = () => {
-    const filterAPI = {};
+    let filterAPI = {};
+    if (currentUser.userType === "USER") {
+      filterAPI["uploadedById"] = currentUser.id;
+    }
+
     if (searchId !== "") {
       filterAPI["id"] = searchId;
     }

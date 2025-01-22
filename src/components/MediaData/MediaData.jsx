@@ -123,33 +123,66 @@ const MediaData = ({ mediaFilterApi }) => {
     setActualData(newArr);
   };
 
+  // const getActualData = async () => {
+  //   try {
+  //     const headers = {
+  //       "X-TenantID": tenant,
+  //     };
+
+  //     if (mediaFilterApi == null) {
+  //       const response = await axios.get("/media/all", { headers });
+  //       if (response.status === 200) {
+  //         if (currentUser.userType === "USER") {
+  //           getClearData(response.data.data);
+  //         } else {
+  //           setActualData(response.data.data);
+  //         }
+  //       }
+  //     } else {
+  //       const response = await axios.get(mediaFilterApi, { headers });
+  //       if (response.status === 200) {
+  //         if (currentUser.userType === "USER") {
+  //           getClearData(response.data.data);
+  //         } else {
+  //           setActualData(response.data.data);
+  //         }
+  //       }
+  //     }
+  //   } catch (error) {
+  //     showErrorToast(error.response.data.message);
+  //   }
+  // };
+
   const getActualData = async () => {
     try {
       const headers = {
         "X-TenantID": tenant,
       };
 
-      if (mediaFilterApi == null) {
-        const response = await axios.get("/media/all", { headers });
-        if (response.status === 200) {
-          if (currentUser.userType === "USER") {
-            getClearData(response.data.data);
-          } else {
+      if (mediaFilterApi === null) {
+        if (currentUser.userType === "USER") {
+          const response = await axios.get(
+            `/media/all?uploadedById=${currentUser.id}`,
+            {
+              headers,
+            }
+          );
+          if (response.status === 200) {
+            setActualData(response.data.data);
+          }
+        } else {
+          const response = await axios.get("/media/all", { headers });
+          if (response.status === 200) {
             setActualData(response.data.data);
           }
         }
       } else {
         const response = await axios.get(mediaFilterApi, { headers });
         if (response.status === 200) {
-          if (currentUser.userType === "USER") {
-            getClearData(response.data.data);
-          } else {
-            setActualData(response.data.data);
-          }
+          setActualData(response.data.data);
         }
       }
     } catch (error) {
-      // console.log(error.message);
       showErrorToast(error.response.data.message);
     }
   };
