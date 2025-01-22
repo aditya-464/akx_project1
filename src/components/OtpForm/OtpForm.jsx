@@ -91,6 +91,8 @@ const OtpForm = () => {
 
   const otpVerifyFunction = async () => {
     try {
+      console.log(currentUser);
+
       if (finalOtp.length == 6 && currentUser && tenant) {
         const headers = {
           "X-TenantID": tenant,
@@ -107,9 +109,18 @@ const OtpForm = () => {
 
         if (response.status === 200) {
           sessionStorage.setItem("page", "home");
-          sessionStorage.setItem("homeComponent", "dashboard");
+          if (currentUser.userType === "USER") {
+            sessionStorage.setItem("homeComponent", "media");
+          } else {
+            sessionStorage.setItem("homeComponent", "dashboard");
+          }
+          
           dispatch(changePage("home"));
-          dispatch(setHomeComponent("dashboard"));
+          if (currentUser.userType === "USER") {
+            dispatch(setHomeComponent("media"));
+          } else {
+            dispatch(setHomeComponent("dashboard"));
+          }
           navigate("/home");
         }
       }

@@ -138,8 +138,6 @@ const LoginForm = () => {
         sessionStorage.setItem("tenantOptions", JSON.stringify(arr));
         dispatch(setTenantOptions(arr));
         setOptions(arr);
-
-        console.log(arr);
       }
     } catch (error) {
       // console.log(error.message);

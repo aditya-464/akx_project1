@@ -8,6 +8,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import Avatar from "react-avatar";
 import { ColorRing } from "react-loader-spinner";
+import { useNavigate } from "react-router-dom";
 
 const UserData = ({ userFilterApi }) => {
   const [actualData, setActualData] = useState(null);
@@ -18,6 +19,8 @@ const UserData = ({ userFilterApi }) => {
   const [deleteUserDetails, setDeleteUserDetails] = useState("");
   const { refreshUserCount } = useSelector((state) => state.page);
   const { currentUser, tenant } = useSelector((state) => state.page);
+
+  const navigate = useNavigate();
 
   // Toggle menu visibility for a specific item
   const toggleMenu = (id) => {
@@ -38,6 +41,24 @@ const UserData = ({ userFilterApi }) => {
     document.addEventListener("click", handleOutsideClick);
     return () => document.removeEventListener("click", handleOutsideClick);
   }, []);
+
+  const reloadPage = () => {
+    navigate(0);
+  };
+
+  // Login as other handler
+  const handleLoginAsOther = (item) => {
+    console.log(item);
+    setVisibleMenuId(null); // Close the menu
+    sessionStorage.setItem("currentUser", JSON.stringify(item));
+    if(item.userType==="USER"){
+      sessionStorage.setItem("homeComponent", "media");
+    }
+    else{
+      sessionStorage.setItem("homeComponent", "dashboard");
+    }
+    reloadPage();
+  };
 
   // Edit handler
   const handleEdit = (item) => {
@@ -307,6 +328,12 @@ const UserData = ({ userFilterApi }) => {
                         (currentUser.userType === "ORGANIZATIONAL_ADMIN" &&
                           item.userType !== "SUPER_ADMIN")) && (
                         <div className="popup-menu">
+                          <p
+                            className="popup-menu-item"
+                            onClick={() => handleLoginAsOther(item)}
+                          >
+                            Login
+                          </p>
                           <p
                             className="popup-menu-item"
                             onClick={() => handleEdit(item)}
