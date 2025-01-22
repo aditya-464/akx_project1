@@ -25,6 +25,7 @@ import UploadMediaModal from "../../components/UploadMediaModal/UploadMediaModal
 import { setTenant } from "../../redux/page.js";
 import UserDataFilterModal from "../../components/UserDataFilterModal/UserDataFilterModal.jsx";
 import MediaDataFilterModal from "../../components/MediaDataFilterModal/MediaDataFilterModal.jsx";
+import Profile from "../../components/Profile/Profile.jsx";
 
 const Dashboard = () => {
   // Function to toggle the popup
@@ -44,22 +45,9 @@ const Dashboard = () => {
   const [userFilterModalVisible, setUserFilterModalVisible] = useState(false);
   const [uploadMediaModalVisible, setUploadMediaModalVisible] = useState(false);
   const [mediaFilterModalVisible, setMediaFilterModalVisible] = useState(false);
+  const [profileModalVisible, setProfileModalVisible] = useState(false);
 
   const dispatch = useDispatch();
-  // const options = [
-  //   {
-  //     id: 1,
-  //     name: "Leanne Graham",
-  //   },
-  //   {
-  //     id: 2,
-  //     name: "Erin Howell",
-  //   },
-  //   {
-  //     id: 3,
-  //     name: "Alex Graham",
-  //   },
-  // ];
 
   useEffect(() => {
     setData(dummy_data);
@@ -253,6 +241,10 @@ const Dashboard = () => {
 
   const closeNav = () => {
     setIsNavOpen(false);
+  };
+
+  const handleProfileModalVisible = () => {
+    setProfileModalVisible(true);
   };
 
   // useEffect(() => {
@@ -471,7 +463,11 @@ const Dashboard = () => {
             </div> */}
             <div id="navbar-admin-details">
               <div id="navbar-admin-logo">
-                <img src={user_img} alt="" />
+                <img
+                  src={user_img}
+                  alt=""
+                  onClick={handleProfileModalVisible}
+                />
               </div>
               {/* <div id="navbar-admin-text">
                 <p id="admin-username">{username}</p>
@@ -570,6 +566,11 @@ const Dashboard = () => {
             ></LogoutForm>
           )}
         </div>
+
+        <Profile
+          show={profileModalVisible}
+          close={() => setProfileModalVisible(false)}
+        ></Profile>
       </div>
     </div>
   );

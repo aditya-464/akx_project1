@@ -143,6 +143,7 @@
   object-fit: cover;
   border-radius: 75%;
   margin-right: 1rem;
+  cursor: pointer;
 }
 
 #admin-username {
