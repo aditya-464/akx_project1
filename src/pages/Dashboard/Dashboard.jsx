@@ -353,21 +353,23 @@ const Dashboard = () => {
         <div id="company-details">DSMS</div>
         {/* <div className="partition-line"></div> */}
         <div id="dashboard-navigation-list-div">
-          <div
-            id="dashboard-dashboard-item"
-            className="dashboard-navigation-item"
-            onClick={() => {
-              sessionStorage.setItem("homeComponent", "dashboard");
-              setDashboardComponent("dashboard");
-              setUserFilterApi(null);
-              setMediaFilterApi(null);
-            }}
-          >
-            <div className="dashboard-navigation-icons">
-              <AiFillHome size={14} color={"white"}></AiFillHome>
+          {currentUser.userType !== "USER" && (
+            <div
+              id="dashboard-dashboard-item"
+              className="dashboard-navigation-item"
+              onClick={() => {
+                sessionStorage.setItem("homeComponent", "dashboard");
+                setDashboardComponent("dashboard");
+                setUserFilterApi(null);
+                setMediaFilterApi(null);
+              }}
+            >
+              <div className="dashboard-navigation-icons">
+                <AiFillHome size={14} color={"white"}></AiFillHome>
+              </div>
+              <p>Dashboard</p>
             </div>
-            <p>Dashboard</p>
-          </div>
+          )}
           {currentUser.userType !== "USER" && (
             <div
               id="dashboard-users-item"
