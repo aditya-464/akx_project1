@@ -66,7 +66,7 @@ const DeleteMediaModal = ({ show, close, mediaDetails }) => {
         <div className="delete-media-modal-body">
           <div className="delete-media-form">
             <p className="delete-media-ask-text">
-              Do you wan't to delete
+              Do you want to delete
               <span className="delete-media-name">
                 {getTruncatedName(mediaDetails.fileName)}?
               </span>

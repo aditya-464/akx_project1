@@ -73,7 +73,7 @@ const DeleteUserModal = ({ show, close, userDetails }) => {
             </p> */}
 
             <p className="delete-user-ask-text">
-              Do you wan't to delete
+              Do you want to delete
               <span className="delete-user-name">
                 {" "}
                 {getTruncatedName(userDetails.name)}?

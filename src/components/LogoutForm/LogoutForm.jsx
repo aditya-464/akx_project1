@@ -11,7 +11,7 @@ const LogoutForm = ({ close }) => {
   return (
     <div className="logout-container">
       <div className="logout-form">
-        <p className="logout-ask-text">Are you sure, you wan't to logout?</p>
+        <p className="logout-ask-text">Are you sure you want to log out?</p>
         <div className="logout-buttons-container">
           <div className="logout-yes-button" onClick={handleLogout}>
             <p>Yes</p>
