@@ -9,18 +9,39 @@ import { toast } from "react-toastify";
 import Avatar from "react-avatar";
 import { ColorRing } from "react-loader-spinner";
 import { useNavigate } from "react-router-dom";
+import PaginationDropdown from "../PaginationDropdown/PaginationDropdown";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 const UserData = ({ userFilterApi }) => {
+  const { currentUser, tenant, refreshUserCount, userFilterAppliedCount } =
+    useSelector((state) => state.page);
   const [actualData, setActualData] = useState(null);
   const [visibleMenuId, setVisibleMenuId] = useState(null); // Tracks the menu's visibility
   const [editUserModalVisible, setEditUserModalVisible] = useState(false);
   const [editUserDetails, setEditUserDetails] = useState("");
   const [deleteUserModalVisible, setdeleteUserModalVisible] = useState(false);
   const [deleteUserDetails, setDeleteUserDetails] = useState("");
-  const { refreshUserCount } = useSelector((state) => state.page);
-  const { currentUser, tenant } = useSelector((state) => state.page);
+  const [rowsPerPageLocal, setRowsPerPageLocal] = useState(1);
+  const [pageNumberLocal, setPageNumberLocal] = useState(0);
+  const [totalRows, setTotalRows] = useState(null);
+  const [totalPages, setTotalPages] = useState(null);
+  const [options, setOptions] = useState([
+    {
+      id: 1,
+      name: 1,
+    },
+    {
+      id: 2,
+      name: 2,
+    },
+    {
+      id: 3,
+      name: 25,
+    },
+  ]);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   // Toggle menu visibility for a specific item
   const toggleMenu = (id) => {
@@ -87,13 +108,50 @@ const UserData = ({ userFilterApi }) => {
     });
   };
 
+  const getTotalRowsAndPagesCount = async () => {
+    try {
+      const headers = {
+        "X-TenantID": tenant,
+      };
+
+      if (userFilterApi === null) {
+        const response = await axios.get("/userProfile?size=1&page=0", {
+          headers,
+        });
+        if (response.status === 200) {
+          setTotalRows(response.data.additionalData.totalElements);
+          setTotalPages(
+            Math.ceil(
+              response.data.additionalData.totalElements / rowsPerPageLocal
+            )
+          );
+        }
+      } else {
+        const response = await axios.get(userFilterApi + "&size=1&page=0", {
+          headers,
+        });
+        if (response.status === 200) {
+          setTotalRows(response.data.additionalData.totalElements);
+          setTotalPages(
+            Math.ceil(
+              response.data.additionalData.totalElements / rowsPerPageLocal
+            )
+          );
+        }
+      }
+    } catch (error) {
+      // console.log(error.message);
+      showErrorToast(error.response.data.message);
+    }
+  };
+
   const getActualData = async () => {
     try {
       const headers = {
         "X-TenantID": tenant,
       };
 
-      if (userFilterApi == null) {
+      if (userFilterApi === null) {
         // if (currentUser.userType === "SUPER_ADMIN") {
         //   const response = await axios.get(
         //     `/userProfile?sortBy=createdOn&order=desc&userType=SUPER_ADMIN,ORGANIZATIONAL_ADMIN,USER`,
@@ -119,34 +177,50 @@ const UserData = ({ userFilterApi }) => {
         //     setActualData(response.data.data);
         //   }
         // }
-        
+
         const response = await axios.get(
-          "/userProfile?sortBy=createdOn&order=desc",
+          `/userProfile?sortBy=createdOn&order=desc&size=${rowsPerPageLocal}&page=${pageNumberLocal}`,
           { headers }
         );
         if (response.data.data) {
           setActualData(response.data.data);
         }
       } else {
-        const response = await axios.get(userFilterApi, { headers });
+        const remainingApiEndpoint = `&size=${rowsPerPageLocal}&page=${pageNumberLocal}`;
+        const response = await axios.get(userFilterApi + remainingApiEndpoint, {
+          headers,
+        });
         if (response.data.data) {
           setActualData(response.data.data);
         }
       }
     } catch (error) {
-      console.log(error);
-      
       showErrorToast(error.response.data.message);
     }
   };
 
   useEffect(() => {
     getActualData();
-  }, [refreshUserCount, tenant, userFilterApi]);
+  }, [
+    refreshUserCount,
+    tenant,
+    userFilterApi,
+    rowsPerPageLocal,
+    pageNumberLocal,
+  ]);
+
+  useEffect(() => {
+    getTotalRowsAndPagesCount();
+  }, [refreshUserCount, tenant, userFilterApi, userFilterAppliedCount]);
 
   // useEffect(() => {
-  //   if (!actualData) return;
-  // }, [actualData]);
+  //   dispatch(setPageNumber(pageNumberLocal));
+  // }, [pageNumberLocal]);
+
+  useEffect(() => {
+    setRowsPerPageLocal(1);
+    setPageNumberLocal(0);
+  }, [userFilterAppliedCount]);
 
   const getStatusColor = (status) => {
     switch (status) {
@@ -224,77 +298,79 @@ const UserData = ({ userFilterApi }) => {
 
   return (
     actualData && (
-      <div id="users-data-container">
-        {
-          <>
-            <div id="users-data-headings-div">
-              <div id="users-heading-checkbox"></div>
-              <p
-                className="users-heading-id"
-                style={{ cursor: "pointer" }}
-                onClick={() => handleSortingOfData("id")}
-              >
-                Id
-              </p>
-              <p className="users-heading-image">Image</p>
-              <p
-                className="users-heading-name"
-                style={{ cursor: "pointer" }}
-                onClick={() => handleSortingOfData("name")}
-              >
-                Name
-              </p>
-              <p
-                className="users-heading-mobile"
-                style={{ cursor: "pointer" }}
-                onClick={() => handleSortingOfData("mobile")}
-              >
-                Mobile
-              </p>
-              <p
-                className="users-heading-email"
-                style={{ cursor: "pointer" }}
-                onClick={() => handleSortingOfData("email")}
-              >
-                Email
-              </p>
-              <p
-                className="users-heading-created-on"
-                style={{ cursor: "pointer" }}
-                onClick={() => handleSortingOfData("createdOn")}
-              >
-                Created On
-              </p>
-              <div
-                className="users-data-option-div"
-                style={{ visibility: "hidden" }}
-              >
-                <SlOptionsVertical size={12} />
+      <>
+        <div id="users-data-container">
+          {
+            <>
+              <div id="users-data-headings-div">
+                <div id="users-heading-checkbox"></div>
+                <p
+                  className="users-heading-id"
+                  style={{ cursor: "pointer" }}
+                  onClick={() => handleSortingOfData("id")}
+                >
+                  Id
+                </p>
+                <p className="users-heading-image">Image</p>
+                <p
+                  className="users-heading-name"
+                  style={{ cursor: "pointer" }}
+                  onClick={() => handleSortingOfData("name")}
+                >
+                  Name
+                </p>
+                <p
+                  className="users-heading-mobile"
+                  style={{ cursor: "pointer" }}
+                  onClick={() => handleSortingOfData("mobile")}
+                >
+                  Mobile
+                </p>
+                <p
+                  className="users-heading-email"
+                  style={{ cursor: "pointer" }}
+                  onClick={() => handleSortingOfData("email")}
+                >
+                  Email
+                </p>
+                <p
+                  className="users-heading-created-on"
+                  style={{ cursor: "pointer" }}
+                  onClick={() => handleSortingOfData("createdOn")}
+                >
+                  Created On
+                </p>
+                <div
+                  className="users-data-option-div"
+                  style={{ visibility: "hidden" }}
+                >
+                  <SlOptionsVertical size={12} />
+                </div>
               </div>
-            </div>
 
-            <div id="users-data-partition-horizontal"></div>
-            {actualData.length == 0 && (
-              <div
-                style={{
-                  textAlign: "center",
-                  fontSize: "14px",
-                  fontWeight: "500",
-                  margin: "2rem 0rem",
-                }}
-              >
-                <p>No data</p>
-              </div>
-            )}
-            {actualData.length > 0 && (
-              <div id="users-data-content-div">
-                {actualData.map((item) => (
-                  <div key={item.id} className="users-data-item-div">
-                    <p className="users-heading-id users-data-item">
-                      {item.id}
-                    </p>
-                    <div className="users-heading-image users-data-item">
-                      {/* <img
+              <div id="users-data-partition-horizontal"></div>
+              {actualData.length == 0 && (
+                <div
+                  style={{
+                    textAlign: "center",
+                    fontSize: "14px",
+                    fontWeight: "500",
+                    margin: "2rem 0rem",
+                  }}
+                >
+                  <p>No data</p>
+                </div>
+              )}
+              {actualData.length > 0 && (
+                <>
+                  <div id="users-data-content-div">
+                    {actualData.map((item) => (
+                      <div key={item.id} className="users-data-item-div">
+                        <p className="users-heading-id users-data-item">
+                          {item.id}
+                        </p>
+                        <div className="users-heading-image users-data-item">
+                          {/* <img
                       className="users-data-image"
                       // src={
                       //   item.brandingLogo ||
@@ -305,97 +381,171 @@ const UserData = ({ userFilterApi }) => {
                       }
                       alt={item.name}
                     /> */}
-                      <div
-                        style={{
-                          position: "relative",
-                          display: "inline-block",
-                        }}
-                      >
-                        <Avatar
-                          name={item.name}
-                          size="35"
-                          round={true}
-                          color="#d9dada"
-                          fgColor="black"
-                        />
-                        <div
-                          style={{
-                            position: "absolute",
-                            bottom: "5px",
-                            right: "-5px",
-                            width: "10px",
-                            height: "10px",
-                            backgroundColor: getStatusColor(item.userType),
-                            // border: "1px solid white",
-                            borderRadius: "50%",
-                          }}
-                        ></div>
-                      </div>
-                    </div>
-                    <p className="users-heading-name users-data-item">
-                      {item.name}
-                    </p>
-                    <p className="users-heading-mobile users-data-item">
-                      {item.mobile}
-                    </p>
-                    <p className="users-heading-email users-data-item">
-                      {item.email}
-                    </p>
-                    <p className="users-heading-created-on users-data-item">
-                      {getReadableDate(item.createdOn)}
-                    </p>
-                    <div
-                      className="users-data-option-div"
-                      onClick={() => toggleMenu(item.id)} // Pass unique ID
-                    >
-                      <SlOptionsVertical size={12} />
-                    </div>
-
-                    {/* Popup Menu */}
-                    {visibleMenuId === item.id &&
-                      (currentUser.userType === "SUPER_ADMIN" ||
-                        (currentUser.userType === "ORGANIZATIONAL_ADMIN" &&
-                          item.userType !== "SUPER_ADMIN")) && (
-                        <div className="popup-menu">
-                          <p
-                            className="popup-menu-item"
-                            onClick={() => handleLoginAsOther(item)}
+                          <div
+                            style={{
+                              position: "relative",
+                              display: "inline-block",
+                            }}
                           >
-                            Login
-                          </p>
-                          <p
-                            className="popup-menu-item"
-                            onClick={() => handleEdit(item)}
-                          >
-                            Edit
-                          </p>
-                          <p
-                            className="popup-menu-item"
-                            onClick={() => handleDelete(item)}
-                          >
-                            Delete
-                          </p>
+                            <Avatar
+                              name={item.name}
+                              size="35"
+                              round={true}
+                              color="#d9dada"
+                              fgColor="black"
+                            />
+                            <div
+                              style={{
+                                position: "absolute",
+                                bottom: "5px",
+                                right: "-5px",
+                                width: "10px",
+                                height: "10px",
+                                backgroundColor: getStatusColor(item.userType),
+                                // border: "1px solid white",
+                                borderRadius: "50%",
+                              }}
+                            ></div>
+                          </div>
                         </div>
-                      )}
+                        <p className="users-heading-name users-data-item">
+                          {item.name}
+                        </p>
+                        <p className="users-heading-mobile users-data-item">
+                          {item.mobile}
+                        </p>
+                        <p className="users-heading-email users-data-item">
+                          {item.email}
+                        </p>
+                        <p className="users-heading-created-on users-data-item">
+                          {getReadableDate(item.createdOn)}
+                        </p>
+                        <div
+                          className="users-data-option-div"
+                          onClick={() => toggleMenu(item.id)} // Pass unique ID
+                        >
+                          <SlOptionsVertical size={12} />
+                        </div>
+
+                        {/* Popup Menu */}
+                        {visibleMenuId === item.id &&
+                          (currentUser.userType === "SUPER_ADMIN" ||
+                            (currentUser.userType === "ORGANIZATIONAL_ADMIN" &&
+                              item.userType !== "SUPER_ADMIN")) && (
+                            <div className="popup-menu">
+                              <p
+                                className="popup-menu-item"
+                                onClick={() => handleLoginAsOther(item)}
+                              >
+                                Login
+                              </p>
+                              <p
+                                className="popup-menu-item"
+                                onClick={() => handleEdit(item)}
+                              >
+                                Edit
+                              </p>
+                              <p
+                                className="popup-menu-item"
+                                onClick={() => handleDelete(item)}
+                              >
+                                Delete
+                              </p>
+                            </div>
+                          )}
+                      </div>
+                    ))}
                   </div>
-                ))}
+                </>
+              )}
+            </>
+          }
+
+          <EditUserModal
+            show={editUserModalVisible}
+            close={() => setEditUserModalVisible(false)}
+            userDetails={editUserDetails}
+          ></EditUserModal>
+
+          <DeleteUserModal
+            show={deleteUserModalVisible}
+            close={() => setdeleteUserModalVisible(false)}
+            userDetails={deleteUserDetails}
+          ></DeleteUserModal>
+        </div>
+
+        {totalRows !== null && totalPages !== null && (
+          <div className="users-pagination-container">
+            <div className="users-pagination-pages-container">
+              <p>Rows per page</p>
+              <div
+                style={{
+                  width: "7rem",
+                }}
+              >
+                <PaginationDropdown
+                  options={options}
+                  returnValue={(val) => {
+                    // dispatch(setRowsPerPage(val));
+                    setRowsPerPageLocal(val);
+                    setPageNumberLocal(0);
+                    setTotalPages(Math.ceil(totalRows / val));
+                  }}
+                  defaultValue={1}
+                  userFilterAppliedCount={userFilterAppliedCount}
+                ></PaginationDropdown>
               </div>
-            )}
-          </>
-        }
-
-        <EditUserModal
-          show={editUserModalVisible}
-          close={() => setEditUserModalVisible(false)}
-          userDetails={editUserDetails}
-        ></EditUserModal>
-
-        <DeleteUserModal
-          show={deleteUserModalVisible}
-          close={() => setdeleteUserModalVisible(false)}
-          userDetails={deleteUserDetails}
-        ></DeleteUserModal>
-      </div>
+            </div>
+            <div className="users-pagination-buttons-container">
+              <div
+                className="users-pagination-previous-button"
+                style={{
+                  opacity: pageNumberLocal === 0 ? "0.2" : "1",
+                  cursor: pageNumberLocal === 0 ? "default" : "pointer",
+                  pointerEvents: pageNumberLocal === 0 ? "none" : "auto", // Prevent hover interactions
+                }}
+                onClick={() => {
+                  if (pageNumberLocal >= 1) {
+                    setPageNumberLocal((prev) => Math.max(prev - 1, 0));
+                  }
+                }}
+              >
+                <IoIosArrowBack size={16} color="#36454f"></IoIosArrowBack>
+              </div>
+              <div>
+                <input
+                  className="users-pagination-page-number-field"
+                  type="text"
+                  value={pageNumberLocal + 1}
+                  disabled={true}
+                />
+              </div>
+              <div
+                className="users-pagination-next-button"
+                style={{
+                  opacity: pageNumberLocal === totalPages - 1 ? "0.2" : "1",
+                  cursor:
+                    pageNumberLocal === totalPages - 1 ? "default" : "pointer",
+                  pointerEvents:
+                    pageNumberLocal === totalPages - 1 ? "none" : "auto", // Prevent hover interactions
+                }}
+                onClick={() => {
+                  if (pageNumberLocal < totalPages - 1) {
+                    setPageNumberLocal((prev) =>
+                      prev < totalPages - 1 ? prev + 1 : prev
+                    );
+                  }
+                }}
+              >
+                <IoIosArrowForward
+                  size={16}
+                  color="#36454f"
+                ></IoIosArrowForward>
+              </div>
+            </div>
+          </div>
+        )}
+      </>
     )
   );
 };

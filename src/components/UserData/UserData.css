@@ -165,6 +165,75 @@
   background-color: #f4f4f4;
 }
 
+/* Pagination */
+.users-pagination-container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin: 3rem 0;
+}
+
+.users-pagination-pages-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.users-pagination-pages-container p {
+  font-size: 12px;
+  font-weight: 400;
+  color: black;
+  margin-right: 1rem;
+}
+
+.users-pagination-buttons-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 3rem;
+}
+
+.users-pagination-previous-button {
+  background-color: #f1f2f2;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.users-pagination-previous-button:hover {
+  background-color: #d9dada;
+}
+
+.users-pagination-next-button {
+  background-color: #f1f2f2;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.users-pagination-next-button:hover {
+  background-color: #d9dada;
+}
+
+.users-pagination-page-number-field {
+  width: 4rem;
+  height: 4rem;
+  font-size: 12px;
+  color: #36454f;
+  border: 1px solid #c3c7ca;
+  border-radius: 3px;
+  font-family: "Poppins", sans-serif !important;
+  text-align: center;
+  margin: 0 1.5rem;
+}
+
 /* Mobiile responsiveness CSS */
 
 @media only screen and (max-width: 500px) {

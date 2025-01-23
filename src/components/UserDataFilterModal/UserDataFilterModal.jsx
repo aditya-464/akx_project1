@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./UserDataFilterModal.css";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { refreshUser } from "../../redux/page";
+import { refreshUser, refreshUserFilterApplied } from "../../redux/page";
 import { toast } from "react-toastify";
 
 const options = [
@@ -95,29 +95,42 @@ const UserDataFilterModal = ({ show, close, getUserFilterApi }) => {
 
   const handleApplyFilter = () => {
     let filterAPI = {};
+    let flag = false;
 
     filterAPI["sortBy"] = "createdOn";
     filterAPI["order"] = "desc";
 
     if (searchId !== "") {
       filterAPI["id"] = searchId;
+      flag = true;
     }
     if (searchName !== "") {
       filterAPI["name"] = searchName;
+      flag = true;
     }
     if (selectedOptions["Least Recent"] === true) {
       filterAPI["sortBy"] = "createdOn";
       filterAPI["order"] = "asc";
+      flag = true;
     }
     if (selectedOptions["Most Recent"] === true) {
       filterAPI["sortBy"] = "createdOn";
       filterAPI["order"] = "desc";
+      flag = true;
     }
     if (selectedOptions["Organizational Admins"] === true) {
       filterAPI["userType"] = "ORGANIZATIONAL_ADMIN";
+      flag = true;
     }
     if (selectedOptions["Users"] === true) {
       filterAPI["userType"] = "USER";
+      flag = true;
+    }
+
+    if (!flag) {
+      showErrorToast("Select atleast one filtering method");
+      getUserFilterApi(null);
+      return;
     }
 
     let result = "";
@@ -125,17 +138,33 @@ const UserDataFilterModal = ({ show, close, getUserFilterApi }) => {
       .map(([key, value]) => `${key}=${value}`) // Format each key-value pair as "key=value"
       .join("&");
 
-    if (result === "") {
-      getUserFilterApi(null);
-    } else {
-      const userFilterUrl = "/userProfile?" + result;
-      getUserFilterApi(userFilterUrl);
-    }
+    // if (result === "") {
+    //   getUserFilterApi(null);
+    // } else {
+    //   const userFilterUrl = "/userProfile?" + result;
+    //   getUserFilterApi(userFilterUrl);
+    // }
 
+    const userFilterUrl = "/userProfile?" + result;
+    getUserFilterApi(userFilterUrl);
+    dispatch(refreshUserFilterApplied());
     handleClose();
   };
 
+  const showSuccessToast = (message) => {
+    toast.success(message, {
+      position: "bottom-center",
+    });
+  };
+
+  const showErrorToast = (message) => {
+    toast.error(message, {
+      position: "bottom-center",
+    });
+  };
+
   const handleClearAll = () => {
+    dispatch(refreshUserFilterApplied());
     getUserFilterApi(null);
     close();
     setSearchId("");

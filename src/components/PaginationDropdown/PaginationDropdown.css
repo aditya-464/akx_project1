@@ -1,0 +1,50 @@
+.react-dropdown-select-dropdown {
+  position: absolute !important;
+  width: 100% !important; /* Ensures it matches the width of the parent input box */
+  border-radius: 5px !important;
+}
+
+.pagination-dropdown {
+  /* width: 20rem !important; */
+  /* margin-top: 1rem !important; */
+  
+  padding: 0 1rem !important;
+  font-family: "Poppins", sans-serif !important;
+  font-size: 12px !important;
+  color: #36454f !important;
+  /* border: 1px solid #c3c7ca !important; */
+  border-radius: 5px !important;
+  outline: none !important;
+  box-shadow: none !important;
+
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+
+  /* new */
+  height: 4rem;
+  background-color: #f1f2f2 !important;
+  border: none !important;
+  /* new */
+}
+
+.pagination-dropdown:focus {
+  box-shadow: none !important;
+  outline: none !important;
+
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+.pagination-dropdown input {
+  font-family: "Poppins", sans-serif !important;
+  font-size: 12px !important;
+  color: #36454f !important;
+}
+
+.dropdown-icon-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

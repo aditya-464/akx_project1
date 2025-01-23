@@ -58,6 +58,7 @@ const NavbarDropdown = ({ returnValue }) => {
         values={option}
         className="navbar-dropdown"
         options={tenantOptions}
+        searchable={false}
         labelField="name"
         valueField="name"
         placeholder="Select brand..."

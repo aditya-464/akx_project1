@@ -15,6 +15,8 @@ const initialState = {
   homeComponent: sessionStorage.getItem("homeComponent") || "dashboard",
   refreshUserCount: 1,
   refreshMediaCount: 1,
+  userFilterAppliedCount: 1,
+  mediaFilterAppliedCount: 1,
   data_for_user: [
     {
       id: 1,
@@ -145,6 +147,12 @@ export const pageSlice = createSlice({
     refreshMedia: (state, action) => {
       state.refreshMediaCount += 1;
     },
+    refreshUserFilterApplied: (state, action) => {
+      state.userFilterAppliedCount += 1;
+    },
+    refreshMediaFilterApplied: (state, action) => {
+      state.mediaFilterAppliedCount += 1;
+    },
     logout: () => initialState,
     insertUser: (state, action) => {
       state.data_for_user.push(action.payload);
@@ -164,6 +172,8 @@ export const {
   setHomeComponent,
   refreshUser,
   refreshMedia,
+  refreshUserFilterApplied,
+  refreshMediaFilterApplied,
   logout,
   insertUser,
   insertMedia,

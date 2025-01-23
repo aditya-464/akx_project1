@@ -203,6 +203,7 @@
 
 #dashboard-filter-button:hover {
   background-color: #ebeced;
+  /* background-color: #d9dada; */
 }
 
 #dashboard-filter-button p {

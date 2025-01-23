@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Select from "react-dropdown-select";
-import "./LoginFormDropdown.css";
+import "./PaginationDropdown.css";
 import { IoIosArrowDown } from "react-icons/io";
 
-const LoginFormDropdown = (props) => {
-  const { options, returnValue, defaultValue } = props;
+const PaginationDropdown = (props) => {
+  const { options, returnValue, defaultValue, userFilterAppliedCount } = props;
   const [option, setOption] = useState([]);
+
+  useEffect(() => {}, [userFilterAppliedCount]);
 
   const handleSetOption = (values) => {
     if (values.length > 0) {
@@ -31,12 +33,13 @@ const LoginFormDropdown = (props) => {
 
   return (
     <Select
+      key={userFilterAppliedCount}
       values={option}
-      className="login-form-dropdown"
+      className="pagination-dropdown"
       options={options}
       disabled={options !== null ? false : true}
       searchable={false}
-      placeholder="Search"
+      //   placeholder="Search"
       labelField="name"
       valueField="name"
       dropdownHandleRenderer={() => (
@@ -50,4 +53,4 @@ const LoginFormDropdown = (props) => {
   );
 };
 
-export default LoginFormDropdown;
+export default PaginationDropdown;
