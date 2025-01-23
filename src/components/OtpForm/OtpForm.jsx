@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { changePage, setHomeComponent } from "../../redux/page";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const OtpForm = () => {
   const [length, setLength] = useState(6);
@@ -15,6 +15,8 @@ const OtpForm = () => {
   const { currentUser, tenant } = useSelector((state) => state.page);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+  const { forgotPassword } = location.state || {}; // Accessing passed data
 
   const inputRefs = useRef([]);
 
@@ -89,9 +91,23 @@ const OtpForm = () => {
     });
   };
 
+  const checkParams = () => {
+    console.log(forgotPassword);
+    
+    if (forgotPassword === undefined || forgotPassword === null) {
+      showErrorToast("Invalid request");
+      return false;
+    } else {
+      return true;
+    }
+  };
+
   const otpVerifyFunction = async () => {
     try {
-      console.log(currentUser);
+      if (!checkParams()) {
+        return;
+      }
+      console.log(forgotPassword);
 
       if (finalOtp.length == 6 && currentUser && tenant) {
         const headers = {
@@ -114,7 +130,7 @@ const OtpForm = () => {
           } else {
             sessionStorage.setItem("homeComponent", "dashboard");
           }
-          
+
           dispatch(changePage("home"));
           if (currentUser.userType === "USER") {
             dispatch(setHomeComponent("media"));

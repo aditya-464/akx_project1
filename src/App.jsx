@@ -13,6 +13,8 @@ import {
 import { useSelector } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword/ResetPassword";
 
 function App() {
   // const { page } = useSelector((state) => state.page);
@@ -21,6 +23,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<Login></Login>} />
+        <Route path="/forgot-password" element={<ForgotPassword></ForgotPassword>} />
+        <Route path="/reset-password" element={<ResetPassword></ResetPassword>} />
         <Route path="/otp" element={<Otp></Otp>} />
         <Route path="/home" element={<Dashboard></Dashboard>} />
         <Route path="*" element={<NotFound></NotFound>} />

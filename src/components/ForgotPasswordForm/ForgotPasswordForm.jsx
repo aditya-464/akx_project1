@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./LoginForm.css";
+import "./ForgotPasswordForm.css";
 import login_img from "../../assets/images/login2.webp";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -14,9 +14,8 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
-const LoginForm = () => {
+const ForgotPasswordForm = () => {
   const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
   const [user, setUser] = useState("");
   // const [dropdownVal, setDropdownVal] = useState("");
   const [options, setOptions] = useState(null);
@@ -68,7 +67,7 @@ const LoginForm = () => {
 
   const loginFunction = async () => {
     try {
-      if (username != "" && password != "" && user != "" && options !== null) {
+      if (username != "" && password != "" && user != "") {
         if (!isValidUser()) {
           return;
         }
@@ -99,21 +98,34 @@ const LoginForm = () => {
           dispatch(setCurrentUser(response.data.data));
           dispatch(setTenant(user));
           dispatch(changePage("otp"));
-          // navigate("/otp");
-          navigate("/otp", {
-            state: { forgotPassword: false },
-          });
+          navigate("/otp");
         }
+      } else {
+        showErrorToast("Please fill all fields");
+      }
+    } catch (error) {
+      console.log(error.response.data.message);
+
+      showErrorToast(error.response.data.message);
+    }
+  };
+
+  const handleProceed = async () => {
+    try {
+      if (user !== "" && username !== "" && options !== null) {
+        if (!isValidUser()) {
+          return;
+        }
+        // navigate("/otp", {
+        //   state: { forgotPassword: true },
+        // });
+        navigate("/reset-password");
       } else {
         showErrorToast("Please fill all fields");
       }
     } catch (error) {
       showErrorToast(error.response.data.message);
     }
-  };
-
-  const handleSelect = (selectedOption) => {
-    console.log("Selected:", selectedOption);
   };
 
   const getTenantOptions = async () => {
@@ -150,20 +162,20 @@ const LoginForm = () => {
   }, []);
 
   return (
-    <div className="login-form-container">
-      <div className="login-image-div">
+    <div className="forgot-password-form-container">
+      <div className="forgot-password-image-div">
         <img src={login_img}></img>
         <div className="black-overlay"></div>
       </div>
-      <div className="login-content-div">
-        <div className="login-content">
-          <p className="login-ask-text">Already have an account?</p>
-          <p className="login-text">Sign in here</p>
+      <div className="forgot-password-content-div">
+        <div className="forgot-password-content">
+          <p className="forgot-password-ask-text">Forgot your password?</p>
+          <p className="forgot-password-text">We'll help you</p>
 
-          <div className="login-fields-group">
+          <div className="forgot-password-fields-group">
             <p>Username</p>
             <input
-              className="login-fields-input"
+              className="forgot-password-fields-input"
               type="email"
               value={username}
               onChange={(e) => {
@@ -171,22 +183,11 @@ const LoginForm = () => {
               }}
             />
           </div>
-          <div className="login-fields-group">
-            <p>Password</p>
-            <input
-              className="login-fields-input"
-              type="password"
-              value={password}
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
-            />
-          </div>
 
-          <div className="login-fields-group">
+          <div className="forgot-password-fields-group">
             <p>User</p>
             <input
-              className="login-fields-input"
+              className="forgot-password-fields-input"
               value={user}
               onChange={(e) => {
                 setUser(e.target.value);
@@ -194,44 +195,19 @@ const LoginForm = () => {
             />
           </div>
 
-          {/* <div className="login-fields-group">
-            <p>Select User</p>
-            <LoginFormDropdown
-              options={options}
-              defaultValue={"vmodaqa"}
-              returnValue={(val) => setDropdownVal(val)}
-            ></LoginFormDropdown>
-          </div> */}
-
-          {/* <div className="stay-logged-in-div">
-            <input
-              className="custom-checkbox"
-              type="checkbox"
-              value="gregory"
-            />
-            <p>Stay logged in</p>
-          </div> */}
-
-          <div className="login-button" onClick={loginFunction}>
-            <p>Login</p>
+          <div className="forgot-password-button" onClick={handleProceed}>
+            <p>Proceed</p>
           </div>
-
           <p
             className="cant-access-text"
             onClick={() => {
-              navigate("/forgot-password");
+              // navigate("/otp", {
+              //   state: { forgetPassword: true },
+              // });
+              navigate("/login");
             }}
           >
-            Can't access your account?
-          </p>
-
-          <div className="other-text-div">
-            <p className="other-text">User Contract</p>
-            <p className="vertical-partition">|</p>
-            <p className="other-text">Privacy Policy</p>
-          </div>
-          <p className="copyright-text">
-            Copyrights 2024 India, Inc. All rights reserved
+            Remember your password?
           </p>
         </div>
       </div>
@@ -239,4 +215,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default ForgotPasswordForm;
