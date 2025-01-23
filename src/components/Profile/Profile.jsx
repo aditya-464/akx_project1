@@ -22,6 +22,7 @@ const Profile = ({ show, close }) => {
   const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [mobile, setMobile] = useState("");
+  const [password, setPassword] = useState("");
   const [isDisabled, setIsDisabled] = useState(true);
   const [profileImage, setProfileImage] = useState(null); // State to store selected image
 
@@ -191,36 +192,35 @@ const Profile = ({ show, close }) => {
               />
             </div>
           </div>
-          {/* <div className="profile-fields-group">
-            <div
-              className="profile-field"
-              style={{ paddingRight: "2rem" }}
-            >
-              <p className="profile-field-heading">Uploaded By</p>
+          <div className="profile-fields-group">
+            <div className="profile-field" style={{ paddingRight: "2rem" }}>
+              <p className="profile-field-heading">Email</p>
               <input
-                type="text"
-                name="uploaded-by"
-                value={uploadedByName}
-                onChange={(e) => {
-                  setUploadedByName(e.target.value);
-                }}
+                type="email"
+                name="email"
+                value={currentUser.email}
+                disabled={true}
                 className="profile-input-field"
+                style={{
+                  cursor : "not-allowed"
+                }}
               />
             </div>
             <div className="profile-field">
-              <p className="profile-field-heading">Approved By</p>
+              <p className="profile-field-heading">Password</p>
               <input
                 type="text"
-                name="approved-by"
-                value={approvedByName}
+                name="password"
+                value={password}
                 onChange={(e) => {
-                  setApprovedByName(e.target.value);
+                  setPassword(e.target.value);
                 }}
-                // placeholder="Enter Name"
+                placeholder="**********"
                 className="profile-input-field"
+                disabled={isDisabled}
               />
             </div>
-          </div> */}
+          </div>
 
           {/* <div className="profile-checkbox-group">
             {options.map((option, index) => (

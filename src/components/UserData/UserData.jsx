@@ -51,10 +51,9 @@ const UserData = ({ userFilterApi }) => {
     console.log(item);
     setVisibleMenuId(null); // Close the menu
     sessionStorage.setItem("currentUser", JSON.stringify(item));
-    if(item.userType==="USER"){
+    if (item.userType === "USER") {
       sessionStorage.setItem("homeComponent", "media");
-    }
-    else{
+    } else {
       sessionStorage.setItem("homeComponent", "dashboard");
     }
     reloadPage();
@@ -95,7 +94,36 @@ const UserData = ({ userFilterApi }) => {
       };
 
       if (userFilterApi == null) {
-        const response = await axios.get("/userProfile?sortBy=createdOn&order=desc", { headers });
+        // if (currentUser.userType === "SUPER_ADMIN") {
+        //   const response = await axios.get(
+        //     `/userProfile?sortBy=createdOn&order=desc&userType=SUPER_ADMIN,ORGANIZATIONAL_ADMIN,USER`,
+        //     { headers }
+        //   );
+        //   if (response.data.data) {
+        //     setActualData(response.data.data);
+        //   }
+        // } else if (currentUser.userType === "ORGANIZATIONAL_ADMIN") {
+        //   const response = await axios.get(
+        //     `/userProfile?sortBy=createdOn&order=desc&userType=ORGANIZATIONAL_ADMIN,USER`,
+        //     { headers }
+        //   );
+        //   if (response.data.data) {
+        //     setActualData(response.data.data);
+        //   }
+        // } else {
+        //   const response = await axios.get(
+        //     `/userProfile?sortBy=createdOn&order=desc&userType=USER`,
+        //     { headers }
+        //   );
+        //   if (response.data.data) {
+        //     setActualData(response.data.data);
+        //   }
+        // }
+        
+        const response = await axios.get(
+          "/userProfile?sortBy=createdOn&order=desc",
+          { headers }
+        );
         if (response.data.data) {
           setActualData(response.data.data);
         }
@@ -106,7 +134,8 @@ const UserData = ({ userFilterApi }) => {
         }
       }
     } catch (error) {
-      // console.log(error.message);
+      console.log(error);
+      
       showErrorToast(error.response.data.message);
     }
   };
