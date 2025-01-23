@@ -1,12 +1,29 @@
 import React from "react";
 import "./LogoutForm.css";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import {
+  changePage,
+  logout,
+  setCurrentUser,
+  setHomeComponent,
+  setTenant,
+  setTenantOptions,
+} from "../../redux/page";
 
 const LogoutForm = ({ close }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleLogout = () => {
+    sessionStorage.clear();
+    dispatch(logout());
     navigate("/login");
+    // dispatch(setCurrentUser({}));
+    // dispatch(setTenant(""));
+    // dispatch(setTenantOptions([]));
+    // dispatch(setHomeComponent("dashboard"));
+    // dispatch(changePage("login"));
   };
   return (
     <div className="logout-container">

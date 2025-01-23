@@ -145,6 +145,7 @@ export const pageSlice = createSlice({
     refreshMedia: (state, action) => {
       state.refreshMediaCount += 1;
     },
+    logout: () => initialState,
     insertUser: (state, action) => {
       state.data_for_user.push(action.payload);
     },
@@ -163,6 +164,7 @@ export const {
   setHomeComponent,
   refreshUser,
   refreshMedia,
+  logout,
   insertUser,
   insertMedia,
 } = pageSlice.actions;
