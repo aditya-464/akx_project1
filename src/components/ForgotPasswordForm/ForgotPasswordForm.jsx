@@ -8,8 +8,6 @@ import {
   setTenant,
   setTenantOptions,
 } from "../../redux/page.js";
-import LoginFormDropdown from "../LoginFormDropdown/LoginFormDropdown.jsx";
-import CryptoJS from "crypto-js";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -17,7 +15,6 @@ import { useNavigate } from "react-router-dom";
 const ForgotPasswordForm = () => {
   const [username, setUsername] = useState("");
   const [user, setUser] = useState("");
-  // const [dropdownVal, setDropdownVal] = useState("");
   const [options, setOptions] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -47,79 +44,30 @@ const ForgotPasswordForm = () => {
     return false;
   };
 
-  // const encrypt = (plainText, secretKey) => {
-  //   const keyBytes = CryptoJS.enc.Utf8.parse(secretKey);
-  //   const encrypted = CryptoJS.AES.encrypt(plainText, keyBytes, {
-  //     mode: CryptoJS.mode.ECB,
-  //   }).toString();
-  //   return encrypted;
-  // };
-
-  const encrypt = (plainText, secretKey) => {
-    const keyBytes = CryptoJS.enc.Utf8.parse(secretKey);
-    const encrypted = CryptoJS.AES.encrypt(plainText, keyBytes, {
-      mode: CryptoJS.mode.ECB,
-      padding: CryptoJS.pad.Pkcs7, // Ensure padding is applied
-    }).toString();
-
-    return encrypted; // Base64 encoded string
-  };
-
-  const loginFunction = async () => {
-    try {
-      if (username != "" && password != "" && user != "") {
-        if (!isValidUser()) {
-          return;
-        }
-        // const secretKey = import.meta.env.VITE_SECRET_KEY;
-        const secretKey = "BxYfjlrtknZyVcjYT3MwPg==";
-        const encryptedKey = encrypt(password, secretKey);
-
-        const headers = {
-          "X-TenantID": user,
-        };
-        const loginData = {
-          email: username,
-          password: encryptedKey,
-        };
-
-        const response = await axios.post("/userProfile/auth", loginData, {
-          headers,
-        });
-
-        if (response.status === 200) {
-          sessionStorage.setItem("tenant", user);
-          sessionStorage.setItem(
-            "currentUser",
-            JSON.stringify(response.data.data)
-          );
-
-          // console.log(response.data.data);
-          dispatch(setCurrentUser(response.data.data));
-          dispatch(setTenant(user));
-          dispatch(changePage("otp"));
-          navigate("/otp");
-        }
-      } else {
-        showErrorToast("Please fill all fields");
-      }
-    } catch (error) {
-      console.log(error.response.data.message);
-
-      showErrorToast(error.response.data.message);
-    }
-  };
-
   const handleProceed = async () => {
     try {
       if (user !== "" && username !== "" && options !== null) {
         if (!isValidUser()) {
           return;
         }
-        // navigate("/otp", {
-        //   state: { forgotPassword: true },
-        // });
-        navigate("/reset-password");
+
+        const headers = {
+          "X-TenantID": user,
+        };
+
+        const response = await axios.get(
+          `/userProfile/forgetPassword?email=${username}`,
+          { headers }
+        );
+
+        if (response.status === 200) {
+          dispatch(setCurrentUser(response.data.data));
+          dispatch(setTenant(user));
+          dispatch(changePage("otp"));
+          navigate("/otp", {
+            state: { forgotPassword: true },
+          });
+        }
       } else {
         showErrorToast("Please fill all fields");
       }
@@ -200,14 +148,14 @@ const ForgotPasswordForm = () => {
           </div>
           <p
             className="cant-access-text"
+            style={{
+              display: "inline-block",
+            }}
             onClick={() => {
-              // navigate("/otp", {
-              //   state: { forgetPassword: true },
-              // });
               navigate("/login");
             }}
           >
-            Remember your password?
+            Back to login
           </p>
         </div>
       </div>

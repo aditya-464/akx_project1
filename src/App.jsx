@@ -32,7 +32,7 @@ function App() {
       {/* {page == "login" && }
       {page == "otp" && }
       {page == "home" && } */}
-      <ToastContainer autoClose={2500} limit={1}></ToastContainer>
+      <ToastContainer autoClose={2000} limit={1}></ToastContainer>
     </Router>
   );
 }

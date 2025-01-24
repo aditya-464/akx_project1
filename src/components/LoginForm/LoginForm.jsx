@@ -218,6 +218,9 @@ const LoginForm = () => {
 
           <p
             className="cant-access-text"
+            style={{
+              display: "inline-block",
+            }}
             onClick={() => {
               navigate("/forgot-password");
             }}

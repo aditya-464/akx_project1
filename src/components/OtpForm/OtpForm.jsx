@@ -93,7 +93,7 @@ const OtpForm = () => {
 
   const checkParams = () => {
     console.log(forgotPassword);
-    
+
     if (forgotPassword === undefined || forgotPassword === null) {
       showErrorToast("Invalid request");
       return false;
@@ -124,20 +124,24 @@ const OtpForm = () => {
         });
 
         if (response.status === 200) {
-          sessionStorage.setItem("page", "home");
-          if (currentUser.userType === "USER") {
-            sessionStorage.setItem("homeComponent", "media");
+          if (forgotPassword === true) {
+            navigate("/reset-password");
           } else {
-            sessionStorage.setItem("homeComponent", "dashboard");
-          }
+            sessionStorage.setItem("page", "home");
+            if (currentUser.userType === "USER") {
+              sessionStorage.setItem("homeComponent", "media");
+            } else {
+              sessionStorage.setItem("homeComponent", "dashboard");
+            }
 
-          dispatch(changePage("home"));
-          if (currentUser.userType === "USER") {
-            dispatch(setHomeComponent("media"));
-          } else {
-            dispatch(setHomeComponent("dashboard"));
+            dispatch(changePage("home"));
+            if (currentUser.userType === "USER") {
+              dispatch(setHomeComponent("media"));
+            } else {
+              dispatch(setHomeComponent("dashboard"));
+            }
+            navigate("/home");
           }
-          navigate("/home");
         }
       }
     } catch (error) {

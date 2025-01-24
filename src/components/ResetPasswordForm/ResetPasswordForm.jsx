@@ -4,6 +4,7 @@ import login_img from "../../assets/images/login2.webp";
 import { useSelector, useDispatch } from "react-redux";
 import {
   changePage,
+  logout,
   setCurrentUser,
   setTenant,
   setTenantOptions,
@@ -15,9 +16,11 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 const ResetPasswordForm = () => {
+  const { currentUser, tenant } = useSelector((state) => state.page);
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [options, setOptions] = useState(null);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -42,6 +45,20 @@ const ResetPasswordForm = () => {
     }
   };
 
+  const isValidPassword = () => {
+    if (password.length < 8) {
+      showErrorToast("Password must contain atleast 8 characters");
+      return false;
+    }
+    for (let i = 0; i < password.length; i++) {
+      if (password[i] == " ") {
+        showErrorToast("Password cannot contain blank space");
+        return false;
+      }
+    }
+    return true;
+  };
+
   // const encrypt = (plainText, secretKey) => {
   //   const keyBytes = CryptoJS.enc.Utf8.parse(secretKey);
   //   const encrypted = CryptoJS.AES.encrypt(plainText, keyBytes, {
@@ -60,60 +77,39 @@ const ResetPasswordForm = () => {
     return encrypted; // Base64 encoded string
   };
 
-  //   const loginFunction = async () => {
-  //     try {
-  //       if (username != "" && password != "" && user != "") {
-  //         if (!isValidUser()) {
-  //           return;
-  //         }
-  //         // const secretKey = import.meta.env.VITE_SECRET_KEY;
-  //         const secretKey = "BxYfjlrtknZyVcjYT3MwPg==";
-  //         const encryptedKey = encrypt(password, secretKey);
-
-  //         const headers = {
-  //           "X-TenantID": user,
-  //         };
-  //         const loginData = {
-  //           email: username,
-  //           password: encryptedKey,
-  //         };
-
-  //         const response = await axios.post("/userProfile/auth", loginData, {
-  //           headers,
-  //         });
-
-  //         if (response.status === 200) {
-  //           sessionStorage.setItem("tenant", user);
-  //           sessionStorage.setItem(
-  //             "currentUser",
-  //             JSON.stringify(response.data.data)
-  //           );
-
-  //           // console.log(response.data.data);
-  //           dispatch(setCurrentUser(response.data.data));
-  //           dispatch(setTenant(user));
-  //           dispatch(changePage("otp"));
-  //           navigate("/otp");
-  //         }
-  //       } else {
-  //         showErrorToast("Please fill all fields");
-  //       }
-  //     } catch (error) {
-  //       console.log(error.response.data.message);
-
-  //       showErrorToast(error.response.data.message);
-  //     }
-  //   };
-
   const handleReset = async () => {
     try {
       if (password !== "" && confirmPassword !== "") {
+        if (Object.keys(currentUser).length === 0 || tenant === "") {
+          showErrorToast("Invalid request");
+          return;
+        }
         if (!passwordMatched()) {
           return;
         }
+
+        if (!isValidPassword()) {
+          return;
+        }
+
         const secretKey = "BxYfjlrtknZyVcjYT3MwPg==";
         const encryptedKey = encrypt(password, secretKey);
-        navigate("/login");
+
+        const headers = {
+          "X-TenantID": tenant,
+        };
+
+        const response = await axios.patch(
+          `/userProfile?id=${currentUser.id}&newPass=${encryptedKey}`,
+          { name: currentUser.name },
+          { headers }
+        );
+
+        if (response.status === 200) {
+          showSuccessToast(response.data.message);
+          dispatch(logout());
+          navigate("/login");
+        }
       } else {
         showErrorToast("Please fill all fields");
       }
@@ -121,39 +117,6 @@ const ResetPasswordForm = () => {
       showErrorToast(error.response.data.message);
     }
   };
-
-  const getTenantOptions = async () => {
-    try {
-      const headers = {
-        "X-TenantID": "dsms",
-      };
-
-      const response = await axios.get("/config", {
-        headers,
-      });
-
-      if (response.status === 200) {
-        let arr = [];
-        for (let i = 0; i < response.data.data.length; i++) {
-          let obj = {
-            id: response.data.data[i].id,
-            name: response.data.data[i].tenantName,
-          };
-          arr.push(obj);
-        }
-        sessionStorage.setItem("tenantOptions", JSON.stringify(arr));
-        dispatch(setTenantOptions(arr));
-        setOptions(arr);
-      }
-    } catch (error) {
-      // console.log(error.message);
-      showErrorToast(error.response.data.message);
-    }
-  };
-
-  useEffect(() => {
-    getTenantOptions();
-  }, []);
 
   return (
     <div className="reset-password-form-container">
@@ -195,7 +158,11 @@ const ResetPasswordForm = () => {
           </div>
           <p
             className="cant-access-text"
+            style={{
+              display: "inline-block",
+            }}
             onClick={() => {
+              dispatch(logout());
               navigate("/login");
             }}
           >
