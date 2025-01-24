@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { refreshMedia, setCurrentUser } from "../../redux/page";
 import { toast } from "react-toastify";
 import { FaCamera } from "react-icons/fa";
+import CryptoJS from "crypto-js";
 
 const options = [
   "Most Recent",
@@ -53,6 +54,30 @@ const Profile = ({ show, close }) => {
     }
   };
 
+  const isValidPassword = () => {
+    if (password.length < 8) {
+      showErrorToast("Password must contain atleast 8 characters");
+      return false;
+    }
+    for (let i = 0; i < password.length; i++) {
+      if (password[i] == " ") {
+        showErrorToast("Password cannot contain blank space");
+        return false;
+      }
+    }
+    return true;
+  };
+
+  const encrypt = (plainText, secretKey) => {
+    const keyBytes = CryptoJS.enc.Utf8.parse(secretKey);
+    const encrypted = CryptoJS.AES.encrypt(plainText, keyBytes, {
+      mode: CryptoJS.mode.ECB,
+      padding: CryptoJS.pad.Pkcs7, // Ensure padding is applied
+    }).toString();
+
+    return encrypted; // Base64 encoded string
+  };
+
   const handleUpdateProfile = async () => {
     try {
       if (name !== "" && mobile !== "") {
@@ -66,28 +91,65 @@ const Profile = ({ show, close }) => {
         //     formData.append("profileImage", profileImage);
         // }
 
+        let msg1 = null,
+          msg2 = null;
+
         const updatedData = {
           name,
           mobile,
         };
 
-        const response = await axios.patch(
-          `/userProfile/${currentUser.id}`,
-          updatedData,
-          {
-            headers,
+        if (password !== "") {
+          if (!isValidPassword()) {
+            return;
           }
-        );
 
-        if (response.status === 200) {
-          handleClose();
-          showSuccessToast(response.data.message);
-          sessionStorage.setItem(
-            "currentUser",
-            JSON.stringify(response.data.data)
+          const secretKey = "BxYfjlrtknZyVcjYT3MwPg==";
+          const encryptedKey = encrypt(password, secretKey);
+
+          const response1 = await axios.patch(
+            `/userProfile?id=${currentUser.id}&newPass=${encryptedKey}`,
+            { name: currentUser.name },
+            { headers }
           );
-          dispatch(setCurrentUser(response.data.data));
+
+          if (response1.status === 200) {
+            msg1 = response1.data.message;
+            handleClose();
+          }
         }
+
+        if (name !== currentUser.name || mobile !== currentUser.mobile) {
+          const response2 = await axios.patch(
+            `/userProfile/${currentUser.id}`,
+            updatedData,
+            {
+              headers,
+            }
+          );
+
+          if (response2.status === 200) {
+            msg2 = response2.data.message;
+            handleClose();
+            sessionStorage.setItem(
+              "currentUser",
+              JSON.stringify(response2.data.data)
+            );
+            dispatch(setCurrentUser(response2.data.data));
+          }
+        }
+
+        if (msg1 !== null && msg2 !== null) {
+          showSuccessToast(msg2 + " and " + msg1);
+        }
+        if (msg1 !== null && msg2 === null) {
+          showSuccessToast(msg1);
+        }
+        if (msg1 === null && msg2 !== null) {
+          showSuccessToast(msg2);
+        }
+      } else {
+        showErrorToast("Field(s) cannot be empty");
       }
     } catch (error) {
       showErrorToast(error.response.data.message);
@@ -102,11 +164,13 @@ const Profile = ({ show, close }) => {
   const handleClose = () => {
     setIsDisabled(true);
     close();
+    setPassword("");
   };
 
   const handleCancel = () => {
     setName(currentUser.name);
     setMobile(currentUser.mobile);
+    setPassword("");
     setProfileImage(null);
     setIsDisabled(true);
     close();
@@ -202,7 +266,7 @@ const Profile = ({ show, close }) => {
                 disabled={true}
                 className="profile-input-field"
                 style={{
-                  cursor : "not-allowed"
+                  cursor: "not-allowed",
                 }}
               />
             </div>
