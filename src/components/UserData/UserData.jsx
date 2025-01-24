@@ -131,6 +131,8 @@ const UserData = ({ userFilterApi }) => {
           headers,
         });
         if (response.status === 200) {
+          console.log(rowsPerPageLocal);
+
           setTotalRows(response.data.additionalData.totalElements);
           setTotalPages(
             Math.ceil(
@@ -191,6 +193,8 @@ const UserData = ({ userFilterApi }) => {
           headers,
         });
         if (response.data.data) {
+          console.log(response.data.data);
+
           setActualData(response.data.data);
         }
       }
@@ -201,26 +205,23 @@ const UserData = ({ userFilterApi }) => {
 
   useEffect(() => {
     getActualData();
-  }, [
-    refreshUserCount,
-    tenant,
-    userFilterApi,
-    rowsPerPageLocal,
-    pageNumberLocal,
-  ]);
+  }, [refreshUserCount, tenant, rowsPerPageLocal, pageNumberLocal]);
 
   useEffect(() => {
     getTotalRowsAndPagesCount();
-  }, [refreshUserCount, tenant, userFilterApi, userFilterAppliedCount]);
-
-  // useEffect(() => {
-  //   dispatch(setPageNumber(pageNumberLocal));
-  // }, [pageNumberLocal]);
+  }, [refreshUserCount]);
 
   useEffect(() => {
     setRowsPerPageLocal(1);
     setPageNumberLocal(0);
-  }, [userFilterAppliedCount]);
+  }, [userFilterAppliedCount, tenant]);
+
+  useEffect(() => {
+    if (rowsPerPageLocal === 1 && pageNumberLocal === 0) {
+      getTotalRowsAndPagesCount();
+      getActualData();
+    }
+  }, [rowsPerPageLocal, pageNumberLocal, userFilterAppliedCount, tenant]);
 
   const getStatusColor = (status) => {
     switch (status) {
@@ -492,7 +493,7 @@ const UserData = ({ userFilterApi }) => {
                     setTotalPages(Math.ceil(totalRows / val));
                   }}
                   defaultValue={1}
-                  userFilterAppliedCount={userFilterAppliedCount}
+                  resetTrigger={`${tenant}-${userFilterAppliedCount}`}
                 ></PaginationDropdown>
               </div>
             </div>

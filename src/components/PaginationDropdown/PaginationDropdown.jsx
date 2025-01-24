@@ -4,13 +4,12 @@ import "./PaginationDropdown.css";
 import { IoIosArrowDown } from "react-icons/io";
 
 const PaginationDropdown = (props) => {
-  const { options, returnValue, defaultValue, userFilterAppliedCount } = props;
+  const { options, returnValue, defaultValue, resetTrigger } = props;
   const [option, setOption] = useState([]);
-
-  useEffect(() => {}, [userFilterAppliedCount]);
 
   const handleSetOption = (values) => {
     if (values.length > 0) {
+      setOption(values); // Update the option state with the selected value
       returnValue(values[0].name);
     }
   };
@@ -29,11 +28,10 @@ const PaginationDropdown = (props) => {
     if (defaultValue !== null) {
       handleDefaultOption();
     }
-  }, [options, defaultValue]);
+  }, [options, defaultValue, resetTrigger]);
 
   return (
     <Select
-      key={userFilterAppliedCount}
       values={option}
       className="pagination-dropdown"
       options={options}
