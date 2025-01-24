@@ -1,17 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  // page: "home",
   page: sessionStorage.getItem("page") || "login",
-  // tenant: "",
   tenant: sessionStorage.getItem("tenant") || "",
   tenantOptions: sessionStorage.getItem("tenantOptions")
     ? JSON.parse(sessionStorage.getItem("tenantOptions"))
     : [],
-  // currentUser: {},
   currentUser: sessionStorage.getItem("currentUser")
     ? JSON.parse(sessionStorage.getItem("currentUser"))
     : {},
+  password: "",
   homeComponent: sessionStorage.getItem("homeComponent") || "dashboard",
   refreshUserCount: 1,
   refreshMediaCount: 1,
@@ -138,6 +136,9 @@ export const pageSlice = createSlice({
     setCurrentUser: (state, action) => {
       state.currentUser = action.payload;
     },
+    setPasswordForResendOtp: (state, action) => {
+      state.password = action.payload;
+    },
     setHomeComponent: (state, action) => {
       state.homeComponent = action.payload;
     },
@@ -169,6 +170,7 @@ export const {
   setTenant,
   setTenantOptions,
   setCurrentUser,
+  setPasswordForResendOtp,
   setHomeComponent,
   refreshUser,
   refreshMedia,

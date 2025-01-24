@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   changePage,
   setCurrentUser,
+  setPasswordForResendOtp,
   setTenant,
   setTenantOptions,
 } from "../../redux/page.js";
@@ -99,6 +100,7 @@ const LoginForm = () => {
           dispatch(setCurrentUser(response.data.data));
           dispatch(setTenant(user));
           dispatch(changePage("otp"));
+          dispatch(setPasswordForResendOtp(password));
           // navigate("/otp");
           navigate("/otp", {
             state: { forgotPassword: false },

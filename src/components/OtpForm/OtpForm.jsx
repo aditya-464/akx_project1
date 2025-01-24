@@ -2,17 +2,24 @@ import React, { useEffect, useRef, useState } from "react";
 import "./OtpForm.css";
 import otp_img from "../../assets/images/login2.webp";
 import { useSelector, useDispatch } from "react-redux";
-import { changePage, setHomeComponent } from "../../redux/page";
+import {
+  changePage,
+  setCurrentUser,
+  setHomeComponent,
+  setPasswordForResendOtp,
+  setTenant,
+} from "../../redux/page";
 import axios from "axios";
 import { toast } from "react-toastify";
+import CryptoJS from "crypto-js";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const OtpForm = () => {
+  const { currentUser, tenant, password } = useSelector((state) => state.page);
   const [length, setLength] = useState(6);
   const [otp, setOtp] = useState(new Array(length).fill(""));
   const [finalOtp, setFinalOtp] = useState("");
   const [timeLeft, setTimeLeft] = useState(59);
-  const { currentUser, tenant } = useSelector((state) => state.page);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -92,8 +99,6 @@ const OtpForm = () => {
   };
 
   const checkParams = () => {
-    console.log(forgotPassword);
-
     if (forgotPassword === undefined || forgotPassword === null) {
       showErrorToast("Invalid request");
       return false;
@@ -107,7 +112,6 @@ const OtpForm = () => {
       if (!checkParams()) {
         return;
       }
-      console.log(forgotPassword);
 
       if (finalOtp.length == 6 && currentUser && tenant) {
         const headers = {
@@ -124,6 +128,7 @@ const OtpForm = () => {
         });
 
         if (response.status === 200) {
+          dispatch(setPasswordForResendOtp(""));
           if (forgotPassword === true) {
             navigate("/reset-password");
           } else {
@@ -147,6 +152,69 @@ const OtpForm = () => {
     } catch (error) {
       // console.log(error.message);
       showErrorToast(error.response.data.message);
+    }
+  };
+
+  const encrypt = (plainText, secretKey) => {
+    const keyBytes = CryptoJS.enc.Utf8.parse(secretKey);
+    const encrypted = CryptoJS.AES.encrypt(plainText, keyBytes, {
+      mode: CryptoJS.mode.ECB,
+      padding: CryptoJS.pad.Pkcs7, // Ensure padding is applied
+    }).toString();
+
+    return encrypted; // Base64 encoded string
+  };
+
+  const handleResend = async () => {
+    if (
+      Object.keys(currentUser).length === 0 ||
+      tenant === "" ||
+      forgotPassword === undefined ||
+      forgotPassword === null
+    ) {
+      return;
+    }
+
+    console.log("Jai shree radhe");
+
+    if (forgotPassword) {
+      const headers = {
+        "X-TenantID": tenant,
+      };
+
+      const response = await axios.get(
+        `/userProfile/forgetPassword?email=${currentUser.email}`,
+        { headers }
+      );
+
+      if (response.status === 200) {
+        showSuccessToast("OTP sent");
+        setTimeLeft(59);
+      }
+    } else {
+      if (password === "") {
+        return;
+      }
+
+      const secretKey = "BxYfjlrtknZyVcjYT3MwPg==";
+      const encryptedKey = encrypt(password, secretKey);
+
+      const headers = {
+        "X-TenantID": tenant,
+      };
+      const loginData = {
+        email: currentUser.email,
+        password: encryptedKey,
+      };
+
+      const response = await axios.post("/userProfile/auth", loginData, {
+        headers,
+      });
+
+      if (response.status === 200) {
+        showSuccessToast("OTP sent to your email");
+        setTimeLeft(59);
+      }
     }
   };
 
@@ -187,14 +255,21 @@ const OtpForm = () => {
             <p
               className="resend-text"
               style={{
+                display: "inline-block",
                 color: timeLeft > 0 ? "#9ba2a7" : "#03c988",
                 fontWeight: timeLeft > 0 ? "400" : "500",
                 cursor: timeLeft > 0 ? "default" : "pointer",
+                pointerEvents: timeLeft > 0 ? "none" : "auto",
+              }}
+              onClick={() => {
+                if (timeLeft <= 0) {
+                  handleResend();
+                }
               }}
             >
               Resend
             </p>
-            {timeLeft > 0 && <p className="time">{timeLeft}s</p>}
+            {timeLeft > 0 && <p className="time">in {timeLeft}s</p>}
           </div>
         </div>
       </div>
