@@ -128,7 +128,7 @@ const UserDataFilterModal = ({ show, close, getUserFilterApi }) => {
     }
 
     if (!flag) {
-      showErrorToast("Select atleast one filtering method");
+      showErrorToast("Select atleast one filter");
       getUserFilterApi(null);
       return;
     }

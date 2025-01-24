@@ -21,22 +21,22 @@ const UserData = ({ userFilterApi }) => {
   const [editUserDetails, setEditUserDetails] = useState("");
   const [deleteUserModalVisible, setdeleteUserModalVisible] = useState(false);
   const [deleteUserDetails, setDeleteUserDetails] = useState("");
-  const [rowsPerPageLocal, setRowsPerPageLocal] = useState(1);
+  const [rowsPerPageLocal, setRowsPerPageLocal] = useState(5);
   const [pageNumberLocal, setPageNumberLocal] = useState(0);
   const [totalRows, setTotalRows] = useState(null);
   const [totalPages, setTotalPages] = useState(null);
   const [options, setOptions] = useState([
     {
       id: 1,
-      name: 1,
+      name: 5,
     },
     {
       id: 2,
-      name: 2,
+      name: 10,
     },
     {
       id: 3,
-      name: 25,
+      name: 20,
     },
   ]);
 
@@ -193,8 +193,6 @@ const UserData = ({ userFilterApi }) => {
           headers,
         });
         if (response.data.data) {
-          console.log(response.data.data);
-
           setActualData(response.data.data);
         }
       }
@@ -212,12 +210,12 @@ const UserData = ({ userFilterApi }) => {
   }, [refreshUserCount]);
 
   useEffect(() => {
-    setRowsPerPageLocal(1);
+    setRowsPerPageLocal(5);
     setPageNumberLocal(0);
   }, [userFilterAppliedCount, tenant]);
 
   useEffect(() => {
-    if (rowsPerPageLocal === 1 && pageNumberLocal === 0) {
+    if (rowsPerPageLocal === 5 && pageNumberLocal === 0) {
       getTotalRowsAndPagesCount();
       getActualData();
     }
@@ -298,6 +296,7 @@ const UserData = ({ userFilterApi }) => {
   }
 
   return (
+    Array.isArray(actualData) &&
     actualData && (
       <>
         <div id="users-data-container">
@@ -492,7 +491,7 @@ const UserData = ({ userFilterApi }) => {
                     setPageNumberLocal(0);
                     setTotalPages(Math.ceil(totalRows / val));
                   }}
-                  defaultValue={1}
+                  defaultValue={5}
                   resetTrigger={`${tenant}-${userFilterAppliedCount}`}
                 ></PaginationDropdown>
               </div>
@@ -501,9 +500,18 @@ const UserData = ({ userFilterApi }) => {
               <div
                 className="users-pagination-previous-button"
                 style={{
-                  opacity: pageNumberLocal === 0 ? "0.2" : "1",
-                  cursor: pageNumberLocal === 0 ? "default" : "pointer",
-                  pointerEvents: pageNumberLocal === 0 ? "none" : "auto", // Prevent hover interactions
+                  opacity:
+                    pageNumberLocal === 0 || actualData.length === 0
+                      ? "0.2"
+                      : "1",
+                  cursor:
+                    pageNumberLocal === 0 || actualData.length === 0
+                      ? "default"
+                      : "pointer",
+                  pointerEvents:
+                    pageNumberLocal === 0 || actualData.length === 0
+                      ? "none"
+                      : "auto", // Prevent hover interactions
                 }}
                 onClick={() => {
                   if (pageNumberLocal >= 1) {
@@ -524,11 +532,21 @@ const UserData = ({ userFilterApi }) => {
               <div
                 className="users-pagination-next-button"
                 style={{
-                  opacity: pageNumberLocal === totalPages - 1 ? "0.2" : "1",
+                  opacity:
+                    pageNumberLocal === totalPages - 1 ||
+                    actualData.length === 0
+                      ? "0.2"
+                      : "1",
                   cursor:
-                    pageNumberLocal === totalPages - 1 ? "default" : "pointer",
+                    pageNumberLocal === totalPages - 1 ||
+                    actualData.length === 0
+                      ? "default"
+                      : "pointer",
                   pointerEvents:
-                    pageNumberLocal === totalPages - 1 ? "none" : "auto", // Prevent hover interactions
+                    pageNumberLocal === totalPages - 1 ||
+                    actualData.length === 0
+                      ? "none"
+                      : "auto", // Prevent hover interactions
                 }}
                 onClick={() => {
                   if (pageNumberLocal < totalPages - 1) {

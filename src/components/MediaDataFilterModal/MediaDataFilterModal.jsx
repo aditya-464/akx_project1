@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./MediaDataFilterModal.css";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { refreshMedia } from "../../redux/page";
+import { refreshMedia, refreshMediaFilterApplied } from "../../redux/page";
 import { toast } from "react-toastify";
 
 const options = [
@@ -70,6 +70,8 @@ const MediaDataFilterModal = ({ show, close, getMediaFilterApi }) => {
 
   const handleApplyFilter = () => {
     let filterAPI = {};
+    let flag = false;
+
     if (currentUser.userType === "USER") {
       filterAPI["uploadedById"] = currentUser.id;
     }
@@ -79,12 +81,15 @@ const MediaDataFilterModal = ({ show, close, getMediaFilterApi }) => {
 
     if (searchId !== "") {
       filterAPI["id"] = searchId;
+      flag = true;
     }
     if (searchName !== "") {
       filterAPI["fileName"] = searchName;
+      flag = true;
     }
     if (uploadedByName !== "") {
       filterAPI["uploadedByName"] = uploadedByName;
+      flag = true;
     }
     // if (approvedByName !== "") {
     //   filterAPI["approvedByName"] = approvedByName;
@@ -92,16 +97,20 @@ const MediaDataFilterModal = ({ show, close, getMediaFilterApi }) => {
     if (selectedOptions["Least Recent"] === true) {
       filterAPI["sortBy"] = "uploadDate";
       filterAPI["order"] = "asc";
+      flag = true;
     }
     if (selectedOptions["Most Recent"] === true) {
       filterAPI["sortBy"] = "uploadDate";
       filterAPI["order"] = "desc";
+      flag = true;
     }
     if (selectedOptions["Approved"] === true) {
       filterAPI["approvedStatus"] = "true";
+      flag = true;
     }
     if (selectedOptions["Not Approved"] === true) {
       filterAPI["approvedStatus"] = "false";
+      flag = true;
     }
     if (selectedOptions["Image"] === true) {
       if (filterAPI.hasOwnProperty("mediaTypes")) {
@@ -109,6 +118,7 @@ const MediaDataFilterModal = ({ show, close, getMediaFilterApi }) => {
       } else {
         filterAPI["mediaTypes"] = "IMAGE,";
       }
+      flag = true;
     }
     if (selectedOptions["Document"] === true) {
       if (filterAPI.hasOwnProperty("mediaTypes")) {
@@ -116,6 +126,7 @@ const MediaDataFilterModal = ({ show, close, getMediaFilterApi }) => {
       } else {
         filterAPI["mediaTypes"] = "DOCUMENT,FILE,";
       }
+      flag = true;
     }
     if (selectedOptions["Audio"] === true) {
       if (filterAPI.hasOwnProperty("mediaTypes")) {
@@ -123,6 +134,7 @@ const MediaDataFilterModal = ({ show, close, getMediaFilterApi }) => {
       } else {
         filterAPI["mediaTypes"] = "AUDIO,";
       }
+      flag = true;
     }
     if (selectedOptions["Video"] === true) {
       if (filterAPI.hasOwnProperty("mediaTypes")) {
@@ -130,6 +142,13 @@ const MediaDataFilterModal = ({ show, close, getMediaFilterApi }) => {
       } else {
         filterAPI["mediaTypes"] = "VIDEO,";
       }
+      flag = true;
+    }
+
+    if (!flag) {
+      showErrorToast("Select atleast one filter");
+      getMediaFilterApi(null);
+      return;
     }
 
     if (filterAPI.hasOwnProperty("mediaTypes")) {
@@ -141,16 +160,20 @@ const MediaDataFilterModal = ({ show, close, getMediaFilterApi }) => {
       .map(([key, value]) => `${key}=${value}`) // Format each key-value pair as "key=value"
       .join("&");
 
-    if (result === "") {
-      getMediaFilterApi(null);
-    } else {
-      const mediaFilterUrl = "/media/all?" + result;
-      getMediaFilterApi(mediaFilterUrl);
-    }
+    // if (result === "") {
+    //   getMediaFilterApi(null);
+    // } else {
+    //   const mediaFilterUrl = "/media/all?" + result;
+    //   getMediaFilterApi(mediaFilterUrl);
+    // }
+    const mediaFilterUrl = "/media/all?" + result;
+    getMediaFilterApi(mediaFilterUrl);
+    dispatch(refreshMediaFilterApplied());
     handleClose();
   };
 
   const handleClearAll = () => {
+    dispatch(refreshMediaFilterApplied());
     getMediaFilterApi(null);
     close();
     setSearchId("");
