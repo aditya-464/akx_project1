@@ -133,7 +133,7 @@ const ForgotPasswordForm = () => {
           </div>
 
           <div className="forgot-password-fields-group">
-            <p>User</p>
+            <p>Vendor</p>
             <input
               className="forgot-password-fields-input"
               value={user}

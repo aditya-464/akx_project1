@@ -186,7 +186,7 @@ const LoginForm = () => {
           </div>
 
           <div className="login-fields-group">
-            <p>User</p>
+            <p>Vendor</p>
             <input
               className="login-fields-input"
               value={user}
